@@ -1,0 +1,46 @@
+<!--<label> Search: <input ng-model="searchTextList"></label>-->
+<!--<br>-->
+<!--<br>-->
+<!--<input ng-repeat="art in art" type="button" value={{art}} ng-click="setSearchText('filter1', art)">-->
+<!--<input type="button" value=Reset ng-click="setSearchText('filter1', '')">-->
+<!--<br>-->
+<!--<br>-->
+<!--<input ng-repeat="grad in schwierigkeitsgrad" type="button" value={{grad}} ng-click="setSearchText('filter2', grad)">-->
+<!--<input type="button" value=Reset ng-click="setSearchText('filter2', '')">-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+
+<div class="item_list_container">
+  <div class="item_list_col_bild_heading"></div>
+  <div class="item_list_col_titel_heading">TITEL</div>
+  <div class="item_list_col_beschreibung_heading">BESCHREIBUNG</div>
+  <div class="item_list_col_kalorien_heading">KALORIEN</div>
+  <div class="item_list_col_zeit_heading">ZEIT</div>
+  <div class="item_list_col_zeit_art">ART</div>
+</div>
+<p id="loadingGif_p">
+  <!--<img class="loadingGif" ng-src="assets/images/loading.gif" *ngIf="waitForResults">-->
+</p>
+<ul class="item_list_ul">
+  <!--<li class="item_list_li" *ngFor="let item of rezeptListe | filter:searchTextList | filter:searchText1 | filter:searchText2" ng-click="openView('/rezept/' +item.id)">-->
+  <li class="item_list_li" *ngFor="let item of rezeptListe" (click)="selectRezept(item.id)" (dblclick)="editRezept(item.id)" [ngClass]="{selected : item.selected}">
+    <!--<img class="item_list_col_bild" ng-src="assets/images/{{item.bildsrc}}" />-->
+    <div class="item_list_col_id">{{item.id}}</div>
+    <div class="item_list_col_titel">{{item.titel}}</div>
+    <div class="item_list_col_beschreibung">{{item.beschreibung}}</div>
+    <div class="item_list_col_kalorien">{{item.kalorien}}</div>
+    <div class="item_list_col_zeit">{{item.zeit}}</div>
+    <div class="item_list_col_art">{{item.art}}</div>
+  </li>
+</ul>
+<footer class="footer" *ngIf="rezeptListe.length > 0">
+  <span class="todo-count"><strong>{{rezeptListe.length}}</strong> {{rezeptListe.length == 1 ? 'Rezept' : 'Rezepte'}} verfügbar</span>
+</footer>
+<br>
+<br>
+
+

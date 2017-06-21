@@ -1,0 +1,31 @@
+<div>
+    <div id="layoutform">
+        <div id="header">
+            Rezepte App by Mike M.
+        </div>
+        <div id="mainarea">
+            <div id="menu">
+                <ul>
+                    <nav>
+                        <a routerLink="/" routerLinkActive="active">HOME</a>
+                        <br>
+                        <a routerLink="/rezeptliste" routerLinkActive="active">LISTE</a>
+                        <br>
+                        <a routerLink="/rezepteerfassen" routerLinkActive="active">ERFASSEN</a>
+                        <br>
+                        <a routerLink="/rezept/1" routerLinkActive="active">Rezept 1</a>
+                        <br>
+                    </nav>
+                </ul>
+            </div>
+            <div id="content">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <!--<div id="footer">-->
+            <!--FOOTER-->
+        <!--</div>-->
+    </div>
+</div>
+
+

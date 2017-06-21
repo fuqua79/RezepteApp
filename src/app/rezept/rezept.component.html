@@ -1,0 +1,72 @@
+<div>
+  <div id="printArea">
+    <h1>
+      {{rezept.titel}} ({{rezept.id}})
+    </h1>
+    <div style="width: 800px; height: 200px;">
+        {{rezept.beschreibung}}
+        </div>
+    <div>
+      <h3>
+        Anzahl Personen:
+      </h3>
+      <input id="gewuenschteAnzalPersonen" type="text" name="gewunschteAnzahlPersonen" [(ngModel)]="gewunschteAnzahlPersonen" ng-init="gewunschteAnzahlPersonen=1">
+    </div>
+    <br>
+    {{rezept.zutatenAnzahl}}
+    <h3>
+      Zutaten
+    </h3>
+    <ul>
+      <li *ngFor="let zutat of rezept.zutaten; let i = index;">
+        <div>
+          {{((gewunschteAnzahlPersonen)/(rezept.zutaten.length|number)) * (zutat.menge|number)}}
+          {{zutat.einheit}}
+          {{zutat.zutat}}
+        </div>
+      </li>
+    </ul>
+    <h3>
+      Kalorien
+    </h3>
+    <div>
+      {{rezept.kalorien|number}}
+    </div>
+    <h3>
+      Schwierigkeitsgrad
+    </h3>
+    <div>
+      {{rezept.schwierigkeitsgrad}}
+    </div>
+    <h3>
+      Zeit
+    </h3>
+    <div>
+      {{rezept.zeit}} min
+    </div>
+    <h3>
+      Zubereitung
+    </h3>
+    <div>
+      {{rezept.zubereitung}}
+    </div>
+    <h3>
+      Art
+    </h3>
+    <div>
+      {{rezept.art}}
+    </div>
+  </div>
+  <br>
+  <br>
+  <input type="button" value="DRUCKEN" ng-click="printIt()">
+  <input type="button" value="LÖSCHEN" ng-click="loescheRezept(rezept, rezept.id)">
+  <input type="button" value="BEARBEITEN" (click)="editRezept(rezept.id)">
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>    <br>
+
+</div>

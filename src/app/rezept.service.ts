@@ -1,0 +1,44 @@
+import { Injectable } from '@angular/core';
+import {Rezept} from "./rezept/rezept";
+import {Zutat} from "./rezept/zutat";
+
+@Injectable()
+export class RezeptService {
+
+  constructor() { }
+
+  getRezeptListe() : Promise<Rezept[]> {
+    console.log('Rezepte im Backend holen.........!!!!');
+
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('WARTEN.........');
+        resolve(this.rezeptListe);
+      }, 1000);
+    });
+    return promise;
+  }
+
+
+
+  rezeptliste : Array<Rezept>;
+
+  zutat1 = new Zutat(100, 'ml', 'Milch');
+  zutat2 = new Zutat(200, 'g', 'Reis');
+  zutaten = [this.zutat1, this.zutat2];
+
+  rezept1 = new Rezept(1,'Milchreis - Beschreibung', 'Milchreis - Titel', this.zutaten, 500, 'einfach',25, 'Zubereitung', 'Art', '../dir/bild.jpg')
+  rezept2 = new Rezept(2,'Milchreis - Beschreibung', 'Milchreis - Titel', this.zutaten, 500, 'einfach',25, 'Zubereitung', 'Art', '../dir/bild.jpg')
+  rezept3 = new Rezept(3,'Milchreis - Beschreibung', 'Milchreis - Titel', this.zutaten, 500, 'einfach',25, 'Zubereitung', 'Art', '../dir/bild.jpg')
+  rezept4 = new Rezept(4,'Milchreis - Beschreibung', 'Milchreis - Titel', this.zutaten, 500, 'einfach',25, 'Zubereitung', 'Art', '../dir/bild.jpg')
+  rezept5 = new Rezept(5,'Milchreis - Beschreibung', 'Milchreis - Titel', this.zutaten, 500, 'einfach',25, 'Zubereitung', 'Art', '../dir/bild.jpg')
+  rezept6 = new Rezept(6,'Milchreis - Beschreibung', 'Milchreis - Titel', this.zutaten, 500, 'einfach',25, 'Zubereitung', 'Art', '../dir/bild.jpg')
+  rezept7 = new Rezept(7,'Milchreis - Beschreibung', 'Milchreis - Titel', this.zutaten, 500, 'einfach',25, 'Zubereitung', 'Art', '../dir/bild.jpg')
+  rezept8 = new Rezept(8,'Milchreis - Beschreibung', 'Milchreis - Titel', this.zutaten, 500, 'einfach',25, 'Zubereitung', 'Art', '../dir/bild.jpg')
+
+  rezeptListe = [this.rezept1, this.rezept2,this.rezept3, this.rezept4,this.rezept5, this.rezept6,this.rezept7, this.rezept8];
+
+
+
+
+}

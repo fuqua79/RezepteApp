@@ -1,0 +1,91 @@
+<div>
+    <form #rezepteForm="ngForm" class="form_erfassen" name="form_erfassen"
+          (ngSubmit)="speichernRezept(inputData)">
+        <div class="form-group">
+            <label>Titel</label>
+            <input type="text" class="form-control" id="titel" name="titel" [(ngModel)]="inputData.titel" required>
+        </div>
+        <div class="form-group">
+            <label>Beschreibung</label>
+            <input appClearField type="textarea" class="form-control" id="beschreibung" name="beschreibung"
+                   [(ngModel)]="inputData.beschreibung" required>
+        </div>
+
+        <div class="form-group">
+            <label>Anzahl Personen</label>
+            <input type="text" class="form-control" id="zutatenAnzahl" name="zutatenAnzahl"
+                   [(ngModel)]="inputData.zutatenAnzahl" required>
+        </div>
+        <div class="form-group">
+            <label>Kalorien</label>
+            <input type="text" class="form-control" id="kalorien" name="kalorien" [(ngModel)]="inputData.kalorien"
+                   required>
+        </div>
+        <div class="form-group">
+            <label>Schwierigkeitsgrad</label>
+            <input type="text" class="form-control" id="schwierigkeitsgrad" name="schwierigkeitsgrad"
+                   [(ngModel)]="inputData.schwierigkeitsgrad"
+                   required>
+        </div>
+        <div class="form-group">
+            <label>Zeit</label>
+            <input type="text" class="form-control" id="zeit" name="zeit" [(ngModel)]="inputData.zeit"
+                   required>
+        </div>
+        <div class="form-group">
+            <label>Zubereitung</label>
+            <input type="text" class="form-control" id="zubereitung" name="zubereitung"
+                   [(ngModel)]="inputData.zubereitung"
+                   required>
+        </div>
+        <div class="form-group">
+            <label>Art</label>
+            <input type="text" class="form-control" id="art" name="art" [(ngModel)]="inputData.art"
+                   required>
+        </div>
+        <div id="zutaten">
+            <label>ZUTATEN</label>
+            <br>
+            <div *ngFor="let element of inputData.zutaten; let i = index;">
+                <label>Zutat {{i+1}}</label>
+                <input type="button" value="Zutat löschen" (click)="removeZutat(i)">
+                <br>
+                <label>Menge</label>
+                <input type="text" class="form-control" id="menge" name="menge"
+                       [(ngModel)]="inputData.zutaten[i].menge"
+                       required>
+                <label>Einheit</label>
+                <input type="text" class="form-control" id="einheit" name="einheit"
+                       [(ngModel)]="inputData.zutaten[i].einheit"
+                       required>
+                <label>Zutat</label>
+                <input type="text" class="form-control" id="zutat" name="zutat"
+                       [(ngModel)]="inputData.zutaten[i].zutat"
+                       required>
+                <br>
+            </div>
+            <br>
+            <input type="button" value="Zutat hinzugüfen" (click)="addZutat()">
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div>
+            <div>
+                <label>Username:</label>
+                <input type="text" class="form-control" id="username" name="username"
+                       [(ngModel)]="username"
+                       required>
+                <br>
+                <input type="file" ngf-pattern="'image/*'" ngf-select="onFileSelect($file)">
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+
+        <input type="button" value="Speichern" id="speichern" (click)="saveRezept(inputData)">
+    </form>
+</div>
