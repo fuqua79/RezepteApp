@@ -13,7 +13,9 @@ import {Rezept} from "../rezept/rezept";
 })
 export class RezeptListeComponent implements OnInit {
 
-        private rezeptListe: Array<Rezept>;
+    private rezeptListe: Array<Rezept>;
+    //TEST
+    private posts : any;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -25,6 +27,13 @@ export class RezeptListeComponent implements OnInit {
         console.log('Lsite holen');
         this.rezeptService.getRezeptListe().then(rezeptListe => this.rezeptListe = rezeptListe);
         console.log('Liste geholt...');
+
+        console.log('POSTS holen');
+        this.rezeptService.getAllPosts().subscribe(posts => {
+            this.posts = posts;
+        });
+        console.log('POSTS geholt...');
+
     }
 
     //Testdaten erzeugen
@@ -56,14 +65,15 @@ export class RezeptListeComponent implements OnInit {
     selectRezept(id: number): void {
         console.log('selektieren Id= ', id);
         for (let i = 0; i < this.rezeptListe.length; i++) {
-            this.rezeptListe[i].selected= false;
+            this.rezeptListe[i].selected = false;
             if (this.rezeptListe[i].id === id) {
-                this.rezeptListe[i].selected= true;            }
+                this.rezeptListe[i].selected = true;
+            }
         }
         console.log('Selektiert....');
     }
 
-    editRezept(id: number) : void {
+    editRezept(id: number): void {
         console.log('Rezept bearbeiten');
         this.router.navigate(['/rezepteerfassen/' + id]);
     }

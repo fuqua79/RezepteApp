@@ -9,6 +9,7 @@ import { RezeptListeComponent } from './rezept-liste/rezept-liste.component';
 import { RezeptErfassenComponent } from './rezept-erfassen/rezept-erfassen.component';
 import { RezeptHomeComponent } from './rezept-home/rezept-home.component';
 import { ClearFieldDirective } from './clear-field.directive';
+import {HttpModule} from "@angular/http";
 
 
 const appRoutes: Routes = [
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
     imports: [
         BrowserModule,
         RouterModule.forRoot(appRoutes),
-        FormsModule
+        FormsModule,
+        HttpModule
     ],
     providers: [],
     bootstrap: [AppComponent]
