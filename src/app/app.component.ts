@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RezeptService} from "./rezept.service";
+import {RezeptService} from "./rezept/rezept.service";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'app by Mike mugglin';
 
   constructor() {
-    this.mylogger('AppComponent');
+    this.mylogger('AppComponent instanziert...');
   }
 
   ngOnInit() {

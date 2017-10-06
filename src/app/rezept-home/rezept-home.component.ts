@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {RezeptService} from '../rezept.service';
-import {Rezept} from "../rezept/rezept";
+import {RezeptService} from '../rezept/rezept.service';
+import {Rezept} from "../rezept/dto/rezept";
 
 @Component({
     selector: 'app-rezept-home',
@@ -16,11 +16,10 @@ export class RezeptHomeComponent implements OnInit {
     }
 
     ngOnInit() {
+      this.getRandomRezept();
     }
 
-
     getRandomRezept(): void {
-
         this.rezeptService.getRezeptListe().then((rezeptListe) => {
             this.rezeptListe = rezeptListe;
             let min: number = 0;

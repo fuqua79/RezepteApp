@@ -8,7 +8,7 @@ import { RezeptComponent } from './rezept/rezept.component';
 import { RezeptListeComponent } from './rezept-liste/rezept-liste.component';
 import { RezeptErfassenComponent } from './rezept-erfassen/rezept-erfassen.component';
 import { RezeptHomeComponent } from './rezept-home/rezept-home.component';
-import { ClearFieldDirective } from './clear-field.directive';
+import { ClearFieldDirective } from './common/directives/clear-field.directive';
 import {HttpModule} from "@angular/http";
 
 

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {RezeptService} from '../rezept.service';
-import {Zutat} from "../rezept/zutat";
-import {Rezept} from "../rezept/rezept";
+import {RezeptService} from '../rezept/rezept.service';
+import {Zutat} from "../rezept/dto/zutat";
+import {Rezept} from "../rezept/dto/rezept";
 
 
 @Component({

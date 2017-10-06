@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
-import {Zutat} from "../rezept/zutat";
-import {Rezept} from "../rezept/rezept";
+import {Zutat} from "../rezept/dto/zutat";
+import {Rezept} from "../rezept/dto/rezept";
 
 @Component({
     selector: 'app-rezept-erfassen',

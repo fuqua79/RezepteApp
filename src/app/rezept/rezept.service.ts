@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Rezept} from "./rezept/rezept";
-import {Zutat} from "./rezept/zutat";
+import {Rezept} from "./dto/rezept";
+import {Zutat} from "./dto/zutat";
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';

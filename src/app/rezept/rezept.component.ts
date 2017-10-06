@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
-import {Rezept} from "./rezept";
-import {Zutat} from "./zutat";
+import {Rezept} from "./dto/rezept";
+import {Zutat} from "./dto/zutat";
 
 
 @Component({
