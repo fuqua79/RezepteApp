@@ -1,11 +1,14 @@
 // Get dependencies
 const express = require('express');
 const path = require('path');
+const assert = require('assert');
 const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient;
+const mongodb = require('mongodb');
 const app = express();
 const dbName = 'rezepte';
 const collectionName = 'rezept';
+const rezeptUrl = '/api/rezept'
+const ObjectID = mongodb.ObjectID;
 
 //dbName= rezepte
 //ds113435/rezepte
@@ -27,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //MongoDB by amazon mLab verbinden & Server starten
 var db;
-MongoClient.connect('mongodb://mike:_123mike@ds113435.mlab.com:13435/' + dbName, (err, database) => {
+mongodb.MongoClient.connect('mongodb://mike:_123mike@ds113435.mlab.com:13435/' + dbName, (err, database) => {
   if (err) return console.log(err);
   db = database;
   app.listen(3000, () => {
@@ -39,30 +42,34 @@ MongoClient.connect('mongodb://mike:_123mike@ds113435.mlab.com:13435/' + dbName,
 //////////////////
 //API Definition//
 //////////////////
-//READ
-app.get('/api/get', (req, res) => {
-  //res.send("GET HOLEN!!");
-  var cursor = db.collection(collectionName).find().toArray((err, results) => {
-    console.log("AAAA", results);
-  });
-  console.log("jdjdj", cursor);
-  res.send("GET HOLEN!!");
-});
-
-//Einzelner Lesen
-app.get("/api/get/:id", (req, res) => {
-  db.collection(collectionName).findOne({_id: new ObjectID(req.params.id)}, (err, doc) => {
+//Alle Rezpte lesen
+app.get(rezeptUrl + '/list', (req, res) => {
+  db.collection(collectionName).find().toArray((err, result) => {
     if (err) {
-      handleError(res, err.message, "Failed to get contact");
+      console.log('Failed to get List of Rezepte');
+      res.status(500).send(err);
     } else {
-      res.status(200).json(doc);
+      console.log("Alle Rezepte lesen aus DB, Result= ", result);
+      res.status(200).send(result);
     }
   });
 });
 
+//Einzelnes Rezept lesen
+app.get(rezeptUrl + '/:id', (req, res) => {
+  console.log("IDDDD: " + req.params.id);
+  db.collection(collectionName).findOne({_id: new ObjectID(req.params.id)}, (err, result) => {
+    if (err) {
+      handleError(res, err.message, "Failed to get Rezept mit id: " + req.params.id);
+    } else {
+      console.log('Rezept erfolgreich geholt mit id: ' + result);
+      res.status(200).json(result);
+    }
+  });
+});
 
 //WRITE
-app.get('/api/post', (req, res) => {
+app.post('/api/rezept/save', (req, res) => {
   db.collection(collectionName).insertOne(req.body, (err, result) => {
     // Auf Fehler prüfen
     if (err) return console.log(err);
@@ -71,12 +78,17 @@ app.get('/api/post', (req, res) => {
     assert.equal(1, result.insertedCount);
 
     console.log('saved to database');
-    res.redirect('/');
+    res.status(200);
+    //res.redirect(rezeptUrl +'/');
   });
 });
 
+
+///////////////////////////////////////////////////////////////
+
+
 //UPDATE
-app.put('/api/quotes', (req, res) => {
+app.put('/api/rezept/quotes', (req, res) => {
   db.collection(collectionName)
     .findOneAndUpdate(
       //Query, was updaten
@@ -102,7 +114,7 @@ app.put('/api/quotes', (req, res) => {
 
 
 //DELETE
-app.delete('/api/quotes', (req, res) => {
+app.delete('/api/rezept/quotes', (req, res) => {
   db.collection(collectionName).findOneAndDelete(
     //query, was löschen
     {name: req.body.name},
@@ -117,7 +129,7 @@ app.delete('/api/quotes', (req, res) => {
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
   console.log("STARTSEITE");
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+  res.sendFile(path.join(__dirname, '../src/index.html'));
   //res.sendFile(__dirname + '/dist/index.html');
   //res.send("Startseite index.html senden");
 });

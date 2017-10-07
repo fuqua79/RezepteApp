@@ -3,6 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
 import {Zutat} from "../rezept/dto/zutat";
 import {Rezept} from "../rezept/dto/rezept";
+import {RezeptService} from "../rezept/rezept.service";
 
 @Component({
   selector: 'app-rezept-erfassen',
@@ -17,7 +18,8 @@ export class RezeptErfassenComponent implements OnInit {
   routeSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private rezeptService: RezeptService) {
     this.mylogger('RezeptErfassen-Component');
   }
 
@@ -42,7 +44,7 @@ export class RezeptErfassenComponent implements OnInit {
         zutat2.zutat = 'Wasser';
         let zutaten = [zutat1, zutat2];
         this.rezept = new Rezept();
-        this.rezept.id = this.id;
+        this.rezept._id = this.id;
         this.rezept.beschreibung = 'Milchreis - Beschreibung';
         this.rezept.zutaten = zutaten;
         this.rezept.kalorien = 500;
@@ -68,7 +70,30 @@ export class RezeptErfassenComponent implements OnInit {
 
   saveRezept(inputData: Rezept): void {
     //Speichern...
+    let zutat1 = new Zutat();
+    zutat1.einheit = 'ml';
+    zutat1.menge = 100;
+    zutat1.zutat = 'Milch';
+    let zutat2 = new Zutat();
+    zutat2.einheit = 'dl';
+    zutat2.menge = 2;
+    zutat2.zutat = 'Wasser';
+    let zutaten = [zutat1, zutat2];
+
+    let rezept = new Rezept();
+    rezept.beschreibung = 'Milchreis - Beschreibung';
+    rezept.zutaten = zutaten;
+    rezept.kalorien = 500;
+    rezept.schwierigkeitsgrad = 'einfach';
+    rezept.art = 'ART';
+    rezept.zubereitung = 'Zubereitung';
+
     console.log('Speichere Rezept...');
+
+    this.rezeptService.saveRezept(rezept).subscribe(result => {
+      console.log('Rezept erfolgreich gespeichert');
+
+    });
   }
 
   mylogger(text: string): void {

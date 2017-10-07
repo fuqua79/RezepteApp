@@ -12,7 +12,6 @@ import {Zutat} from "./dto/zutat";
 })
 export class RezeptComponent implements OnInit {
 
-  private id: number;
   private rezept: Rezept;
   private gewunschteAnzahlPersonen: number = 1;
 
@@ -26,9 +25,9 @@ export class RezeptComponent implements OnInit {
   ngOnInit() {
     console.log('ngOnIniti');
     this.routeSubscription = this.route.params.subscribe(params => {
-      this.id = (params['id'] || '');
+      let id = (params['id'] || '');
       //this.rezept = this.rezeptService.getRezept(id);
-      console.log('Rezept mit Id: ', this.id, ' holen')
+      console.log('Rezept mit Id: ', id, ' holen')
 
 
       let zutat1 = new Zutat();
@@ -41,7 +40,7 @@ export class RezeptComponent implements OnInit {
       zutat2.zutat = 'Wasser';
       let zutaten = [zutat1, zutat2];
       this.rezept = new Rezept();
-      this.rezept.id = this.id;
+      this.rezept._id = id;
       this.rezept.beschreibung = 'Milchreis - Beschreibung';
       this.rezept.zutaten = zutaten;
       this.rezept.kalorien = 500;
@@ -57,9 +56,9 @@ export class RezeptComponent implements OnInit {
   }
 
   editRezept(id: number): void {
-    console.log('Id= ', this.id);
+    console.log('Id= ', id);
     // const relUrl = this.router.url.includes()
-    this.router.navigate(['/rezepteerfassen/' + this.id]);
+    this.router.navigate(['/rezepteerfassen/' + id]);
   }
 
   mylogger(text: string): void {
