@@ -5,71 +5,75 @@ import {Zutat} from "../rezept/dto/zutat";
 import {Rezept} from "../rezept/dto/rezept";
 
 @Component({
-    selector: 'app-rezept-erfassen',
-    templateUrl: './rezept-erfassen.component.html',
-    styleUrls: ['./rezept-erfassen.component.css']
+  selector: 'app-rezept-erfassen',
+  templateUrl: './rezept-erfassen.component.html',
+  styleUrls: ['./rezept-erfassen.component.css']
 })
 export class RezeptErfassenComponent implements OnInit {
 
-    private id: number;
-    private rezept: Rezept;
-    public inputData: Rezept;
-    routeSubscription: Subscription;
+  private id: number;
+  private rezept: Rezept;
+  public inputData: Rezept;
+  routeSubscription: Subscription;
 
-    constructor(private route: ActivatedRoute,
-                private router: Router) {
-        this.mylogger('RezeptErfassen-Component');
-    }
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
+    this.mylogger('RezeptErfassen-Component');
+  }
 
-    ngOnInit() {
-        console.log('ngOnIniti');
-        this.routeSubscription = this.route.params.subscribe(params => {
-            this.id = (params['id'] || '');
+  ngOnInit() {
+    console.log('ngOnInit !');
+    this.inputData = new Rezept();
 
-            if(this.id) {
-                //this.rezept = this.rezeptService.getRezept(id);
-                console.log('Rezept mit Id: ', this.id, ' holen')
+    this.routeSubscription = this.route.params.subscribe(params => {
+      this.id = (params['id'] || '');
 
-                let zutat1 = new Zutat(100, 'ml', 'Milch');
-                let zutat2 = new Zutat(200, 'dl', 'Wasser');
-                let zutaten = [zutat1, zutat2];
-                this.rezept = new Rezept(this.id, 'Milchreis - Beschreibung', 'Milchreis - Titel', zutaten, 500, 'einfach', 25, 'Zubereitung', 'Art', '../dir/bild.jpg');
-                this.inputData = this.rezept;
+      if (this.id) {
+        //this.rezept = this.rezeptService.getRezept(id);
+        console.log('Rezept mit Id: ', this.id, ' holen')
 
-            } else {
-                console.log('Rezept neu erfassen');
+        let zutat1 = new Zutat();
+        zutat1.einheit = 'ml';
+        zutat1.menge = 100;
+        zutat1.zutat = 'Milch';
+        let zutat2 = new Zutat();
+        zutat2.einheit = 'dl';
+        zutat2.menge = 2;
+        zutat2.zutat = 'Wasser';
+        let zutaten = [zutat1, zutat2];
+        this.rezept = new Rezept();
+        this.rezept.id = this.id;
+        this.rezept.beschreibung = 'Milchreis - Beschreibung';
+        this.rezept.zutaten = zutaten;
+        this.rezept.kalorien = 500;
+        this.rezept.schwierigkeitsgrad = 'einfach';
+        this.rezept.art = 'ART';
+        this.rezept.zubereitung = 'Zubereitung';
+        this.inputData = this.rezept;
 
+      } else {
+        console.log('Rezept neu erfassen');
+      }
+    });
+  }
 
-            }
+  addZutat(): void {
+    this.inputData.zutaten.push(new Zutat());
+  }
 
+  removeZutat(arrayIndex: number): void {
+    console.log('arrayIndex: ', arrayIndex)
+    this.inputData.zutaten.splice(arrayIndex);
+  }
 
-        });
-    }
-/*
-    zutat1 = new Zutat(100, 'ml', 'Milch');
-    zutat2 = new Zutat(200, 'g', 'Reis');
-    zutaten = [this.zutat1, this.zutat2];
-    inputData = new Rezept(1, 'Milchreis - Beschreibung', 'Milchreis - Titel Data1', this.zutaten, 500, 'einfach', 25, 'Zubereitung', 'Art', '../dir/bild.jpg');
-*/
+  saveRezept(inputData: Rezept): void {
+    //Speichern...
+    console.log('Speichere Rezept...');
+  }
 
+  mylogger(text: string): void {
+    console.log(text);
+  }
 
-    addZutat() : void {
-        this.inputData.addZutat(new Zutat());
-    }
-
-    removeZutat(arrayIndex: number) : void {
-        console.log('arrayIndex: ', arrayIndex)
-        this.inputData.removeZutat(arrayIndex);
-    }
-
-    saveRezept(inputData: Rezept) : void {
-        //Speichern...
-        console.log('Speichere Rezept...');
-    }
-
-
-    mylogger(text: string): void {
-        console.log(text);
-    }
 }
 
