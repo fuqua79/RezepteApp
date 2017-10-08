@@ -58,12 +58,13 @@ app.get(rezeptUrl + '/list', (req, res) => {
 //Einzelnes Rezept lesen
 app.get(rezeptUrl + '/:id', (req, res) => {
   console.log("IDDDD: " + req.params.id);
-  db.collection(collectionName).findOne({_id: new ObjectID(req.params.id)}, (err, result) => {
+  db.collection(collectionName).findOne({_id: new ObjectID(req.params.id)}, (err, doc) => {
+    console.log("doc: ", doc);
     if (err) {
       handleError(res, err.message, "Failed to get Rezept mit id: " + req.params.id);
     } else {
-      console.log('Rezept erfolgreich geholt mit id: ' + result);
-      res.status(200).json(result);
+      console.log('Rezept erfolgreich geholt mit id: ' + res);
+      res.status(200).json(doc);
     }
   });
 });

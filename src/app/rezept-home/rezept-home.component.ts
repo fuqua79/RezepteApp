@@ -22,7 +22,7 @@ export class RezeptHomeComponent implements OnInit {
 
     getRandomRezept(): void {
       console.log("-- RandomRezept aus dem Backend holen --");
-      this.rezeptService.loadRezept('59d8e095f32cc63f6835287e').subscribe(result => {
+      this.rezeptService.loadRezept('59da4757237ef93e448127c3').subscribe(result => {
         console.log('Rezept am GUI angekommen mit id= ' +result._id);
         this.randomRezept = new Rezept();
         this.randomRezept = result;

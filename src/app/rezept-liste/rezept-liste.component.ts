@@ -13,7 +13,7 @@ import {Rezept} from "../rezept/dto/rezept";
 })
 export class RezeptListeComponent implements OnInit {
 
-  private rezeptListe: Array<Rezept>;
+  public rezeptListe: Array<Rezept>;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -50,9 +50,9 @@ export class RezeptListeComponent implements OnInit {
     console.log('Selektiert....');
   }
 
-  editRezept(id: number): void {
+  editRezept(id): void {
     console.log('Rezept bearbeiten');
-    this.router.navigate(['/rezepteerfassen/' + id]);
+    this.router.navigate(['/rezept/' + id]);
   }
 
   mylogger(text: string): void {

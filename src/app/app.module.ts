@@ -4,7 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import { FormsModule }   from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import { RezeptComponent } from './rezept/rezept.component';
+import { RezeptComponent } from './rezept-detail/rezept.component';
 import { RezeptListeComponent } from './rezept-liste/rezept-liste.component';
 import { RezeptErfassenComponent } from './rezept-erfassen/rezept-erfassen.component';
 import { RezeptHomeComponent } from './rezept-home/rezept-home.component';

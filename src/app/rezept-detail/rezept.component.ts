@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
-import {Rezept} from "./dto/rezept";
-import {Zutat} from "./dto/zutat";
+import {Rezept} from "../rezept/dto/rezept";
+import {Zutat} from "../rezept/dto/zutat";
+import {RezeptService} from "../rezept/rezept.service";
 
 
 @Component({
@@ -12,41 +13,26 @@ import {Zutat} from "./dto/zutat";
 })
 export class RezeptComponent implements OnInit {
 
-  private rezept: Rezept;
-  private gewunschteAnzahlPersonen: number = 1;
+  public rezept: Rezept;
+  public gewunschteAnzahlPersonen: number = 1;
 
   routeSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private rezeptService: RezeptService) {
     this.mylogger('RezeptComponent');
   }
 
   ngOnInit() {
     console.log('ngOnIniti');
+    this.rezept = new Rezept();
     this.routeSubscription = this.route.params.subscribe(params => {
       let id = (params['id'] || '');
-      //this.rezept = this.rezeptService.getRezept(id);
+      this.rezeptService.loadRezept(id).subscribe( rezept => {
+        this.rezept = rezept;
+      });
       console.log('Rezept mit Id: ', id, ' holen')
-
-
-      let zutat1 = new Zutat();
-      zutat1.einheit = 'ml';
-      zutat1.menge = 100;
-      zutat1.zutat = 'Milch';
-      let zutat2 = new Zutat();
-      zutat2.einheit = 'dl';
-      zutat2.menge = 2;
-      zutat2.zutat = 'Wasser';
-      let zutaten = [zutat1, zutat2];
-      this.rezept = new Rezept();
-      this.rezept._id = id;
-      this.rezept.beschreibung = 'Milchreis - Beschreibung';
-      this.rezept.zutaten = zutaten;
-      this.rezept.kalorien = 500;
-      this.rezept.schwierigkeitsgrad = 'einfach';
-      this.rezept.art = 'ART';
-      this.rezept.zubereitung = 'Zubereitung';
 
     });
   }
@@ -55,7 +41,7 @@ export class RezeptComponent implements OnInit {
     this.routeSubscription.unsubscribe();
   }
 
-  editRezept(id: number): void {
+  editRezept(id): void {
     console.log('Id= ', id);
     // const relUrl = this.router.url.includes()
     this.router.navigate(['/rezepteerfassen/' + id]);

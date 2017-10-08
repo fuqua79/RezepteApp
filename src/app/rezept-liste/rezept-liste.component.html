@@ -8,11 +8,6 @@
 <!--<input ng-repeat="grad in schwierigkeitsgrad" type="button" value={{grad}} ng-click="setSearchText('filter2', grad)">-->
 <!--<input type="button" value=Reset ng-click="setSearchText('filter2', '')">-->
 <!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
 
 <div class="item_list_container">
   <div class="item_list_col_bild_heading"></div>
@@ -27,9 +22,9 @@
 </p>
 <ul class="item_list_ul">
   <!--<li class="item_list_li" *ngFor="let item of rezeptListe | filter:searchTextList | filter:searchText1 | filter:searchText2" ng-click="openView('/rezept/' +item.id)">-->
-  <li class="item_list_li" *ngFor="let item of rezeptListe" (click)="selectRezept(item.id)" (dblclick)="editRezept(item.id)" [ngClass]="{selected : item.selected}">
+  <li class="item_list_li" *ngFor="let item of rezeptListe" (click)="selectRezept(item._id)" (dblclick)="editRezept(item._id)" [ngClass]="{selected : item.selected}">
     <!--<img class="item_list_col_bild" ng-src="assets/images/{{item.bildsrc}}" />-->
-    <div class="item_list_col_id">{{item.id}}</div>
+    <div class="item_list_col_id">{{item._id}}</div>
     <div class="item_list_col_titel">{{item.titel}}</div>
     <div class="item_list_col_beschreibung">{{item.beschreibung}}</div>
     <div class="item_list_col_kalorien">{{item.kalorien}}</div>
@@ -40,19 +35,4 @@
 <!--<footer class="footer" *ngIf="rezeptListe.length > 0">-->
   <!--<span class="todo-count"><strong>{{rezeptListe.length}}</strong> {{rezeptListe.length == 1 ? 'Rezept' : 'Rezepte'}} verfügbar</span>-->
 <!--</footer>-->
-<br>
-<br>
-<h1>POSTS: </h1>
-<div class="container">
-  <div class="row" *ngFor="let post of posts">
-    <div class="card card-block">
-      <h4 class="card-title">{{ post.title }}</h4>
-      <p class="card-text">{{post.body}}</p>
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
-    </div>
-  </div>
-</div>
-<div>{{posts}}</div>
-
 
