@@ -13,7 +13,7 @@ import {RezepteAppPage} from "../../../e2e/app.po";
 })
 export class RezeptErfassenComponent implements OnInit {
 
-  private id: number;
+  private id: string;
   public rezept: Rezept;
   routeSubscription: Subscription;
 

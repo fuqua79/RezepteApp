@@ -1,13 +1,22 @@
-<input type="button" label="labekl" text="TEXT" (click)="getRandomRezept()"/>
+<button data-balloon="Tooltip here with balloon-css. 😀 😬 😁 😂" data-balloon-length="medium" data-balloon-pos="down"
+        label="labekl" text="TEXT" (click)="getRandomRezept()">Zufälliges Rezept
+</button>
+
 <div>
-    <div id="printArea">
-        <h1>
-            11: {{randomRezept?.titel}} {{randomRezept?._id}}
-        </h1>
-        <div style="width: 800px; height: 200px;">
-            {{randomRezept?.beschreibung}}
-        </div>
+  <div id="printArea">
+    <h1>
+      Titel: {{randomRezept?.titel}} {{randomRezept?._id}}
+    </h1>
+    <div style="width: 800px; height: 200px;">
+      {{randomRezept?.beschreibung}}
     </div>
+  </div>
+</div>
+
+<div>
+  <p>Counter: {{ counter }}</p>
+  <button class="increment-button" (click)="increment()">INCREMENT</button>
+
 </div>
 
 

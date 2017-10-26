@@ -24,12 +24,10 @@ export class RezeptListeComponent implements OnInit {
   ngOnInit() {
     console.log("real api REST aufruf");
     this.rezeptService.loadAllRezepte().subscribe(result => {
-      console.log('Rezept am GUI angekommen mit id= ' +result);
+      console.log('Rezeptliste geholt= ' +result);
       this.rezeptListe = result;
     });
-    console.log("real rezepteliste vom BAckend geholt !");
   }
-
 
 
   openRezept(id: number): void {
@@ -39,7 +37,7 @@ export class RezeptListeComponent implements OnInit {
   }
 
 
-  selectRezept(id: number): void {
+  selectRezept(id: string): void {
     console.log('selektieren Id= ', id);
     for (let i = 0; i < this.rezeptListe.length; i++) {
       this.rezeptListe[i].selected = false;

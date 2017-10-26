@@ -15,7 +15,7 @@
     </div>
     <br>
     {{rezept?.zutatenAnzahl}}
-    <div *ngIf="rezept?.zutaten.length > 0">
+    <div *ngIf="rezept?.zutaten?.length > 0">
       <h3>
         Zutaten
       </h3>
@@ -63,7 +63,7 @@
   <br>
   <br>
   <input type="button" value="DRUCKEN" (click)="printIt()">
-  <input type="button" value="LÖSCHEN" (click)="loescheRezept(rezept, rezept._id)">
+  <input type="button" value="LÖSCHEN" (click)="deleteRezept(rezept._id)">
   <input type="button" value="BEARBEITEN" (click)="editRezept(rezept._id)">
   <br>
   <br>

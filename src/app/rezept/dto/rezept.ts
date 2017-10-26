@@ -2,7 +2,7 @@ import {Zutat} from "./zutat";
 
 export class Rezept {
 
-  public _id?: number;
+  public _id?: string;
   public beschreibung : string = "";
   public titel : string = "";
   public zutatenAnzahl : number = 0;

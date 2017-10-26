@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //MongoDB by amazon mLab verbinden & Server starten
+//CONNECTION
 var db;
 mongodb.MongoClient.connect('mongodb://mike:_123mike@ds113435.mlab.com:13435/' + dbName, (err, database) => {
   if (err) return console.log(err);
@@ -49,7 +50,7 @@ app.get(rezeptUrl + '/list', (req, res) => {
       console.log('Failed to get List of Rezepte');
       res.status(500).send(err);
     } else {
-      console.log("Alle Rezepte lesen aus DB, Result= ", result);
+      console.log("Alle Rezepte erfolgreich geholt, Result= ", result);
       res.status(200).send(result);
     }
   });
@@ -57,72 +58,85 @@ app.get(rezeptUrl + '/list', (req, res) => {
 
 //Einzelnes Rezept lesen
 app.get(rezeptUrl + '/:id', (req, res) => {
-  console.log("IDDDD: " + req.params.id);
+  console.log("Rezpet mit Id: " + req.params.id + " lesen.");
   db.collection(collectionName).findOne({_id: new ObjectID(req.params.id)}, (err, doc) => {
-    console.log("doc: ", doc);
     if (err) {
+      console.log('Failed to get one Rezept');
       handleError(res, err.message, "Failed to get Rezept mit id: " + req.params.id);
     } else {
-      console.log('Rezept erfolgreich geholt mit id: ' + res);
+      console.log('Rezept erfolgreich geholt, Result= ', doc);
       res.status(200).json(doc);
     }
   });
 });
 
-//WRITE
-app.post('/api/rezept/save', (req, res) => {
-  db.collection(collectionName).insertOne(req.body, (err, result) => {
-    // Auf Fehler prüfen
-    if (err) return console.log(err);
-    //ODER Logik prüfen, ob es geklappt hat
-    assert.equal(null, err);
-    assert.equal(1, result.insertedCount);
-
-    console.log('saved to database');
-    res.status(200);
-    //res.redirect(rezeptUrl +'/');
+//Random Rezept lesen
+app.get(rezeptUrl + '/random/mike', (req, res) => {
+  console.log("Random Rezpet lesen.");
+  db.collection(collectionName).aggregate([{$sample: {size: 1}}], (err, doc) => {
+    if (err) {
+      console.log('Failed to get one Rezept');
+      handleError(res, err.message, "Failed to get Rezept mit id: " + req.params.id);
+    } else {
+      console.log('Rezept erfolgreich geholt, Result= ', doc[0]);
+      res.status(200).json(doc[0]);
+    }
   });
 });
 
+//Rezept speichern (INSERT oder UPDATE)
+app.post(rezeptUrl + '/save', (req, res) => {
+  //Hier wird gemerkt, ob ich ein Insert oder Update machen muss !!!
+  console.log("Speichern, _id = ", req.body._id);
+  console.log("Speichern, body= ", req.body);
+  console.log("objectID= ", new ObjectID(req.body._id));
 
-///////////////////////////////////////////////////////////////
-
-
-//UPDATE
-app.put('/api/rezept/quotes', (req, res) => {
-  db.collection(collectionName)
-    .findOneAndUpdate(
-      //Query, was updaten
-      {name: 'Yoda'},
-      //wie updaten
-      {
-        $set: {
-          name: req.body.name,
-          quote: req.body.quote
-        }
-      },
-      //options
-      {
-        sort: {_id: -1}, //neuster Eintrag suchen
-        upsert: true //falls keine gefunden, dann einen neuen erstellen
-      },
-      //callback => result wieder zurücksenden
-      (err, result) => {
-        if (err) return res.send(err);
-        res.send(result)
-      })
+  //UPSERT
+  db.collection(collectionName).findOneAndUpdate(
+    //Query, was updaten
+    {_id: new ObjectID(req.body._id)},
+    //updaten wie
+    {
+      $set: {
+        beschreibung: req.body.beschreibung,
+        titel: req.body.titel,
+        zutatenAnzahl: req.body.zutatenAnzahl,
+        zutaten: req.body.zutaten,
+        kalorien: req.body.kalorien,
+        schwierigkeitsgrad: req.body.schwierigkeitsgrad,
+        zeit: req.body.zeit,
+        zubereitung: req.body.zubereitung,
+        art: req.body.art,
+        bildsrc: req.body.bildsrc,
+        url: req.body.url
+      }
+    },
+    //options
+    {
+      sort: {_id: -1}, //neuster Eintrag suchen
+      upsert: true //falls keine gefunden, dann einen neuen erstellen
+    },
+    //callback => result wieder zurücksenden
+    (err, result) => {
+      if (err) {
+        console.log("ERROR !!!!!");
+        return res.send(err);
+      }
+      console.log("ERFOLG !!!!!");
+      res.send(result)
+    })
 });
 
-
-//DELETE
-app.delete('/api/rezept/quotes', (req, res) => {
+//Rezept loeschen
+app.delete(rezeptUrl + '/delete/:id', (req, res) => {
   db.collection(collectionName).findOneAndDelete(
     //query, was löschen
-    {name: req.body.name},
-    //callback => zurücksenden, ob es funktioniert hat
+    {_id: new ObjectID(req.params.id)},
     (err, result) => {
-      if (err) return res.send(500, err);
-      res.send('A darth vadar quote got deleted');
+      if (err) {
+        return res.send(500, err);
+      }
+      res.send('result');
     })
 });
 
@@ -141,12 +155,3 @@ function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
   res.status(code || 500).json({"error": message});
 }
-
-/*
-// => USE:
-// if (err) {
-handleError(res, err.message, "Failed to get contacts.");
-} else {
-  res.status(200).json(docs);
-}
-*/

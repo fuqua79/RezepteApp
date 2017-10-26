@@ -2,73 +2,58 @@ import {Component, OnInit} from '@angular/core';
 import {RezeptService} from '../rezept/rezept.service';
 import {Rezept} from "../rezept/dto/rezept";
 import {Zutat} from "../rezept/dto/zutat";
+import {NgRedux} from "ng2-redux";
+import {IAppState} from "../common/redux/store";
+import {INCREMENT} from "../common/redux/actions";
+import {Observable} from 'rxjs';
 
 @Component({
-    selector: 'app-rezept-home',
-    templateUrl: './rezept-home.component.html',
-    styleUrls: ['./rezept-home.component.css']
+  selector: 'app-rezept-home',
+  templateUrl: './rezept-home.component.html',
+  styleUrls: ['./rezept-home.component.css']
 })
 export class RezeptHomeComponent implements OnInit {
 
-    private rezeptListe: Array<Rezept>;
-    private randomRezept : Rezept;
+  public randomRezept: Rezept;
+  counter = 0;
 
-    constructor(private rezeptService: RezeptService) {
-    }
+  constructor(private rezeptService: RezeptService, private ngRedux: NgRedux<IAppState>) {
+  }
 
-    ngOnInit() {
-      this.getRandomRezept();
-    }
+  ngOnInit() {
+    this.getRandomRezept();
 
-    getRandomRezept(): void {
-      console.log("-- RandomRezept aus dem Backend holen --");
-      this.rezeptService.loadRezept('59da4757237ef93e448127c3').subscribe(result => {
-        console.log('Rezept am GUI angekommen mit id= ' +result._id);
-        this.randomRezept = new Rezept();
-        this.randomRezept = result;
+    //Old School
+    let button2 = document.querySelector('.increment-button');
+    button2.addEventListener('click', () => console.log('Clicked2!'));
 
-        let zutat1 = new Zutat();
-        zutat1.einheit = 'ml';
-        zutat1.menge = 100;
-        zutat1.zutat = 'Milch';
-        let zutat2 = new Zutat();
-        zutat2.einheit = 'dl';
-        zutat2.menge = 2;
-        zutat2.zutat = 'Wasser';
-        let zutaten = [zutat1, zutat2];
+    let button = document.querySelector('.increment-button');
+    Observable.fromEvent(button, 'click')
+      .subscribe(() => console.log('Clicked!'));
+  }
 
-        let rezept = new Rezept();
-        rezept.beschreibung = 'Milchreis - Beschreibung';
-        rezept.zutaten = zutaten;
-        rezept.kalorien = 500;
-        rezept.schwierigkeitsgrad = 'einfach';
-        rezept.art = 'ART';
-        rezept.zubereitung = 'Zubereitung';
-        console.log('rezept.beschreibung: ' +rezept.beschreibung);
+  increment(): void {
+    console.log(">>>> increment()");
+    this.ngRedux.dispatch({type: INCREMENT});
+  }
 
+  getRandomRezept(): void {
+    console.log("-- RandomRezept aus dem Backend holen --");
 
-        console.log('randomRezept.Id: ', this.randomRezept._id);
-        console.log('randomRezept.titel: ', this.randomRezept.beschreibung);
-        //console.log('randomRezept.titel: ', this.randomRezept._beschreibung);
+    this.rezeptService.loadRandomRezept().subscribe(result => {
+      console.log('RandomRezept erfolgreich geholt');
 
-      });
+      console.log("result= ", result);
+      this.randomRezept = result;
+    });
+  }
 
-      /*
-        this.rezeptService.getRezeptListe().then((rezeptListe) => {
-            this.rezeptListe = rezeptListe;
-            let min: number = 0;
-            let max: number = this.rezeptListe.length - 1;
-            console.log('min: ', min);
-            console.log('max: ', max);
-            let zufallszahl: number = Math.floor(min + Math.random() * ((max + 1) - min));
-            console.log('zufallszahl: ', zufallszahl);
+  deleteRezept(id: string): void {
+    console.log("-- Rezept im Backend loeschen --");
 
-            this.randomRezept = this.rezeptListe[zufallszahl];
-
-            console.log('randomRezept.Id: ', this.randomRezept.id);
-        });
-        */
-
-    }
-
+    this.rezeptService.deleteRezept(id).subscribe(result => {
+      console.log('Rezept erfolgreich geloescht');
+      console.log("result= ", result);
+    });
+  }
 }

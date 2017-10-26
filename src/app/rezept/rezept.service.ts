@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Rezept} from "./dto/rezept";
-import {Zutat} from "./dto/zutat";
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -15,46 +14,54 @@ export class RezeptService {
   constructor(private http: Http) {
   }
 
-//http anschauen, wie ich optioins mitgeben kann ;-)
+//http anschauen, wie ich options mitgeben kann ;-)
 
-  loadAllRezepte() : Observable<Rezept[]> {
+  loadAllRezepte(): Observable<Rezept[]> {
     console.log("--Alle Rezepte vom Backend holen--");
 
     let url = this.rezeptUrl + '/list';
     return this.http.get(url)
       .map(res => res.json())
-      .catch((error: any) => Observable.throw(this.handleError(error)|| 'Server error'));
+      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
   }
 
-  loadRezept(id) : Observable<Rezept> {
-    console.log('--Rezept mit id: ' +id +' vom Backend holen--');
+  loadRezept(id: string): Observable<Rezept> {
+    console.log('--Rezept mit id: ' + id + ' vom Backend holen--');
 
-    let url = this.rezeptUrl + '/' +id;
+    let url = this.rezeptUrl + '/' + id;
     return this.http.get(url)
       .map(res => res.json())
-      .catch((error: any) => Observable.throw(this.handleError(error)|| 'Server error'));
+      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
   }
 
-  saveRezept(rezept: Rezept) : Observable<void> {
+  loadRandomRezept(): Observable<Rezept> {
+    console.log('--RandomRezept vom Backend holen--');
+
+//TODO: url noch ändern !!!!
+    let url = this.rezeptUrl + '/random/mike';
+    return this.http.get(url)
+      .map(res => res.json())
+      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
+  }
+
+  saveRezept(rezept: Rezept): Observable<void> {
     console.log('--Neues Rezept im Backend speichern--');
 
     let url = this.rezeptUrl + '/save';
     return this.http.post(url, rezept)
-    //TODO: Hier funktioniert das JSON Konvertieren nicht, da hier die index.html kommt !
       .map(res => res)
-      .catch((error: any) => Observable.throw(this.handleError(error)|| 'Server error'));
+      //TODO: Hier funktioniert das JSON Konvertieren nicht, da hier die index.html kommt !
+      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
   }
 
-////////////////////////////////////////////////////////
+  deleteRezept(id: string): Observable<void> {
+    console.log('--Rezept mit id: ' + id + ' im Backend loeschen--');
 
-
-
-  updateRezept(putRezept: Rezept): Promise<void | Rezept> {
-    var putUrl = this.rezeptUrl + '/' + putRezept._id;
-    return this.http.put(putUrl, putRezept)
-      .toPromise()
-      .then(response => response.json() as Rezept)
-      .catch(this.handleError);
+    let url = this.rezeptUrl + '/delete/' + id;
+    return this.http.delete(url)
+      .map(res => res)
+      //TODO: Hier funktioniert das JSON Konvertieren nicht, da hier die index.html kommt !
+      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
   }
 
   private handleError(error: any) {
@@ -62,6 +69,4 @@ export class RezeptService {
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
   }
-
-
 }
