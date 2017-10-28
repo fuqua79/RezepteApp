@@ -1,10 +1,12 @@
 // Get dependencies
 const express = require('express');
+const socketio = require('socket.io');
 const path = require('path');
-const assert = require('assert');
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
+
 const app = express();
+
 const dbName = 'rezepte';
 const collectionName = 'rezept';
 const rezeptUrl = '/api/rezept'
@@ -32,7 +34,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //CONNECTION
 var db;
 mongodb.MongoClient.connect('mongodb://mike:_123mike@ds113435.mlab.com:13435/' + dbName, (err, database) => {
-  if (err) return console.log(err);
+  if (err) {
+    return console.log(err);
+  }
   db = database;
   app.listen(3000, () => {
     console.log('Express Server listening on localhost:3000')
@@ -62,7 +66,7 @@ app.get(rezeptUrl + '/:id', (req, res) => {
   db.collection(collectionName).findOne({_id: new ObjectID(req.params.id)}, (err, doc) => {
     if (err) {
       console.log('Failed to get one Rezept');
-      handleError(res, err.message, "Failed to get Rezept mit id: " + req.params.id);
+      res.status(500).send(err);
     } else {
       console.log('Rezept erfolgreich geholt, Result= ', doc);
       res.status(200).json(doc);
@@ -76,7 +80,7 @@ app.get(rezeptUrl + '/random/mike', (req, res) => {
   db.collection(collectionName).aggregate([{$sample: {size: 1}}], (err, doc) => {
     if (err) {
       console.log('Failed to get one Rezept');
-      handleError(res, err.message, "Failed to get Rezept mit id: " + req.params.id);
+      res.status(500).send(err);
     } else {
       console.log('Rezept erfolgreich geholt, Result= ', doc[0]);
       res.status(200).json(doc[0]);
@@ -86,10 +90,7 @@ app.get(rezeptUrl + '/random/mike', (req, res) => {
 
 //Rezept speichern (INSERT oder UPDATE)
 app.post(rezeptUrl + '/save', (req, res) => {
-  //Hier wird gemerkt, ob ich ein Insert oder Update machen muss !!!
-  console.log("Speichern, _id = ", req.body._id);
-  console.log("Speichern, body= ", req.body);
-  console.log("objectID= ", new ObjectID(req.body._id));
+  console.log("Rezept upsert mit objectID= ", new ObjectID(req.body._id));
 
   //UPSERT
   db.collection(collectionName).findOneAndUpdate(
@@ -120,10 +121,10 @@ app.post(rezeptUrl + '/save', (req, res) => {
     (err, result) => {
       if (err) {
         console.log("ERROR !!!!!");
-        return res.send(err);
-      }
-      console.log("ERFOLG !!!!!");
-      res.send(result)
+      return res.status(500).send(err);
+    }
+  console.log("ERFOLG !!!!!");
+  res.send(result)
     })
 });
 
@@ -134,7 +135,7 @@ app.delete(rezeptUrl + '/delete/:id', (req, res) => {
     {_id: new ObjectID(req.params.id)},
     (err, result) => {
       if (err) {
-        return res.send(500, err);
+        return res.status(500).send(err);
       }
       res.send('result');
     })
@@ -145,13 +146,6 @@ app.delete(rezeptUrl + '/delete/:id', (req, res) => {
 app.get('*', (req, res) => {
   console.log("STARTSEITE");
   res.sendFile(path.join(__dirname, '../src/index.html'));
+//TODO:
   //res.sendFile(__dirname + '/dist/index.html');
-  //res.send("Startseite index.html senden");
 });
-
-
-//Hilsfunktionen
-function handleError(res, reason, message, code) {
-  console.log("ERROR: " + reason);
-  res.status(code || 500).json({"error": message});
-}

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
 import {Rezept} from "../rezept/dto/rezept";
 import {RezeptService} from "../rezept/rezept.service";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {RezeptService} from "../rezept/rezept.service";
 })
 export class RezeptComponent implements OnInit {
 
-  public rezept: Rezept;
+  public rezept$: Observable<Rezept>;
   public gewunschteAnzahlPersonen: number = 1;
 
   routeSubscription: Subscription;
@@ -25,14 +26,10 @@ export class RezeptComponent implements OnInit {
 
   ngOnInit() {
     console.log('ngOnIniti');
-    this.rezept = new Rezept();
     this.routeSubscription = this.route.params.subscribe(params => {
       let id = (params['id'] || '');
-      this.rezeptService.loadRezept(id).subscribe(rezept => {
-        this.rezept = rezept;
-      });
+      this.rezept$ = this.rezeptService.loadRezept(id);
       console.log('Rezept mit Id: ', id, ' holen')
-
     });
   }
 
@@ -40,19 +37,21 @@ export class RezeptComponent implements OnInit {
     this.routeSubscription.unsubscribe();
   }
 
-  editRezept(id): void {
-    console.log('Id= ', id);
-    // const relUrl = this.router.url.includes()
-    this.router.navigate(['/rezepteerfassen/' + id]);
-  }
-
-  deleteRezept(id) {
-    console.log("Rezept loeschen mit Id= ", id);
-    this.rezeptService.deleteRezept(id).subscribe(rezept => {
-      console.log("Rezept erfolgreich geloescht mit id= ", id);
+  editRezept(rezept$: Observable<Rezept>): void {
+    rezept$.subscribe( (rezept) => {
+      console.log('Id= ', rezept._id);
+      this.router.navigate(['/rezepteerfassen/' + rezept._id]);
     });
   }
 
+  deleteRezept(rezept$: Observable<Rezept>) {
+    rezept$.subscribe( (rezept) => {
+      console.log("Rezept loeschen mit Id= ", rezept._id);
+      this.rezeptService.deleteRezept(rezept._id).subscribe(() => {
+        console.log("Rezept erfolgreich geloescht");
+      });
+    });
+  }
 
   mylogger(text: string): void {
     console.log(text);
