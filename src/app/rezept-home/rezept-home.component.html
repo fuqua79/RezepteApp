@@ -4,8 +4,13 @@
 
 <div>
   <div id="printArea">
-    <h1>
-      Titel: {{randomRezept?.titel}} {{randomRezept?._id}}
+    <h1 class="h1">
+      <p class="text-center">
+        Titel: {{randomRezept?.titel}}
+      </p>
+      <p>
+        ID: {{randomRezept?._id}}
+      </p>
     </h1>
     <div style="width: 800px; height: 200px;">
       {{randomRezept?.beschreibung}}
@@ -15,7 +20,7 @@
 
 <div>
   <p>Counter: {{ counter }}</p>
-  <button class="increment-button" (click)="increment()">INCREMENT</button>
+  <button class="increment-button btn btn-primary" (click)="increment()">INCREMENT</button>
 
 </div>
 
