@@ -12,7 +12,6 @@ import {ClearFieldDirective} from './common/directives/clear-field.directive';
 import {HttpModule} from "@angular/http";
 
 import {NgRedux, NgReduxModule} from 'ng2-redux';
-// import { StoreModule } from '@ngrx/store';
 import {IAppState, INITIAL_STATE, rootReducer} from "./common/redux/store";
 
 
@@ -22,8 +21,8 @@ const appRoutes: Routes = [
   {path: 'rezepteerfassen', component: RezeptErfassenComponent, data: {title: 'Rezept Erfassen -  Titel'}},
   {path: 'rezepteerfassen/:id', component: RezeptErfassenComponent, data: {title: 'Rezept Erfassen -  Titel2'}},
   {path: 'home', component: RezeptHomeComponent, data: {title: 'HOME -  Titel'}},
-  {path: '**', component: RezeptHomeComponent, data: {title: 'IRGENDWAS -  Titel'}},
-  {path: '', redirectTo: '/home', pathMatch: 'full'} // empty path is the default path
+  {path: '', redirectTo: '/home', pathMatch: 'full'}, // empty path is the default path
+  {path: '**', component: RezeptHomeComponent, data: {title: 'IRGENDWAS -  Titel'}}
 ];
 
 @NgModule({
@@ -41,7 +40,6 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     NgReduxModule
-    // StoreModule.provideStore({})
   ],
   providers: [],
   bootstrap: [AppComponent]

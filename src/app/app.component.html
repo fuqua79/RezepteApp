@@ -1,29 +1,37 @@
-<div>
-    <div id="layoutform">
-        <div id="header">
-            Rezepte App by Mike M.
-        </div>
-        <div id="mainarea">
-            <div id="menu">
-                <ul>
-                    <nav>
-                        <a routerLink="/" routerLinkActive="active">HOME</a>
-                        <br>
-                        <a routerLink="/rezeptliste" routerLinkActive="active">LISTE</a>
-                        <br>
-                        <a routerLink="/rezepteerfassen" routerLinkActive="active">ERFASSEN</a>
-                        <br>
-                    </nav>
-                </ul>
-            </div>
-            <div id="content">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-        <!--<div id="footer">-->
-            <!--FOOTER-->
-        <!--</div>-->
+<div class="app-header row">
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+      Menü
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" routerLink="/">HOME</a>
+      <a class="dropdown-item" routerLink="/rezeptliste">LISTE</a>
+      <a class="dropdown-item" routerLink="/rezepteerfassen">ERFASSEN</a>
     </div>
+  </div>
+  <div class="row text-center">
+    <h1 class="h1 text-center app-maintitel">
+      MIKE'S REZEPTE
+    </h1>
+  </div>
 </div>
+<div class="app-mainarea">
+  <div class="app-container container-fluid">
+    <div class="app-container row">
+      <div class="col-2 app-panel-left">
+      </div>
+      <div class="col app-content">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="col-2">
+      </div>
+    </div>
+  </div>
 
-
+</div>
+<div class="app-footer">
+  FOOTER
+</div>

@@ -1,255 +1,48 @@
 * {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
 body {
-    background-color: gainsboro;
+  background-color: gainsboro;
 }
 
-#ContentPart {
-    background-color: darkgrey;
-    height: 90%;
+.app-header {
+  background-color: gainsboro;
+  position:fixed;
+  min-width: 100%;
+  height: 50px;
+  top:0px;
+  left:0px;
+  margin:0;
+  z-index:99;
 }
 
-#layoutform {
+.app-footer {
+  background-color: gainsboro;
+  min-width: 100%;
+  height: 50px;
+  position: fixed;
+  bottom: 0px;
+  left:0px;
 }
 
-#mainarea {
-    background-color: ghostwhite;
-    width: 100%;
-    min-height: 100%;
-    position: absolute;
+.app-container {
+  padding: 0;
+  margin: 0px;
+  position: inherit;
 }
 
-#mainarea #menu, #mainarea #content {
-    margin: 0px;
-    border: 0px;
-    height: 100%;
+.app-maintitel {
+  margin:0 15px 0 15px;
 }
 
-#header {
-    background-color: gainsboro;
-    width: 100%;
+.app-content {
+  /*TODO: color ändern*/
+  background-color: red;
 }
 
-#menu {
-    background-color: gainsboro;
-    width: 10%;
-    min-height: 100%;
-    min-width: 190px;
-    float: left;
-    position: absolute;
-}
-
-#content {
-    background-color: ghostwhite;
-    width: 70%;
-    float:right;
-}
-
-#footer {
-    background-color: gainsboro;
-    width: 100%;
-    clear: both;
-    position: fixed;
-    bottom: 1px;
-}
-
-/*Item List*/
-ol, ul {
-    list-style: none;
-    display: block;
-}
-
-.item_list_container {
-    display: block;
-    background-color: ghostwhite;
-    margin: 0;
-    min-height: 50px;
-    position: relative;
-    word-break: break-all;
-    overflow: hidden;
-    border-top: 1px solid #cccccc;
-    height: auto;
-}
-
-.item_list_ul {
-    display: block;
-    padding: 0;
-    margin: 0;
-}
-
-.item_list_li {
-    clear:both;
-    display: list-item;
-    background-color: #eee;
-    padding: 0;
-    margin: 0;
-    border: 1px solid black;
-    min-height: 30px;
-}
-
-.item_list_container div {
-    display: inline-block;
-}
-
-.item_list_li div {
-    display: inline-block;
-    vertical-align: top;
-}
-
-
-.item_list_col_bild_heading, .item_list_col_bild{
-    width: 5%;
-    margin: 10px;
-    margin-right: 20px;
-}
-
-.item_list_col_id_heading, .item_list_col_id {
-    width: 20%;
-}
-.item_list_col_titel_heading, .item_list_col_titel{
-    width: 15%;
-}
-.item_list_col_beschreibung_heading, .item_list_col_beschreibung {
-    width: 30%;
-}
-.item_list_col_zutatenAnzahl_heading, .item_list_col_zutatenAnzahl {
-    width: 10%;
-}
-.item_list_col_zutaten_heading, .item_list_col_zutaten {
-    width: 20%;
-}
-.item_list_col_kalorien_heading, .item_list_col_kalorien {
-    width: 10%;
-}
-.item_list_col_schwierigkeitsgrad_heading, .item_list_col_schwierigkeitsgrad {
-    width: 15%;
-}
-.item_list_col_zeit_heading, .item_list_col_zeit {
-    width: 10%;
-}
-.item_list_col_art_heading, .item_list_col_art {
-    width: 10%;
-}
-
-.rezeptDesTagesImage{
-    width:30% !important;
-}
-
-
-
-
-
-input.ng-invalid, textarea.ng-invalid{
-    background-color: #e10000;
-}
-
-input.ng-pristine, textarea.ng-pristine{
-    background-color: gainsboro;
-}
-
-
-/*-----------------------------------------------*/
-.form_erfassen ul {
-    width:750px;
-    list-style-type:none;
-    list-style-position:outside;
-    margin:0px;
-    padding:0px;
-}
-.form_erfassen li{
-    padding:12px;
-    border-bottom:1px solid #eee;
-    position:relative;
-}
-.form_erfassen li:first-child {
-    border-top:1px solid #777;
-}
-.form_erfassen li:last-child {
-    border-bottom:1px solid #777;
-}
-.form_erfassen label {
-    width:200px;
-    margin-top: 3px;
-    display:inline-block;
-    float:left;
-    /*padding:3px;*/
-}
-.form_erfassen input, .form_erfassen textarea {
-    height:20px;
-    width:250px;
-    padding:5px 8px;
-    border:1px solid #aaa;
-    box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
-    border-radius:2px;
-}
-.form_erfassen textarea {
-    min-height: 40px;
-}
-.form_erfassen #schwierigkeitsgrad,  .form_erfassen #art {
-    width: 268px;
-    height: 32px;
-
-}
-.form_erfassen input[type="button"] {
-    width: 150px;
-    height: 25px;
-    margin: 10px;
-}
-
-.form_erfassen input:focus, .form_erfassen textarea:focus {
-    background: #fff;
-    border:1px solid #555;
-    box-shadow: 0 0 3px #aaa;
-}
-
-#titel:focus, #zubereitung:focus, #tbl_zutat:focus {
-    padding-right: 150px;
-}
-.form_erfassen textarea:focus {
-    padding-right: 150px;
-    padding-bottom: 150px;
-}
-
-.form_erfassen input, .form_erfassen textarea, .form_erfassen select {
-    -moz-transition: padding .25s;
-    -webkit-transition: padding .25s;
-    -o-transition: padding .25s;
-    transition: padding .25s;
-}
-.form_erfassen td input, .form_erfassen td select{
-    width: 50px;
-}
-#speichern{
-    background-color: #68b12f;
-}
-
-.tbl_menge{
-    width:40px !important;
-}
-.tbl_einheit{
-    width:70px !important;
-    height: 32px !important;
-}
-.tbl_zutat{
-    width:200px !important;
-}
-
-
-h1, h3{
-    padding-left: 5px;
-}
-
-#printArea div {
-    padding-left: 5px;
-}
-
-
-
-.loadingGif {
-    height: 75px;
-}
-#loadingGif_p {
-    text-align:center;
+.app-mainarea{
+  position:relative;
+  top:50px;
+  margin-bottom:50px;
 }

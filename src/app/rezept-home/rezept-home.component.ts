@@ -15,7 +15,7 @@ import {Observable} from 'rxjs';
 export class RezeptHomeComponent implements OnInit {
 
   public randomRezept: Rezept;
-  counter = 0;
+  public counter = 1;
 
   constructor(private rezeptService: RezeptService, private ngRedux: NgRedux<IAppState>) {
   }
@@ -23,6 +23,7 @@ export class RezeptHomeComponent implements OnInit {
   ngOnInit() {
     this.getRandomRezept();
 
+///////////////////////////////////////
     //Old School
     let button2 = document.querySelector('.increment-button');
     button2.addEventListener('click', () => console.log('Clicked2!'));
@@ -30,6 +31,8 @@ export class RezeptHomeComponent implements OnInit {
     let button = document.querySelector('.increment-button');
     Observable.fromEvent(button, 'click')
       .subscribe(() => console.log('Clicked!'));
+///////////////////////////////////////
+//     this.test = "Häää";
   }
 
   increment(): void {

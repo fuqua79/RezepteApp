@@ -9,17 +9,12 @@ import {RezeptService} from "./rezept/rezept.service";
 })
 export class AppComponent {
 
-  title = 'app by Mike mugglin';
-
   constructor() {
-    this.mylogger('AppComponent instanziert...');
+    console.log('AppComponent started...');
   }
 
   ngOnInit() {
   }
 
-  mylogger(text : string) : void {
-    console.log(text);
-  }
-
 }
+
