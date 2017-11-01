@@ -1,3 +1,11 @@
-.selected {
-    background: red;
+.app-liste-image {
+  width: 10rem;
+}
+
+.app-liste-ul {
+  list-style-type: none;
+}
+
+.app-liste-item:hover {
+
 }

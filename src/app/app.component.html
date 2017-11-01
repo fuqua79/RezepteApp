@@ -1,4 +1,4 @@
-<div class="app-header row">
+<div class="app-header row d-flex justify-content-between">
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown"
@@ -17,16 +17,17 @@
       MIKE'S REZEPTE
     </h1>
   </div>
+  <div></div>
 </div>
 <div class="app-mainarea">
   <div class="app-container container-fluid">
     <div class="app-container row">
-      <div class="col-2 app-panel-left">
+      <div class="col-2 app-panel-left bg-dark">
       </div>
-      <div class="col app-content">
+      <div class="col app-content bg-light">
         <router-outlet></router-outlet>
       </div>
-      <div class="col-2">
+      <div class="col-2 bg-dark">
       </div>
     </div>
   </div>

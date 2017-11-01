@@ -20,9 +20,9 @@
         Zutaten
       </h3>
       <ul>
-        <li *ngFor="let zutat of (rezept$ | async).zutaten; let i = index;">
+        <li *ngFor="let zutat of (rezept$ | async)?.zutaten; let i = index;">
           <div>
-            {{((gewunschteAnzahlPersonen)/((rezept$ | async).zutaten.length|number)) * (zutat.menge|number)}}
+            {{((gewunschteAnzahlPersonen)/((rezept$ | async)?.zutaten.length)) * (zutat.menge)}}
             {{zutat.einheit}}
             {{zutat.zutat}}
           </div>

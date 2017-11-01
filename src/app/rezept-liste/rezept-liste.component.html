@@ -9,30 +9,36 @@
 <!--<input type="button" value=Reset ng-click="setSearchText('filter2', '')">-->
 <!--<br>-->
 
-<div class="item_list_container">
-  <div class="item_list_col_bild_heading"></div>
-  <div class="item_list_col_titel_heading">TITEL</div>
-  <div class="item_list_col_beschreibung_heading">BESCHREIBUNG</div>
-  <div class="item_list_col_kalorien_heading">KALORIEN</div>
-  <div class="item_list_col_zeit_heading">ZEIT</div>
-  <div class="item_list_col_zeit_art">ART</div>
+<div class="app-liste-header">
+  <h2 class="h2 text-center m-4">
+    {{rezeptListe?.length}} Rezepte gefunden
+  </h2>
+  <div class="border m-3 border-dark">
+    <br>
+    <br>
+    <br>
+    FILTER / SUCHEKRITERIEN
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
 </div>
-<p id="loadingGif_p">
-  <!--<img class="loadingGif" ng-src="assets/images/loading.gif" *ngIf="waitForResults">-->
-</p>
-<ul class="item_list_ul">
+
+<ul class="list-group app-liste-ul">
   <!--<li class="item_list_li" *ngFor="let item of rezeptListe | filter:searchTextList | filter:searchText1 | filter:searchText2" ng-click="openView('/rezept/' +item.id)">-->
-  <li class="item_list_li" *ngFor="let item of rezeptListe" (click)="selectRezept(item._id)" (dblclick)="editRezept(item._id)" [ngClass]="{selected : item.selected}">
-    <!--<img class="item_list_col_bild" ng-src="assets/images/{{item.bildsrc}}" />-->
-    <div class="item_list_col_id">{{item._id}}</div>
-    <div class="item_list_col_titel">{{item.titel}}</div>
-    <div class="item_list_col_beschreibung">{{item.beschreibung}}</div>
-    <div class="item_list_col_kalorien">{{item.kalorien}}</div>
-    <div class="item_list_col_zeit">{{item.zeit}}</div>
-    <div class="item_list_col_art">{{item.art}}</div>
+  <li class="m-1 rounded app-liste-item border border-muted" *ngFor="let item of rezeptListe"
+      (click)="selectRezept(item._id)"
+      (dblclick)="editRezept(item._id)"
+      [ngClass]="{'bg-primary border-primary ' : item.selected}">
+    <img class="app-liste-image float-left mr-3 rounded" src="../../assets/images/Risotto_Tomaten.jpg"
+         alt="Smiley face"><!--ng-src="assets/images/{{item.bildsrc}}-->
+    <h5 class="">{{item.titel}}</h5>
+    <div class="">{{item.beschreibung}}</div>
+    <div class="row mt-3">
+      <div class="mr-4">{{item.zeit}} min </div>
+      <div class="mr-4">{{item.kalorien}} kcal </div>
+      <div class="">{{item.art}}</div>
+    </div>
   </li>
 </ul>
-<!--<footer class="footer" *ngIf="rezeptListe.length > 0">-->
-  <!--<span class="todo-count"><strong>{{rezeptListe.length}}</strong> {{rezeptListe.length == 1 ? 'Rezept' : 'Rezepte'}} verfügbar</span>-->
-<!--</footer>-->
-
