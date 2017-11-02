@@ -32,7 +32,7 @@ export class RezeptHomeComponent implements OnInit {
     Observable.fromEvent(button, 'click')
       .subscribe(() => console.log('Clicked!'));
 ///////////////////////////////////////
-//     this.test = "Häää";
+
   }
 
   increment(): void {
@@ -43,11 +43,15 @@ export class RezeptHomeComponent implements OnInit {
   getRandomRezept(): void {
     console.log("-- RandomRezept aus dem Backend holen --");
 
-    this.rezeptService.loadRandomRezept().subscribe(result => {
+    this.rezeptService.loadRandomRezept().subscribe(rezept => {
       console.log('RandomRezept erfolgreich geholt');
 
-      console.log("result= ", result);
-      this.randomRezept = result;
+      console.log("result= ", rezept);
+      if (rezept.imageFilename) {
+        rezept.imageFilename = '../../assets/images/' + rezept.imageFilename;
+      }
+
+      this.randomRezept = rezept;
     });
   }
 

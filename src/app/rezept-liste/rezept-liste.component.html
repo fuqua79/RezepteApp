@@ -29,10 +29,9 @@
   <!--<li class="item_list_li" *ngFor="let item of rezeptListe | filter:searchTextList | filter:searchText1 | filter:searchText2" ng-click="openView('/rezept/' +item.id)">-->
   <li class="m-1 rounded app-liste-item border border-muted" *ngFor="let item of rezeptListe"
       (click)="selectRezept(item._id)"
-      (dblclick)="editRezept(item._id)"
+      (dblclick)="openRezept(item._id)"
       [ngClass]="{'bg-primary border-primary ' : item.selected}">
-    <img class="app-liste-image float-left mr-3 rounded" src="../../assets/images/Risotto_Tomaten.jpg"
-         alt="Smiley face"><!--ng-src="assets/images/{{item.bildsrc}}-->
+    <img class="app-liste-image float-left mr-3 rounded" src={{item.imageFilename}} alt="Smiley face">
     <h5 class="">{{item.titel}}</h5>
     <div class="">{{item.beschreibung}}</div>
     <div class="row mt-3">

@@ -25,14 +25,17 @@ export class RezeptListeComponent implements OnInit {
     console.log("real api REST aufruf");
     this.rezeptService.loadAllRezepte().subscribe(result => {
       console.log('Rezeptliste geholt= ' +result);
+       for(let rezept of result) {
+         if(rezept.imageFilename) {
+           rezept.imageFilename = '../../assets/images/' + rezept.imageFilename;
+         }
+       }
       this.rezeptListe = result;
     });
   }
 
-
-  openRezept(id: number): void {
-    console.log('Id= ', id);
-    // const relUrl = this.router.url.includes()
+  openRezept(id: string): void {
+    console.log('Rezpet oeffnen mit id= ', id);
     this.router.navigate(['/rezept/' + id]);
   }
 
@@ -47,11 +50,12 @@ export class RezeptListeComponent implements OnInit {
     }
     console.log('Selektiert....');
   }
-
+/*
   editRezept(id): void {
     console.log('Rezept bearbeiten');
     this.router.navigate(['/rezept/' + id]);
   }
+*/
 
   mylogger(text: string): void {
     console.log(text);

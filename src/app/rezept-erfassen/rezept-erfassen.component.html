@@ -96,26 +96,18 @@
     </div>
 
     <br>
-    <br>
-    <br>
-
-    <div>
-      <div>
-        <label>Username:</label>
-        <input type="text" class="form-control" id="username" name="username"
-               [(ngModel)]="username"
-               required>
-        <br>
-      </div>
-      <div class="form-group">
-        <input type="file" class="form-control-file" ngf-pattern="'image/*'" ngf-select="onFileSelect($file)">
-      </div>
-
+    <div class="form-group">
+      <label>Image Filename</label>
+      <input type="text" class="form-control" id="imageFilename" name="imageFilename"
+             [(ngModel)]="rezept.imageFilename" readonly>
+      <input type="file" class="form-control-file" (change)="onFileChange($event)" accept=".jpg, .jpeg, .png"/>
     </div>
     <br>
-    <br>
-    <br>
-
     <input type="button" class="btn btn-primary" value="Speichern" id="speichern" (click)="saveRezept(rezept)">
+    <br>
+    <!--<input type="button" class="btn btn-secondary" value="Image Speichern" id="imageSpeichern"-->
+    <!--(click)="saveImage('TEST')">-->
+    <!--<br>-->
+    <!--<input type="button" class="btn btn-secondary" value="Image holen" id="imageLaden" (click)="loadImage('TEST')">-->
   </form>
 </div>

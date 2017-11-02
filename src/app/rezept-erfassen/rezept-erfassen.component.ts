@@ -61,6 +61,35 @@ export class RezeptErfassenComponent implements OnInit {
     });
   }
 
+  /*
+  saveImage(path: string): void {
+    //Speichern...
+    console.log('Speichere Image...');
+
+    this.rezeptService.saveImage(path).subscribe(result => {
+      console.log('Image erfolgreich gespeichert');
+    });
+  }
+
+
+  loadImage(id: string): void {
+    //Speichern...
+    console.log('Laden Image...');
+
+    this.rezeptService.loadImage(id).subscribe(result => {
+      console.log('Image erfolgreich geholt', result);
+    });
+  }
+  */
+
+  onFileChange(fileInput){
+    console.log('FILE SAVEN, fileInput:', fileInput);
+    let file = fileInput.target.files[0].name;
+    console.log('FILE SAVEN, file :', file );
+    this.rezept.imageFilename = file;
+    // let fileName = file.name;
+  }
+
   mylogger(text: string): void {
     console.log(text);
   }

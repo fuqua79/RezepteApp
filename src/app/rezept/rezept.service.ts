@@ -18,7 +18,7 @@ export class RezeptService {
 
   loadAllRezepte(): Observable<Rezept[]> {
     console.log("--Alle Rezepte vom Backend holen--");
-
+//TODO: Image-Directory hier noch reinbekommen und nicht erst in den einzelnen Components !!!
     let url = this.rezeptUrl + '/list';
     return this.http.get(url)
       .map(res => res.json())
@@ -27,7 +27,7 @@ export class RezeptService {
 
   loadRezept(id: string): Observable<Rezept> {
     console.log('--Rezept mit id: ' + id + ' vom Backend holen--');
-
+//TODO: Image-Directory hier noch reinbekommen und nicht erst in den einzelnen Components !!!
     let url = this.rezeptUrl + '/' + id;
     return this.http.get(url)
       .map(res => res.json())
@@ -36,13 +36,14 @@ export class RezeptService {
 
   loadRandomRezept(): Observable<Rezept> {
     console.log('--RandomRezept vom Backend holen--');
-
+//TODO: Image-Directory hier noch reinbekommen und nicht erst in den einzelnen Components !!!
 //TODO: url noch ändern !!!!
-    let url = this.rezeptUrl + '/random/mike';
+    let url = this.rezeptUrl + '/random';
     return this.http.get(url)
       .map(res => res.json())
       .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
   }
+
 
   saveRezept(rezept: Rezept): Observable<void> {
     console.log('--Neues Rezept im Backend speichern--');

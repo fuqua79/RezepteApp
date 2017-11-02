@@ -1,9 +1,9 @@
 <div>
   <div id="printArea">
     <h1>
-      {{(rezept$ | async)?.titel}} ({{(rezept$ | async)?._id}})
+      {{(rezept$ | async)?.titel}}
     </h1>
-    <div style="width: 800px; height: 200px;">
+    <div>
       {{(rezept$ | async)?.beschreibung}}
     </div>
     <div>
@@ -22,9 +22,9 @@
       <ul>
         <li *ngFor="let zutat of (rezept$ | async)?.zutaten; let i = index;">
           <div>
-            {{((gewunschteAnzahlPersonen)/((rezept$ | async)?.zutaten.length)) * (zutat.menge)}}
-            {{zutat.einheit}}
-            {{zutat.zutat}}
+            {{((gewunschteAnzahlPersonen)/((rezept$ | async)?.zutaten.length)) * (zutat?.menge)}}
+            {{zutat?.einheit}}
+            {{zutat?.zutat}}
           </div>
         </li>
       </ul>
@@ -66,10 +66,5 @@
   <input type="button" value="LÖSCHEN" (click)="deleteRezept(rezept$)">
   <input type="button" value="BEARBEITEN" (click)="editRezept(rezept$)">
   <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br> <br>
-
+  ({{(rezept$ | async)?._id}})
 </div>

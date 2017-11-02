@@ -12,9 +12,8 @@ export class Rezept {
   public zeit : number = 0;
   public zubereitung: string = "";
   public art : string = "";
-  public bildsrc : string = "";
   public selected : boolean= false;
-  public url : string= "";
+  public imageFilename : string= "";
 
   constructor() {
   }
