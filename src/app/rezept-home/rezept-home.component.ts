@@ -54,13 +54,4 @@ export class RezeptHomeComponent implements OnInit {
       this.randomRezept = rezept;
     });
   }
-
-  deleteRezept(id: string): void {
-    console.log("-- Rezept im Backend loeschen --");
-
-    this.rezeptService.deleteRezept(id).subscribe(result => {
-      console.log('Rezept erfolgreich geloescht');
-      console.log("result= ", result);
-    });
-  }
 }

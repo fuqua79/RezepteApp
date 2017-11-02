@@ -8,7 +8,6 @@ import {RezeptComponent} from './rezept-detail/rezept.component';
 import {RezeptListeComponent} from './rezept-liste/rezept-liste.component';
 import {RezeptErfassenComponent} from './rezept-erfassen/rezept-erfassen.component';
 import {RezeptHomeComponent} from './rezept-home/rezept-home.component';
-import {ClearFieldDirective} from './common/directives/clear-field.directive';
 import {HttpModule} from "@angular/http";
 
 import {NgRedux, NgReduxModule} from 'ng2-redux';
@@ -31,8 +30,7 @@ const appRoutes: Routes = [
     RezeptComponent,
     RezeptListeComponent,
     RezeptErfassenComponent,
-    RezeptHomeComponent,
-    ClearFieldDirective
+    RezeptHomeComponent
   ],
   imports: [
     BrowserModule,

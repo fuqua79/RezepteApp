@@ -63,7 +63,7 @@
   <br>
   <br>
   <input type="button" value="DRUCKEN" (click)="printIt()">
-  <input type="button" value="LÖSCHEN" (click)="deleteRezept(rezept$)">
+  <input type="button" class="btn btn-secondary" value="LÖSCHEN" (click)="deleteRezept(rezept$)">
   <input type="button" value="BEARBEITEN" (click)="editRezept(rezept$)">
   <br>
   ({{(rezept$ | async)?._id}})

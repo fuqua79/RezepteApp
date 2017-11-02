@@ -133,8 +133,9 @@ app.post(rezeptUrl + '/save', (req, res) => {
 
 //Rezept loeschen
 app.delete(rezeptUrl + '/delete/:id', (req, res) => {
+  console.log("Rezept loeschen mit objectID= ", new ObjectID(req.params.id));
   db.collection(collectionName).findOneAndDelete(
-    //query, was löschen
+  //query, was löschen
     {_id: new ObjectID(req.params.id)},
     (err, result) => {
       if (err) {
