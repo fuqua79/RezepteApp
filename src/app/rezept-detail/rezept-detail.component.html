@@ -11,7 +11,7 @@
     </h2>
     <div class="container">
       <div class="row">
-        <div class="col border border-primary">
+        <div class="col">
           <h4 class="h4 text-center">
             Anzahl Personen
           </h4>
@@ -22,7 +22,7 @@
             <input type="button" value="+" id="plus" (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen + 1">
           </div>
           <div *ngIf="(rezept$ | async)?.zutaten?.length > 0">
-            <h4 class="h4 text-center mt-3">
+            <h4 class="h4 text-center mt-4">
               Zutaten
             </h4>
             <ul class="list-group">
@@ -36,31 +36,31 @@
             </ul>
           </div>
         </div>
-        <div class="col border border-secondary">
+        <div class="col">
           <h4>
             Zubereitung
           </h4>
           <textarea class="zubereitung form-control">
             {{(rezept$ | async)?.zubereitung}}
           </textarea>
-          <h5>
+          <h5 class="h5 mt-3">
             Zeit: {{(rezept$ | async)?.zeit}} min
           </h5>
-          <h5>
+          <h5 class="h5 mt-3">
             Schwierigkeitsgrad: {{(rezept$ | async)?.schwierigkeitsgrad}}
           </h5>
-          <h5>
+          <h5 class="h5 mt-3">
             Art: {{(rezept$ | async)?.art}}
           </h5>
-          <div id="accordion" role="tablist">
+          <div class="mt-4" id="accordion" role="tablist">
             <div class="card">
               <div class="card-header" role="tab" id="headingOne">
-                <h4 class="mb-0">
-                  <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Nährwerte
-                    <i class="fa fa-plus-circle"></i>
+                <h5 class="mb-0">
+                  <a id="naehrwerte" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Nährwerte +
+                    <!--<i class="fa fa-plus-circle"></i>-->
                   </a>
-                </h4>
+                </h5>
               </div>
               <div id="collapseOne" class="collapse hidden" role="tabpanel" aria-labelledby="headingOne"
                    data-parent="#accordion">
