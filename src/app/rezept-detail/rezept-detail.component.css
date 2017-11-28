@@ -1,0 +1,11 @@
+.app-detail-image {
+  height: 10rem;
+}
+
+.app-anzahl-personen {
+  max-width: 10%
+}
+
+.zubereitung {
+  min-height: 15em;
+}

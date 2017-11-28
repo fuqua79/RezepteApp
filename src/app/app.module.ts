@@ -4,14 +4,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-import {RezeptComponent} from './rezept-detail/rezept.component';
+import {RezeptComponent} from './rezept-detail/rezept-detail.component';
 import {RezeptListeComponent} from './rezept-liste/rezept-liste.component';
 import {RezeptErfassenComponent} from './rezept-erfassen/rezept-erfassen.component';
 import {RezeptHomeComponent} from './rezept-home/rezept-home.component';
 import {HttpModule} from "@angular/http";
 
-import {NgRedux, NgReduxModule} from 'ng2-redux';
+import {NgReduxModule, NgRedux, DevToolsExtension } from '@angular-redux/store';
 import {IAppState, INITIAL_STATE, rootReducer} from "./common/redux/store";
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 const appRoutes: Routes = [
@@ -21,7 +22,7 @@ const appRoutes: Routes = [
   {path: 'rezepteerfassen/:id', component: RezeptErfassenComponent, data: {title: 'Rezept Erfassen -  Titel2'}},
   {path: 'home', component: RezeptHomeComponent, data: {title: 'HOME -  Titel'}},
   {path: '', redirectTo: '/home', pathMatch: 'full'}, // empty path is the default path
-  {path: '**', component: RezeptHomeComponent, data: {title: 'IRGENDWAS -  Titel'}}
+  {path: '**', component: PageNotFoundComponent, data: {title: 'IRGENDWAS -  Titel'}}
 ];
 
 @NgModule({
@@ -30,7 +31,8 @@ const appRoutes: Routes = [
     RezeptComponent,
     RezeptListeComponent,
     RezeptErfassenComponent,
-    RezeptHomeComponent
+    RezeptHomeComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,11 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>) {
-    ngRedux.configureStore(rootReducer, INITIAL_STATE);
+  constructor(ngRedux: NgRedux<IAppState>, devTools: DevToolsExtension) {
+
+    const storeEnhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
+
+    ngRedux.configureStore(rootReducer, INITIAL_STATE, [], storeEnhancers);
+
   }
 }

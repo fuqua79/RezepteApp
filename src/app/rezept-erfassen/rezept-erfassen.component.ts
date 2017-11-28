@@ -20,7 +20,6 @@ export class RezeptErfassenComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private rezeptService: RezeptService) {
-    this.mylogger('RezeptErfassen-Component');
   }
 
   ngOnInit() {
@@ -44,6 +43,7 @@ export class RezeptErfassenComponent implements OnInit {
   }
 
   addZutat(): void {
+    console.log("this.rezept.zutaten", this.rezept.zutaten);
     this.rezept.zutaten.push(new Zutat());
   }
 
@@ -89,10 +89,5 @@ export class RezeptErfassenComponent implements OnInit {
     this.rezept.imageFilename = file;
     // let fileName = file.name;
   }
-
-  mylogger(text: string): void {
-    console.log(text);
-  }
-
 }
 

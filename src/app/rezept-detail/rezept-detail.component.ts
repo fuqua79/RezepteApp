@@ -8,8 +8,8 @@ import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-rezept',
-  templateUrl: './rezept.component.html',
-  styleUrls: ['./rezept.component.css']
+  templateUrl: './rezept-detail.component.html',
+  styleUrls: ['./rezept-detail.component.css']
 })
 export class RezeptComponent implements OnInit {
 
@@ -55,6 +55,10 @@ export class RezeptComponent implements OnInit {
 
   mylogger(text: string): void {
     console.log(text);
+  }
+
+  incrementAnzahlPersonen() {
+    this.gewunschteAnzahlPersonen = 12;
   }
 
 }

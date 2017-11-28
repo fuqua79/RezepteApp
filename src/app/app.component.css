@@ -37,8 +37,7 @@ body {
 }
 
 .app-content {
-  /*TODO: color ändern*/
-  background-color: #e1ffaf;
+  min-height: 827px;
 }
 
 .app-mainarea{

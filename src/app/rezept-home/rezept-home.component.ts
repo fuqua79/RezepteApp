@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {RezeptService} from '../rezept/rezept.service';
 import {Rezept} from "../rezept/dto/rezept";
-import {Zutat} from "../rezept/dto/zutat";
-import {NgRedux} from "ng2-redux";
+
+import {NgRedux} from "@angular-redux/store";
 import {IAppState} from "../common/redux/store";
-import {INCREMENT} from "../common/redux/actions";
+import {DECREMENT, INCREMENT} from "../common/redux/actions";
+
 import {Observable} from 'rxjs';
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-rezept-home',
@@ -15,9 +18,12 @@ import {Observable} from 'rxjs';
 export class RezeptHomeComponent implements OnInit {
 
   public randomRezept: Rezept;
-  public counter = 1;
+  public counter$ : Observable<number>;
 
-  constructor(private rezeptService: RezeptService, private ngRedux: NgRedux<IAppState>) {
+  constructor(private rezeptService: RezeptService,
+              private ngRedux: NgRedux<IAppState>,
+              private router: Router) {
+    this.counter$ = ngRedux.select<number>('counter');
   }
 
   ngOnInit() {
@@ -32,7 +38,6 @@ export class RezeptHomeComponent implements OnInit {
     Observable.fromEvent(button, 'click')
       .subscribe(() => console.log('Clicked!'));
 ///////////////////////////////////////
-
   }
 
   increment(): void {
@@ -40,18 +45,24 @@ export class RezeptHomeComponent implements OnInit {
     this.ngRedux.dispatch({type: INCREMENT});
   }
 
+  decrement(): void {
+    console.log(">>>> decrement()");
+    this.ngRedux.dispatch({type: DECREMENT});
+  }
+
   getRandomRezept(): void {
     console.log("-- RandomRezept aus dem Backend holen --");
 
     this.rezeptService.loadRandomRezept().subscribe(rezept => {
       console.log('RandomRezept erfolgreich geholt');
-
       console.log("result= ", rezept);
-      if (rezept.imageFilename) {
-        rezept.imageFilename = '../../assets/images/' + rezept.imageFilename;
-      }
-
       this.randomRezept = rezept;
     });
   }
+
+  openRezept(id: string): void {
+    console.log('Rezpet oeffnen mit id= ', id);
+    this.router.navigate(['/rezept/' + id]);
+  }
+
 }

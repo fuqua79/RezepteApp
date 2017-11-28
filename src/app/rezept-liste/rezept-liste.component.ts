@@ -22,14 +22,7 @@ export class RezeptListeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("real api REST aufruf");
     this.rezeptService.loadAllRezepte().subscribe(result => {
-      console.log('Rezeptliste geholt= ' +result);
-       for(let rezept of result) {
-         if(rezept.imageFilename) {
-           rezept.imageFilename = '../../assets/images/' + rezept.imageFilename;
-         }
-       }
       this.rezeptListe = result;
     });
   }

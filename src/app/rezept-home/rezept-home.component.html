@@ -1,31 +1,30 @@
-<div>
-  <h1 class="h1 text-center m-4">
-    Zufälliges Rezept
-  </h1>
+<div (dblclick)="openRezept(randomRezept?._id)">
+  <div>
+    <h1 class="h1 text-center m-4">
+      Zufälliges Rezept
+    </h1>
+  </div>
+  <div class="text-center">
+    <img class="app-zufaelliges-image" src={{randomRezept?.imageFilename}} alt="Smiley face">
+  </div>
+  <div class="text-center mt-4 mb-4">
+    <h2>
+      {{randomRezept?.titel}}
+    </h2>
+    <h3>
+      {{randomRezept?.beschreibung}}
+    </h3>
+  </div>
+  <div class="text-center">
+    <button class="btn btn-primary" data-balloon="Tooltip here with balloon-css. 😀 😬 😁 😂"
+            data-balloon-length="medium"
+            data-balloon-pos="down"
+            label="label" text="TEXT" (click)="getRandomRezept()">Neues Rezept
+    </button>
+  </div>
+  <div>
+    <p>Counter$: {{ counter$ | async }}</p>
+    <button class="increment-button btn" (click)="increment()">+</button>
+    <button class="increment-button btn" (click)="decrement()">-</button>
+  </div>
 </div>
-
-<div class="text-center">
-  <img class="app-zufaelliges-image" src={{randomRezept?.imageFilename}} alt="Smiley face">
-</div>
-
-<div class="text-center mt-4 mb-4">
-  <h2>
-    {{randomRezept?.titel}}
-  </h2>
-  <h3>
-    {{randomRezept?.beschreibung}}
-  </h3>
-</div>
-
-<div class="text-center">
-  <button class="btn btn-primary" data-balloon="Tooltip here with balloon-css. 😀 😬 😁 😂"
-          data-balloon-length="medium"
-          data-balloon-pos="down"
-          label="label" text="TEXT" (click)="getRandomRezept()">Neues Rezept
-  </button>
-</div>
-<div>
-  <p>Counter: {{ counter }}</p>
-  <button class="increment-button btn btn-primary" (click)="increment()">INCREMENT</button>
-</div>
-

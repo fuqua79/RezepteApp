@@ -10,6 +10,7 @@ import {Observable} from "rxjs";
 export class RezeptService {
 
   private rezeptUrl = '/api/rezept';
+  private dirImages = '../../assets/images/';
 
   constructor(private http: Http) {
   }
@@ -18,36 +19,45 @@ export class RezeptService {
 
   loadAllRezepte(): Observable<Rezept[]> {
     console.log("--Alle Rezepte vom Backend holen--");
-//TODO: Image-Directory hier noch reinbekommen und nicht erst in den einzelnen Components !!!
     let url = this.rezeptUrl + '/list';
     return this.http.get(url)
-      .map(res => res.json())
+      .map((rezepteliste) => {
+        let rezeptelisteJSON = rezepteliste.json();
+        for(let rezept of rezeptelisteJSON) {
+          rezept.imageFilename = this.dirImages + rezept.imageFilename;
+        }
+        return rezeptelisteJSON;
+      })
       .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
   }
 
   loadRezept(id: string): Observable<Rezept> {
     console.log('--Rezept mit id: ' + id + ' vom Backend holen--');
-//TODO: Image-Directory hier noch reinbekommen und nicht erst in den einzelnen Components !!!
     let url = this.rezeptUrl + '/' + id;
     return this.http.get(url)
-      .map(res => res.json())
+      .map((rezept) => {
+        let rezeptJSON = rezept.json();
+        rezeptJSON.imageFilename = this.dirImages + rezeptJSON.imageFilename;
+        return rezeptJSON;
+      })
       .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
   }
 
   loadRandomRezept(): Observable<Rezept> {
     console.log('--RandomRezept vom Backend holen--');
-//TODO: Image-Directory hier noch reinbekommen und nicht erst in den einzelnen Components !!!
-//TODO: url noch ändern !!!!
     let url = this.rezeptUrl + '/random';
     return this.http.get(url)
-      .map(res => res.json())
+      .map((rezept) => {
+        let rezeptJSON = rezept.json();
+        rezeptJSON.imageFilename = this.dirImages + rezeptJSON.imageFilename;
+        return rezeptJSON;
+      })
       .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
   }
 
 
   saveRezept(rezept: Rezept): Observable<void> {
     console.log('--Neues Rezept im Backend speichern--');
-
     let url = this.rezeptUrl + '/save';
     return this.http.post(url, rezept)
       .map(res => res)
