@@ -1,0 +1,7 @@
+.zubereitung {
+  min-height: 10em;
+}
+
+.ng-touched.ng-invalid {
+  border-color: red;
+}

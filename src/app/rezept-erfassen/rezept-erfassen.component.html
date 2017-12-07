@@ -1,18 +1,33 @@
 <div>
-  <form #rezepteForm="ngForm" class="form_erfassen form-group" name="form_erfassen"
+  <form novalidate (ngSubmit)="saveRezept(rezept)" #rezepteForm="ngForm" class="form_erfassen form-group"
+        name="form_erfassen"
         (ngSubmit)="saveRezept(rezept)">
     <div class="form-group">
       <label class="col-form-label">Titel</label>
-      <input type="text" class="form-control" id="titel" name="titel" [(ngModel)]="rezept.titel" required
+      <input type="text" class="form-control" id="titel" name="titel" #title="ngModel" [(ngModel)]="rezept.titel"
+             required minlength="5"
              placeholder="Titel">
+      <div *ngIf="!title.control.valid && title.control.touched" class="alert alert-danger">
+        <div *ngIf="title.control.hasError('required')">
+          Der Titel ist erforderlich
+        </div>
+        <div *ngIf="title.control.hasError('minlength')">
+          Der Titel muss mindestens {{title.control.getError('minlength').requiredLength}} Zeichen haben
+        </div>
+      </div>
     </div>
+
+
     <div class="form-group">
       <label class="col-form-label">Beschreibung</label>
-      <input appClearField type="textarea" class="form-control" id="beschreibung" name="beschreibung"
+      <input appClearField type="textarea" class="form-control" id="beschreibung" name="beschreibung" #beschreibung="ngModel"
              [(ngModel)]="rezept.beschreibung" required placeholder="Beschreibung">
+      <div *ngIf="!beschreibung.control.valid && beschreibung.control.touched" class="alert alert-danger">
+        <div *ngIf="beschreibung.control.hasError('required')">
+          Die Beschreibung ist erforderlich
+        </div>
+      </div>
     </div>
-
-
     <div class="form-group">
       <label>Anzahl Personen</label>
       <input type="text" class="form-control" id="zutatenAnzahl" name="zutatenAnzahl"
@@ -24,41 +39,34 @@
              required>
     </div>
     <div class="form-group">
-      <label>Schwierigkeitsgrad</label>
-      <input type="text" class="form-control" id="schwierigkeitsgrad" name="schwierigkeitsgrad"
-             [(ngModel)]="rezept.schwierigkeitsgrad"
-             required>
+      <label class="">Schwierigkeitsgrad</label>
+      <select name="schwireigkeitsgrad" [(ngModel)]="rezept.schwierigkeitsgrad" class="form-control">
+        <option value="">--- Bitte auswählen ---</option>
+        <option *ngFor="let grad of model.schwierigkeitsgrad" class="" [ngValue]="grad">
+          {{grad.value}}
+        </option>
+      </select>
     </div>
     <div class="form-group">
-      <label>Schwierigkeitsgrad 2</label>
-      <div class="form-check form-check-inline">
-        <label class="form-check-label">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1
-        </label>
-      </div>
-      <div class="form-check form-check-inline">
-        <label class="form-check-label">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2
-        </label>
-      </div>
-      <div class="form-check form-check-inline disabled">
-        <label class="form-check-label">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"
-                 disabled> 3
-        </label>
-      </div>
+      <label class="">WEISS NOCH NICHT</label>
+      <input type="checkbox" name="weissnochnicht" [(ngModel)]="rezept.weissnochnicht">
+      Weiss noch nicht
     </div>
-
-
+    <div class="radio" *ngFor="let art of model.art">
+      <label>
+        <input type="radio" name="art" [(ngModel)]="rezept.art" [value]="art">
+        {{art.value}}
+      </label>
+    </div>
     <div class="form-group">
-      <label>Zeit</label>
+      <label class="">Zeit</label>
       <input type="text" class="form-control" id="zeit" name="zeit" [(ngModel)]="rezept.zeit"
              required>
     </div>
     <div class="form-group">
       <label>Zubereitung</label>
-      <textarea class="form-control" id="zubereitung2" name="zubereitung"
-             [(ngModel)]="rezept.zubereitung"
+      <textarea class="form-control zubereitung" id="zubereitung2" name="zubereitung"
+                [(ngModel)]="rezept.zubereitung"
                 required></textarea>
     </div>
     <div class="form-group">
@@ -79,22 +87,21 @@
         <br>
         <label>Menge</label>
         <input type="text" class="form-control" id="menge" name="menge"
-               [(ngModel)]="rezept.zutaten[i].menge"
+               [(ngModel)]="element.menge"
                required>
         <label>Einheit</label>
         <input type="text" class="form-control" id="einheit" name="einheit"
-               [(ngModel)]="rezept.zutaten[i].einheit"
+               [(ngModel)]="element.einheit"
                required>
         <label>Zutat</label>
         <input type="text" class="form-control" id="zutat" name="zutat"
-               [(ngModel)]="rezept.zutaten[i].zutat"
+               [(ngModel)]="element.zutat"
                required>
         <br>
       </div>
       <br>
       <input type="button" class="btn btn-secondary" value="Zutat hinzugüfen" (click)="addZutat()">
     </div>
-
     <br>
     <div class="form-group">
       <label>Image Filename</label>

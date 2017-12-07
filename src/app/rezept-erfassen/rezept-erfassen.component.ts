@@ -4,7 +4,7 @@ import {Subscription} from "rxjs/Subscription";
 import {Zutat} from "../rezept/dto/zutat";
 import {Rezept} from "../rezept/dto/rezept";
 import {RezeptService} from "../rezept/rezept.service";
-import {RezepteAppPage} from "../../../e2e/app.po";
+import * as model from "../rezept/dto/model-interfaces";
 
 @Component({
   selector: 'app-rezept-erfassen',
@@ -15,6 +15,7 @@ export class RezeptErfassenComponent implements OnInit {
 
   private id: string;
   public rezept: Rezept;
+  public model = model;
   routeSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
@@ -44,12 +45,19 @@ export class RezeptErfassenComponent implements OnInit {
 
   addZutat(): void {
     console.log("this.rezept.zutaten", this.rezept.zutaten);
+    setTimeout(function(){ }, 2000);
     this.rezept.zutaten.push(new Zutat());
+    setTimeout(function(){ }, 2000);
+    console.log("NACH NEU this.rezept.zutaten", this.rezept.zutaten);
   }
 
   removeZutat(arrayIndex: number): void {
-    console.log('arrayIndex: ', arrayIndex)
-    this.rezept.zutaten.splice(arrayIndex);
+    console.log('zutaten vor loschen: ', this.rezept.zutaten);
+    console.log('zutaten vor loschen length: ', this.rezept.zutaten.length);
+    console.log('arrayIndex: ', arrayIndex);
+    this.rezept.zutaten.splice(arrayIndex, 1);
+    console.log('zutaten nach loschen: ', this.rezept.zutaten);
+    console.log('zutaten nach loschen length: ', this.rezept.zutaten.length);
   }
 
   saveRezept(rezept: Rezept): void {
