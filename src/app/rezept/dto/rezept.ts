@@ -1,4 +1,5 @@
 import {Zutat} from "./zutat";
+import {Naehrwerte} from "./naehrwerte";
 
 export class Rezept {
 
@@ -13,10 +14,7 @@ export class Rezept {
   public art : string = "";
   public selected : boolean= false;
   public imageFilename : string= "";
-  public kalorien : number = 0;
-  public fett : number = 0;
-  public eiweiss : number = 0;
-  public kohlenhydrate : number = 0;
+  public naehrwerte : Naehrwerte = new Naehrwerte();
 
   constructor() {
   }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Subscription} from "rxjs/Subscription";
 import {Zutat} from "../rezept/dto/zutat";
 import {Rezept} from "../rezept/dto/rezept";
@@ -21,7 +21,6 @@ export class RezeptErfassenComponent implements OnInit {
   routeSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
               private rezeptService: RezeptService) {
   }
 
@@ -37,11 +36,12 @@ export class RezeptErfassenComponent implements OnInit {
         this.rezeptService.loadRezept(this.id).subscribe(rezept => {
           this.rezept = rezept;
         });
-        // this.rezept$ = this.rezeptService.loadRezept(this.id);
-
       } else {
         console.log('Rezept neu erfassen');
         this.rezept = new Rezept();
+
+
+console.log('MIKE, REZEPT: ', this.rezept);
 
       }
     });

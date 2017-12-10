@@ -28,49 +28,27 @@
     </div>
 
     <div class="form-group">
-      <label>Anzahl Personen</label>
-      <input type="text" class="form-control" id="zutatenAnzahl" name="zutatenAnzahl" #zutatenAnzahl="ngModel"
-             [(ngModel)]="rezept.zutatenAnzahl" required>
-      <div *ngIf="!zutatenAnzahl.control.valid && zutatenAnzahl.control.touched" class="alert alert-danger">
-        <div *ngIf="zutatenAnzahl.control.hasError('required')">
-          Die Anzahl Personen ist erforderlich
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Kalorien</label>
-      <input type="number" class="form-control" id="kalorien" name="kalorien" #kalorien="ngModel"
-             [(ngModel)]="rezept.kalorien" min="0">
-    </div>
-
-    <div class="form-group">
       <label class="">Schwierigkeitsgrad</label>
       <select name="schwireigkeitsgrad" [(ngModel)]="rezept.schwierigkeitsgrad" class="form-control">
         <option value="">--- Bitte auswählen ---</option>
-        <option *ngFor="let grad of model.schwierigkeitsgrad" class="" [ngValue]="grad">
+        <option *ngFor="let grad of model.schwierigkeitsgrad" class="" [ngValue]="grad.name">
           {{grad.value}}
         </option>
       </select>
     </div>
 
     <div class="form-group">
-      <label class="">WEISS NOCH NICHT</label>
-      <input type="checkbox" name="weissnochnicht" [(ngModel)]="rezept.weissnochnicht">
-    </div>
-
-    <div class="form-group">
       <label>Art</label>
       <div class="radio" *ngFor="let art of model.art">
         <label>
-          <input type="radio" name="art" [(ngModel)]="rezept.art" [value]="art" required>
+          <input type="radio" name="art" [(ngModel)]="rezept.art" [value]="art.name" required>
           {{art.value}}
         </label>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="">Zeit</label>
+      <label class="">Zeit in min</label>
       <input type="number" class="form-control" id="zeit" name="zeit" [(ngModel)]="rezept.zeit"
              required min="0">
     </div>
@@ -82,38 +60,71 @@
                 required placeholder="Zubereitung"></textarea>
     </div>
 
+    <div class="form-group">
+      <label>Anzahl Personen</label>
+      <input type="text" class="form-control" id="zutatenAnzahl" name="zutatenAnzahl" #zutatenAnzahl="ngModel"
+             [(ngModel)]="rezept.zutatenAnzahl" required>
+      <div *ngIf="!zutatenAnzahl.control.valid && zutatenAnzahl.control.touched" class="alert alert-danger">
+        <div *ngIf="zutatenAnzahl.control.hasError('required')">
+          Die Anzahl Personen ist erforderlich
+        </div>
+      </div>
+    </div>
     <div id="zutaten" class="form-group">
       <label>Zutaten</label>
       <div *ngFor="let element of rezept.zutaten; let i = index;" class="mt-4">
-          <label>Zutat {{i+1}}</label>
-          <button class="btn btn-danger" (click)="removeZutat(i)">
-            Zutat löschen
-          </button>
-          <br>
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <label>Menge</label>
-                <input type="text" class="form-control" id="menge" name="menge_{{i}}"
-                       [(ngModel)]="element.menge">
-              </div>
-              <div class="col">
-                <label>Einheit</label>
-                <input type="text" class="form-control" id="einheit" name="einheit_{{i}}"
-                       [(ngModel)]="element.einheit">
-              </div>
-              <div class="col-6">
-                <label>Zutat</label>
-                <input type="text" class="form-control" id="zutat" name="zutat_{{i}}"
-                       [(ngModel)]="element.zutat">
-              </div>
+        <label>Zutat {{i+1}}</label>
+        <button class="btn btn-danger" (click)="removeZutat(i)">
+          Zutat löschen
+        </button>
+        <br>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label>Menge</label>
+              <input type="text" class="form-control" id="menge" name="menge_{{i}}"
+                     [(ngModel)]="element.menge">
+            </div>
+            <div class="col">
+              <label>Einheit</label>
+              <input type="text" class="form-control" id="einheit" name="einheit_{{i}}"
+                     [(ngModel)]="element.einheit">
+            </div>
+            <div class="col-6">
+              <label>Zutat</label>
+              <input type="text" class="form-control" id="zutat" name="zutat_{{i}}"
+                     [(ngModel)]="element.zutat">
             </div>
           </div>
+        </div>
       </div>
       <br>
       <button class="btn btn-success" (click)="addZutat()">
         Zutat hinzufügen
       </button>
+    </div>
+
+    <div class="form-group" *ngIf="rezept.naehrwerte">
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+              aria-expanded="false" aria-controls="collapseExample">
+        Nähwerte
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          <label>Kalorien</label>
+          <input type="number" class="form-control" id="kalorien" name="kalorien" #kalorien="ngModel"
+                 [(ngModel)]="rezept.naehrwerte.kalorien" min="0">
+          <label>Fett</label>
+          <input type="number" class="form-control" id="fett" name="fett" #fett="ngModel"
+                 [(ngModel)]="rezept.naehrwerte.fett" min="0">
+          <label>Eiweiss</label>
+          <input type="number" class="form-control" id="eiweiss" name="eiweiss" #eiweiss="ngModel"
+                 [(ngModel)]="rezept.naehrwerte.eiweiss" min="0">
+          <label>Kohlenhydrate</label>
+          <input type="number" class="form-control" id="kohlenhydrate" name="kohlenhydrate" #kohlenhydrate="ngModel"
+                 [(ngModel)]="rezept.naehrwerte.kohlenhydrate" min="0">
+        </div>
+      </div>
     </div>
 
     <br>

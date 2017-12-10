@@ -49,6 +49,7 @@ export class RezeptComponent implements OnInit {
       console.log("Rezept loeschen mit Id= ", rezept._id);
       this.rezeptService.deleteRezept(rezept._id).subscribe(() => {
         console.log("Rezept erfolgreich geloescht");
+        this.router.navigate(['/rezeptliste/']);
       });
     });
   }

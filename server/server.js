@@ -107,7 +107,7 @@ app.post(rezeptUrl + '/save', (req, res) => {
         titel: req.body.titel,
         zutatenAnzahl: req.body.zutatenAnzahl,
         zutaten: req.body.zutaten,
-        kalorien: req.body.kalorien,
+        naehrwerte: req.body.naehrwerte,
         schwierigkeitsgrad: req.body.schwierigkeitsgrad,
         zeit: req.body.zeit,
         zubereitung: req.body.zubereitung,

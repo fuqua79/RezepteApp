@@ -58,6 +58,7 @@ export class RezeptService {
 
   saveRezept(rezept: Rezept): Observable<void> {
     console.log('--Neues Rezept im Backend speichern--');
+    console.log('--Neues Rezept im Backend speichern-- REZEPT: ', rezept);
     let url = this.rezeptUrl + '/save';
     return this.http.post(url, rezept)
       .map(res => res)
