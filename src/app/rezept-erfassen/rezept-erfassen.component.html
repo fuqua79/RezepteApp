@@ -1,7 +1,6 @@
 <div>
-  <form novalidate (ngSubmit)="saveRezept(rezept)" #rezepteForm="ngForm" class="form_erfassen form-group"
-        name="form_erfassen"
-        (ngSubmit)="saveRezept(rezept)">
+  <form novalidate #rezepteForm="ngForm" class="form_erfassen form-group"
+        name="form_erfassen">
     <div class="form-group">
       <label class="col-form-label">Titel</label>
       <input type="text" class="form-control" id="titel" name="titel" #title="ngModel" [(ngModel)]="rezept.titel"
@@ -17,27 +16,34 @@
       </div>
     </div>
 
-
     <div class="form-group">
       <label class="col-form-label">Beschreibung</label>
-      <input appClearField type="textarea" class="form-control" id="beschreibung" name="beschreibung" #beschreibung="ngModel"
-             [(ngModel)]="rezept.beschreibung" required placeholder="Beschreibung">
+      <input type="textarea" class="form-control" id="beschreibung" name="beschreibung" #beschreibung="ngModel"
+             [(ngModel)]="rezept.beschreibung" placeholder="Beschreibung" required>
       <div *ngIf="!beschreibung.control.valid && beschreibung.control.touched" class="alert alert-danger">
         <div *ngIf="beschreibung.control.hasError('required')">
           Die Beschreibung ist erforderlich
         </div>
       </div>
     </div>
+
     <div class="form-group">
       <label>Anzahl Personen</label>
-      <input type="text" class="form-control" id="zutatenAnzahl" name="zutatenAnzahl"
+      <input type="text" class="form-control" id="zutatenAnzahl" name="zutatenAnzahl" #zutatenAnzahl="ngModel"
              [(ngModel)]="rezept.zutatenAnzahl" required>
+      <div *ngIf="!zutatenAnzahl.control.valid && zutatenAnzahl.control.touched" class="alert alert-danger">
+        <div *ngIf="zutatenAnzahl.control.hasError('required')">
+          Die Anzahl Personen ist erforderlich
+        </div>
+      </div>
     </div>
+
     <div class="form-group">
       <label>Kalorien</label>
-      <input type="text" class="form-control" id="kalorien" name="kalorien" [(ngModel)]="rezept.kalorien"
-             required>
+      <input type="number" class="form-control" id="kalorien" name="kalorien" #kalorien="ngModel"
+             [(ngModel)]="rezept.kalorien" min="0">
     </div>
+
     <div class="form-group">
       <label class="">Schwierigkeitsgrad</label>
       <select name="schwireigkeitsgrad" [(ngModel)]="rezept.schwierigkeitsgrad" class="form-control">
@@ -47,61 +53,69 @@
         </option>
       </select>
     </div>
+
     <div class="form-group">
       <label class="">WEISS NOCH NICHT</label>
       <input type="checkbox" name="weissnochnicht" [(ngModel)]="rezept.weissnochnicht">
-      Weiss noch nicht
     </div>
-    <div class="radio" *ngFor="let art of model.art">
-      <label>
-        <input type="radio" name="art" [(ngModel)]="rezept.art" [value]="art">
-        {{art.value}}
-      </label>
+
+    <div class="form-group">
+      <label>Art</label>
+      <div class="radio" *ngFor="let art of model.art">
+        <label>
+          <input type="radio" name="art" [(ngModel)]="rezept.art" [value]="art" required>
+          {{art.value}}
+        </label>
+      </div>
     </div>
+
     <div class="form-group">
       <label class="">Zeit</label>
-      <input type="text" class="form-control" id="zeit" name="zeit" [(ngModel)]="rezept.zeit"
-             required>
+      <input type="number" class="form-control" id="zeit" name="zeit" [(ngModel)]="rezept.zeit"
+             required min="0">
     </div>
+
     <div class="form-group">
       <label>Zubereitung</label>
       <textarea class="form-control zubereitung" id="zubereitung2" name="zubereitung"
                 [(ngModel)]="rezept.zubereitung"
-                required></textarea>
+                required placeholder="Zubereitung"></textarea>
     </div>
-    <div class="form-group">
-      <label>Art</label>
-      <select class="form-control" id="art" name="art" [(ngModel)]="rezept.art" required>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
-    </div>
-    <div id="zutaten">
-      <label>ZUTATEN</label>
-      <br>
-      <div *ngFor="let element of rezept.zutaten; let i = index;">
-        <label>Zutat {{i+1}}</label>
-        <input type="button" class="btn btn-secondary" value="Zutat löschen" (click)="removeZutat(i)">
-        <br>
-        <label>Menge</label>
-        <input type="text" class="form-control" id="menge" name="menge"
-               [(ngModel)]="element.menge"
-               required>
-        <label>Einheit</label>
-        <input type="text" class="form-control" id="einheit" name="einheit"
-               [(ngModel)]="element.einheit"
-               required>
-        <label>Zutat</label>
-        <input type="text" class="form-control" id="zutat" name="zutat"
-               [(ngModel)]="element.zutat"
-               required>
-        <br>
+
+    <div id="zutaten" class="form-group">
+      <label>Zutaten</label>
+      <div *ngFor="let element of rezept.zutaten; let i = index;" class="mt-4">
+          <label>Zutat {{i+1}}</label>
+          <button class="btn btn-danger" (click)="removeZutat(i)">
+            Zutat löschen
+          </button>
+          <br>
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <label>Menge</label>
+                <input type="text" class="form-control" id="menge" name="menge_{{i}}"
+                       [(ngModel)]="element.menge">
+              </div>
+              <div class="col">
+                <label>Einheit</label>
+                <input type="text" class="form-control" id="einheit" name="einheit_{{i}}"
+                       [(ngModel)]="element.einheit">
+              </div>
+              <div class="col-6">
+                <label>Zutat</label>
+                <input type="text" class="form-control" id="zutat" name="zutat_{{i}}"
+                       [(ngModel)]="element.zutat">
+              </div>
+            </div>
+          </div>
       </div>
       <br>
-      <input type="button" class="btn btn-secondary" value="Zutat hinzugüfen" (click)="addZutat()">
+      <button class="btn btn-success" (click)="addZutat()">
+        Zutat hinzufügen
+      </button>
     </div>
+
     <br>
     <div class="form-group">
       <label>Image Filename</label>
