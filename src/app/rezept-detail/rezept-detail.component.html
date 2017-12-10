@@ -47,12 +47,10 @@
             Zeit: {{(rezept$ | async)?.zeit}} min
           </h5>
           <h5 class="h5 mt-3">
-            Schwierigkeitsgrad: {{(rezept$ | async)?.schwierigkeitsgrad}}
-            Model: {{model}}
-            Mike: {{mike}}
+            Schwierigkeitsgrad: {{getTranslationSchwierigkeitsgrad((rezept$ | async)?.schwierigkeitsgrad)}}
           </h5>
           <h5 class="h5 mt-3">
-            Art: {{(rezept$ | async)?.art}}
+            Art: {{getTranslationArt((rezept$ | async)?.art)}}
           </h5>
           <div class="mt-4" id="accordion" role="tablist">
             <div class="card">

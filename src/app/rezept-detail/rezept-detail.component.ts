@@ -32,12 +32,7 @@ export class RezeptComponent implements OnInit {
       let id = (params['id'] || '');
       this.rezept$ = this.rezeptService.loadRezept(id);
       console.log('Rezept mit Id: ', id, ' holen')
-
     });
-
-
-    let mike = model.schwierigkeitsgrad['EINFACH'];
-    console.log("kk:", model.schwierigkeitsgrad);
   }
 
   ngOnDestroy() {
@@ -61,7 +56,26 @@ export class RezeptComponent implements OnInit {
     });
   }
 
+  getTranslationSchwierigkeitsgrad(name : string) : string {
+    for (var elem in model.schwierigkeitsgrad) {
+      if(model.schwierigkeitsgrad[elem].name == name){
+        return model.schwierigkeitsgrad[elem].value;
+      }
+    }
+    return null;
+  }
+
+  getTranslationArt(name : string) : string {
+    for (var elem in model.art) {
+      if(model.art[elem].name == name){
+        return model.art[elem].value;
+      }
+    }
+    return null;
+  }
+
   mylogger(text: string): void {
     console.log(text);
   }
 }
+
