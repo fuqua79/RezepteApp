@@ -31,7 +31,7 @@
       (click)="selectRezept(item._id)"
       (dblclick)="openRezept(item._id)"
       [ngClass]="{'bg-primary border-primary ' : item.selected}">
-    <img class="app-liste-image float-left mr-3 rounded" src={{item.imageFilename}} alt="Smiley face">
+    <img class="app-liste-image float-left mr-3 rounded" src={{item.imageFilename}}>
     <h5 class="">{{item.titel}}</h5>
     <div class="">{{item.beschreibung}}</div>
     <div class="row mt-3">
