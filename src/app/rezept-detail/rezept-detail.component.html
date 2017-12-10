@@ -48,6 +48,8 @@
           </h5>
           <h5 class="h5 mt-3">
             Schwierigkeitsgrad: {{(rezept$ | async)?.schwierigkeitsgrad}}
+            Model: {{model}}
+            Mike: {{mike}}
           </h5>
           <h5 class="h5 mt-3">
             Art: {{(rezept$ | async)?.art}}
@@ -66,16 +68,16 @@
                    data-parent="#accordion">
                 <div class="card-body">
                   <div>
-                    Kalorien: {{(rezept$ | async)?.kalorien|number}} kcal
+                    Kalorien: {{(rezept$ | async)?.naehrwerte.kalorien|number}} kcal
                   </div>
                   <div>
-                    Kohlenhydrate:
+                    Kohlenhydrate: {{(rezept$ | async)?.naehrwerte.kohlenhydrate|number}}
                   </div>
                   <div>
-                    Eiweiss:
+                    Eiweiss: {{(rezept$ | async)?.naehrwerte.eiweiss|number}}
                   </div>
                   <div>
-                    Fett:
+                    Fett: {{(rezept$ | async)?.naehrwerte.fett|number}}
                   </div>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import {Subscription} from "rxjs/Subscription";
 import {Rezept} from "../rezept/dto/rezept";
 import {RezeptService} from "../rezept/rezept.service";
 import {Observable} from "rxjs/Observable";
+import * as model from "../rezept/dto/model-interfaces";
 
 
 @Component({
@@ -14,6 +15,7 @@ import {Observable} from "rxjs/Observable";
 export class RezeptComponent implements OnInit {
 
   public rezept$: Observable<Rezept>;
+  public model = model;
   public gewunschteAnzahlPersonen: number = 1;
 
   routeSubscription: Subscription;
@@ -30,7 +32,12 @@ export class RezeptComponent implements OnInit {
       let id = (params['id'] || '');
       this.rezept$ = this.rezeptService.loadRezept(id);
       console.log('Rezept mit Id: ', id, ' holen')
+
     });
+
+
+    let mike = model.schwierigkeitsgrad['EINFACH'];
+    console.log("kk:", model.schwierigkeitsgrad);
   }
 
   ngOnDestroy() {
@@ -57,9 +64,4 @@ export class RezeptComponent implements OnInit {
   mylogger(text: string): void {
     console.log(text);
   }
-
-  incrementAnzahlPersonen() {
-    this.gewunschteAnzahlPersonen = 12;
-  }
-
 }

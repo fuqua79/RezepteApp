@@ -29,7 +29,7 @@
 
     <div class="form-group">
       <label class="">Schwierigkeitsgrad</label>
-      <select name="schwireigkeitsgrad" [(ngModel)]="rezept.schwierigkeitsgrad" class="form-control">
+      <select name="schwierigkeitsgrad" [(ngModel)]="rezept.schwierigkeitsgrad" class="form-control">
         <option value="">--- Bitte auswählen ---</option>
         <option *ngFor="let grad of model.schwierigkeitsgrad" class="" [ngValue]="grad.name">
           {{grad.value}}
