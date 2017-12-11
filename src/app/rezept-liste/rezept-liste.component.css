@@ -1,9 +1,6 @@
 .app-liste-image {
   width: 10rem;
-}
-
-.app-liste-ul {
-  list-style-type: none;
+  min-width: 10rem;
 }
 
 .app-liste-item:hover {

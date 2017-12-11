@@ -13,3 +13,11 @@
 #naehrwerte{
   color:inherit;
 }
+
+li > span {
+  float:right;
+}
+
+/*#detail_content {*/
+  /*min-height: 750px;*/
+/*}*/

@@ -74,6 +74,17 @@ export class RezeptComponent implements OnInit {
     return null;
   }
 
+  printIt(divId: string) : void {
+    /*
+    var printContents = document.getElementById(divId).innerHTML;
+    var popupWin = window.open('', '_blank', 'width=800,height=600');
+    popupWin.document.open();
+    popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
+    popupWin.document.close();
+  */
+    //window.print();
+  }
+
   mylogger(text: string): void {
     console.log(text);
   }
