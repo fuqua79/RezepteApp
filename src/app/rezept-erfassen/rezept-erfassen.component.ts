@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {Zutat} from "../rezept/dto/zutat";
 import {Rezept} from "../rezept/dto/rezept";
 import {RezeptService} from "../rezept/rezept.service";

@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from "rxjs/Subscription";
+import {Subscription, Observable} from "rxjs";
 import {Rezept} from "../rezept/dto/rezept";
 import {RezeptService} from "../rezept/rezept.service";
-import {Observable} from "rxjs/Observable";
 import * as model from "../rezept/dto/model-interfaces";
 
 

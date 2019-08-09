@@ -8,11 +8,11 @@ import {RezeptComponent} from './rezept-detail/rezept-detail.component';
 import {RezeptListeComponent} from './rezept-liste/rezept-liste.component';
 import {RezeptErfassenComponent} from './rezept-erfassen/rezept-erfassen.component';
 import {RezeptHomeComponent} from './rezept-home/rezept-home.component';
-import {HttpModule} from "@angular/http";
 
 import {NgReduxModule, NgRedux, DevToolsExtension } from '@angular-redux/store';
 import {IAppState, INITIAL_STATE, rootReducer} from "./common/redux/store";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 const appRoutes: Routes = [
@@ -38,7 +38,7 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     NgReduxModule
   ],
   providers: [],

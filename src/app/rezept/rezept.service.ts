@@ -1,9 +1,8 @@
+
+import {throwError as observableThrowError, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {Rezept} from "./dto/rezept";
 import {Http} from "@angular/http";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import {Observable} from "rxjs";
 
 
 @Injectable()
@@ -28,7 +27,7 @@ export class RezeptService {
         }
         return rezeptelisteJSON;
       })
-      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
+      .catch((error: any) => observableThrowError(this.handleError(error) || 'Server error'));
   }
 
   loadRezept(id: string): Observable<Rezept> {
@@ -40,7 +39,7 @@ export class RezeptService {
         rezeptJSON.imageFilename = this.dirImages + rezeptJSON.imageFilename;
         return rezeptJSON;
       })
-      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
+      .catch((error: any) => observableThrowError(this.handleError(error) || 'Server error'));
   }
 
   loadRandomRezept(): Observable<Rezept> {
@@ -52,7 +51,7 @@ export class RezeptService {
         rezeptJSON.imageFilename = this.dirImages + rezeptJSON.imageFilename;
         return rezeptJSON;
       })
-      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
+      .catch((error: any) => observableThrowError(this.handleError(error) || 'Server error'));
   }
 
 
@@ -63,7 +62,7 @@ export class RezeptService {
     return this.http.post(url, rezept)
       .map(res => res)
       //TODO: Hier funktioniert das JSON Konvertieren nicht, da hier die index.html kommt !
-      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
+      .catch((error: any) => observableThrowError(this.handleError(error) || 'Server error'));
   }
 
   deleteRezept(id: string): Observable<void> {
@@ -73,7 +72,7 @@ export class RezeptService {
     return this.http.delete(url)
       .map(res => res)
       //TODO: Hier funktioniert das JSON Konvertieren nicht, da hier die index.html kommt !
-      .catch((error: any) => Observable.throw(this.handleError(error) || 'Server error'));
+      .catch((error: any) => observableThrowError(this.handleError(error) || 'Server error'));
   }
 
   private handleError(error: any) {
