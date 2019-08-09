@@ -1,10 +1,13 @@
 export class Zutat {
 
-  public menge: number = 0;
-  public einheit: string = "";
-  public zutat: string = ""
+  public menge: number;
+  public einheit: string;
+  public zutat: string
 
   constructor() {
+    this.menge = 0;
+    this.einheit = '';
+    this.zutat = '';
   }
 }
 

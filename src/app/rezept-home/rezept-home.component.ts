@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RezeptService} from '../rezept/rezept.service';
-import {Rezept} from "../rezept/dto/rezept";
-import {Router} from "@angular/router";
+import {Rezept} from '../rezept/dto/rezept';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -22,11 +22,11 @@ export class RezeptHomeComponent implements OnInit {
   }
 
   getRandomRezept(): void {
-    console.log("-- RandomRezept aus dem Backend holen --");
+    console.log('-- RandomRezept aus dem Backend holen --');
 
     this.rezeptService.loadRandomRezept().subscribe(rezept => {
       console.log('RandomRezept erfolgreich geholt');
-      console.log("result= ", rezept);
+      console.log('result= ', rezept);
       this.randomRezept = rezept;
     });
   }

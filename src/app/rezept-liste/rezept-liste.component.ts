@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {RezeptService} from '../rezept/rezept.service';
-import {Zutat} from "../rezept/dto/zutat";
-import {Rezept} from "../rezept/dto/rezept";
+import {Rezept} from '../rezept/dto/rezept';
 
 
 @Component({
@@ -43,12 +42,13 @@ export class RezeptListeComponent implements OnInit {
     }
     console.log('Selektiert....');
   }
-/*
-  editRezept(id): void {
-    console.log('Rezept bearbeiten');
-    this.router.navigate(['/rezept/' + id]);
-  }
-*/
+
+  /*
+    editRezept(id): void {
+      console.log('Rezept bearbeiten');
+      this.router.navigate(['/rezept/' + id]);
+    }
+  */
 
   mylogger(text: string): void {
     console.log(text);

@@ -4,6 +4,7 @@ const socketio = require('socket.io');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 
 const app = express();
 
@@ -33,6 +34,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 //MongoDB by amazon mLab verbinden & Server starten
 //CONNECTION
 var db;
+/*
+const client = new MongoClient('mongodb://mike:_123mike@ds113435.mlab.com:13435');
+client.connect(function (err) {
+  console.log("Connected successfully to server");
+  db = client.db(dbName);
+  client.close();
+});
+*/
 mongodb.MongoClient.connect('mongodb://mike:_123mike@ds113435.mlab.com:13435/' + dbName, (err, database) => {
   if (err) {
     return console.log(err);
@@ -42,6 +51,7 @@ mongodb.MongoClient.connect('mongodb://mike:_123mike@ds113435.mlab.com:13435/' +
     console.log('Express Server listening on localhost:3000')
   });
 });
+
 
 
 //////////////////
@@ -124,10 +134,10 @@ app.post(rezeptUrl + '/save', (req, res) => {
     (err, result) => {
       if (err) {
         console.log("ERROR !!!!!");
-      return res.status(500).send(err);
-    }
-  console.log("ERFOLG !!!!!");
-  res.send(result)
+        return res.status(500).send(err);
+      }
+      console.log("ERFOLG !!!!!");
+      res.send(result)
     })
 });
 
@@ -135,7 +145,7 @@ app.post(rezeptUrl + '/save', (req, res) => {
 app.delete(rezeptUrl + '/delete/:id', (req, res) => {
   console.log("Rezept loeschen mit objectID= ", new ObjectID(req.params.id));
   db.collection(collectionName).findOneAndDelete(
-  //query, was löschen
+    //query, was löschen
     {_id: new ObjectID(req.params.id)},
     (err, result) => {
       if (err) {

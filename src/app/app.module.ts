@@ -9,8 +9,6 @@ import {RezeptListeComponent} from './rezept-liste/rezept-liste.component';
 import {RezeptErfassenComponent} from './rezept-erfassen/rezept-erfassen.component';
 import {RezeptHomeComponent} from './rezept-home/rezept-home.component';
 
-import {NgReduxModule, NgRedux, DevToolsExtension } from '@angular-redux/store';
-import {IAppState, INITIAL_STATE, rootReducer} from "./common/redux/store";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -38,18 +36,10 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     FormsModule,
-    HttpClientModule,
-    NgReduxModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>, devTools: DevToolsExtension) {
-
-    const storeEnhancers = devTools.isEnabled() ? [devTools.enhancer()] : [];
-
-    ngRedux.configureStore(rootReducer, INITIAL_STATE, [], storeEnhancers);
-
-  }
 }

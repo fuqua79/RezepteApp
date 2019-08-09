@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Subscription} from "rxjs";
-import {Zutat} from "../rezept/dto/zutat";
-import {Rezept} from "../rezept/dto/rezept";
-import {RezeptService} from "../rezept/rezept.service";
-import * as model from "../rezept/dto/model-interfaces";
+import {Subscription} from 'rxjs';
+import {Zutat} from '../rezept/dto/zutat';
+import {Rezept} from '../rezept/dto/rezept';
+import {RezeptService} from '../rezept/rezept.service';
+import * as model from '../rezept/dto/model-interfaces';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class RezeptErfassenComponent implements OnInit {
 
   ngOnInit() {
     console.log('ngOnInit !');
-    this.rezept = new Rezept(); //Zum Erzeugen mal ein leeres Rezept !
+    this.rezept = new Rezept(); // Zum Erzeugen mal ein leeres Rezept !
 
     this.routeSubscription = this.route.params.subscribe(params => {
       this.id = (params['id'] || '');
@@ -48,7 +48,7 @@ console.log('MIKE, REZEPT: ', this.rezept);
   }
 
   addZutat(): void {
-    let zutat = new Zutat();
+    const zutat = new Zutat();
     this.rezept.zutaten.push(zutat);
   }
 
@@ -58,7 +58,7 @@ console.log('MIKE, REZEPT: ', this.rezept);
   }
 
   saveRezept(rezept: Rezept): void {
-    //Speichern...
+    // Speichern...
     this.rezeptService.saveRezept(rezept).subscribe(result => {
     });
   }
@@ -84,9 +84,9 @@ console.log('MIKE, REZEPT: ', this.rezept);
   }
   */
 
-  onFileChange(fileInput){
+  onFileChange(fileInput) {
     console.log('FILE SAVEN, fileInput:', fileInput);
-    let file = fileInput.target.files[0].name;
+    const file = fileInput.target.files[0].name;
     console.log('FILE SAVEN, file :', file );
     this.rezept.imageFilename = file;
     // let fileName = file.name;
