@@ -28,8 +28,8 @@ export class RezeptService {
             rezept.imageFilename = this.dirImages + rezept.imageFilename;
           }
           return rezeptelisteJSON;
-        }),
-        catchError(this.handleError)
+        })
+        // ,catchError(this.handleError)
       );
   }
 
@@ -41,8 +41,8 @@ export class RezeptService {
           const rezeptJSON = rezept.json();
           rezeptJSON.imageFilename = this.dirImages + rezeptJSON.imageFilename;
           return rezeptJSON;
-        }),
-        catchError(this.handleError)
+        })
+        // ,catchError(this.handleError)
       );
   }
 
@@ -51,11 +51,11 @@ export class RezeptService {
     const url = this.rezeptUrl + '/random';
     return this.httpClient.get(url)
       .pipe(map((rezept: any) => {
-          const rezeptJSON = rezept.json();
+          const rezeptJSON = rezept;
           rezeptJSON.imageFilename = this.dirImages + rezeptJSON.imageFilename;
           return rezeptJSON;
-        }),
-        catchError(this.handleError)
+        })
+        // ,catchError(this.handleError)
       );
   }
 
@@ -65,9 +65,9 @@ export class RezeptService {
     console.log('--Neues Rezept im Backend speichern-- REZEPT: ', rezept);
     const url = this.rezeptUrl + '/save';
     return this.httpClient.post(url, rezept)
-      .pipe(map(res => res),
+      .pipe(map(res => res)
         // TODO: Hier funktioniert das JSON Konvertieren nicht, da hier die index.html kommt !
-        catchError(this.handleError)
+        // ,catchError(this.handleError)
       );
   }
 
@@ -76,9 +76,9 @@ export class RezeptService {
 
     const url = this.rezeptUrl + '/delete/' + id;
     return this.httpClient.delete(url)
-      .pipe(map(res => res),
+      .pipe(map(res => res)
         // TODO: Hier funktioniert das JSON Konvertieren nicht, da hier die index.html kommt !
-        catchError(this.handleError)
+        // ,catchError(this.handleError)
       );
   }
 
