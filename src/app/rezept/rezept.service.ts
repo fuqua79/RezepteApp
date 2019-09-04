@@ -11,11 +11,24 @@ export class RezeptService {
 
   private rezeptUrl = '/api/rezept';
   private dirImages = '../../assets/images/';
+  private testRezept: any;
 
   constructor(private httpClient: HttpClient) {
   }
 
-// http anschauen, wie ich options mitgeben kann ;-)
+/*
+  loadTest(): Observable<Rezept> {
+    console.log('--Test vom Backend holen--');
+    const url = '/api/test';
+  22  this.httpClient.get<{message: string, rezept: any}>(url)
+      .subscribe((response) => {
+        this.testRezept = response.rezept;
+
+      });
+  }
+*/
+
+
 
   loadAllRezepte(): Observable<Rezept[]> {
     console.log('--Alle Rezepte vom Backend holen--');
@@ -23,11 +36,12 @@ export class RezeptService {
     return this.httpClient.get(url)
       .pipe(
         map((rezepteliste: any) => {
-          const rezeptelisteJSON = rezepteliste.json();
-          for (const rezept of rezeptelisteJSON) {
+          console.log('CLient: Rezeptliste= ', rezepteliste);
+          for (const rezept of rezepteliste) {
             rezept.imageFilename = this.dirImages + rezept.imageFilename;
+            rezept.id = rezept._id;
           }
-          return rezeptelisteJSON;
+          return rezepteliste;
         })
         // ,catchError(this.handleError)
       );
@@ -38,9 +52,10 @@ export class RezeptService {
     const url = this.rezeptUrl + '/' + id;
     return this.httpClient.get(url)
       .pipe(map((rezept: any) => {
-          const rezeptJSON = rezept.json();
-          rezeptJSON.imageFilename = this.dirImages + rezeptJSON.imageFilename;
-          return rezeptJSON;
+          rezept.imageFilename = this.dirImages + rezept.imageFilename;
+          rezept.id = rezept._id;
+          console.log('MIKE Rezept: ', rezept)
+          return rezept;
         })
         // ,catchError(this.handleError)
       );
@@ -51,23 +66,23 @@ export class RezeptService {
     const url = this.rezeptUrl + '/random';
     return this.httpClient.get(url)
       .pipe(map((rezept: any) => {
-          const rezeptJSON = rezept;
-          rezeptJSON.imageFilename = this.dirImages + rezeptJSON.imageFilename;
-          return rezeptJSON;
+          rezept.imageFilename = this.dirImages + rezept.imageFilename;
+          rezept.id = rezept._id;
+          return rezept;
         })
         // ,catchError(this.handleError)
       );
   }
-
 
   saveRezept(rezept: Rezept): Observable<Object> {
     console.log('--Neues Rezept im Backend speichern--');
     console.log('--Neues Rezept im Backend speichern-- REZEPT: ', rezept);
     const url = this.rezeptUrl + '/save';
     return this.httpClient.post(url, rezept)
-      .pipe(map(res => res)
-        // TODO: Hier funktioniert das JSON Konvertieren nicht, da hier die index.html kommt !
-        // ,catchError(this.handleError)
+      .pipe(map((rez: any) => {
+          rez.id = rez._id;
+          return rez;
+        })
       );
   }
 

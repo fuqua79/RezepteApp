@@ -36,7 +36,7 @@ export class RezeptListeComponent implements OnInit {
     console.log('selektieren Id= ', id);
     for (let i = 0; i < this.rezeptListe.length; i++) {
       this.rezeptListe[i].selected = false;
-      if (this.rezeptListe[i]._id === id) {
+      if (this.rezeptListe[i].id === id) {
         this.rezeptListe[i].selected = true;
       }
     }

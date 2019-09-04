@@ -1,49 +1,149 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const Rezept = require('./models/rezept');
 
 const app = express();
-/*
-app.use((req, res, next) => {
-  console.log("first middleware");
-  next(); //=> next muss aufgerufen werden, da sonst nicht weitergegangen wird: use ist middleware das einfach nacheinander aufegrufen wird, d.h. nach dem next() ;-)
-});
-*/
+const rezeptUrl = '/api/rezept';
+mongoose.set('useFindAndModify', false);
 
-app.use('/api/test', (req, res, next) => {
-  const rezepte = [
-    {
-      id: '124234kf4',
-      title: 'Titel erster post'
-    },
-    {
-      id: '84jhit',
-      title: 'Titel zweiter post'
-    }
-  ];
-  res.status(200).json({
-    message: 'Post fethced successfully',
-    posts: rezepte
+//test mit korrekter DB-Name austauschen
+mongoose.connect('mongodb+srv://ssouser:YLiZYNFOro1JKF8s@cluster0-vqzry.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true})
+  .then(() => {
+    console.log('Connected to database');
+  })
+  .catch(() => {
+    console.log('Connection to databse failed !')
   });
+/*
+MongoDB Account: fuqua
+
+MongoDb Atlas
+mmugglin@hotmail.com
+fuqua
+_123Mike
+
+MongodDB Atlas Credentials
+https://cloud.mongodb.com/v2/59515b3ec0c6e30371baa3a0#clusters/connect?clusterId=Cluster0
+username: ssouser
+password: YLiZYNFOro1JKF8s
+ */
+
+
+//// OLD //////
+//dbName= rezepte
+//ds113435/rezepte
+//URL: https://mlab.com/databases/rezepte#collections
+//account-user: fuqua
+//DB-user: mike
+//DB-password: _123mike
+//mongo shell: mongo ds113435.mlab.com:13435/rezepte -u <dbuser> -p <dbpassword>
+//mongoDB Driver: mongodb://mike:_123mike@ds113435.mlab.com:13435/rezepte
+
+
+app.use(bodyParser.json());
+
+//Header-Handling
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
   next();
 });
 
-app.use('/api/rezept/random', (req, res, next) => {
-  const rezept = {
-    id: '892h34tui',
-    beschreibung: 'beschreibung_mike',
-    titel: 'titel_mike',
-    zutatenAnzahl: 0,
-    zutaten: [],
-    schwierigkeitsgrad: '',
-    zeit: 0,
-    zubereitung: '',
-    art: '',
-    selected: false,
-    imageFilename: '',
-    naehrwerte: null
-  };
-  res.status(200).json(rezept);
-  next();
+//Methods
+//Rezept SPEICHERN
+app.post(rezeptUrl + '/save', (req, res, next) => {
+  console.log('Rezept speichern.');
+  var query = {_id: req.body.id};
+  if(!query._id){
+    query._id = new mongoose.mongo.ObjectID();
+  }
+  //if(req.body.id)
+  Rezept.findOneAndUpdate(
+    //Query, was updaten
+    query,
+    {
+      $set: {
+        beschreibung: req.body.beschreibung,
+        titel: req.body.titel,
+        zutatenAnzahl: req.body.zutatenAnzahl,
+        zutaten: req.body.zutaten,
+        naehrwerte: req.body.naehrwerte,
+        schwierigkeitsgrad: req.body.schwierigkeitsgrad,
+        zeit: req.body.zeit,
+        zubereitung: req.body.zubereitung,
+        art: req.body.art,
+        imageFilename: req.body.imageFilename
+      }
+    },
+    //options
+    {
+      sort: {_id: -1}, //neuster Eintrag suchen
+      upsert: true //falls keine gefunden, dann einen neuen erstellen
+    }
+  )
+    .then((result) => {
+      console.log('result: ', result);
+      res.status(201).json(result);
+    })
+    .catch((err) => {
+      console.log('Error occured: ', err);
+    });
 });
+
+
+//ALLE Rezepte LADEN
+app.get(rezeptUrl + '/list', (req, res, next) => {
+  console.log('Alle Rezepte laden.');
+  Rezept.find()
+    .then(rezeptListe => {
+    console.log('rezeptListe= ', rezeptListe);
+    res.status(200).json(rezeptListe);
+  })
+    .catch((err) => {
+      console.log('Error occured: ', err);
+    })
+});
+
+//Random Rezept lesen
+app.get(rezeptUrl + '/random', (req, res, next) => {
+  console.log("Random Rezept laden.");
+  Rezept.aggregate([{$sample: {size: 1}}])
+    .then(rez => {
+      console.log("rez: ", rez);
+      res.status(200).json(rez);
+    })
+    .catch((err) => {
+      console.log('Error occured: ', err);
+    });
+});
+
+//Rezept LADEN
+app.get(rezeptUrl + '/:id', (req, res, next) => {
+  console.log('Einzelnes Rezept laden.');
+  Rezept.findById(req.params.id)
+    .then(rez => {
+    console.log("rez: ", rez);
+    res.status(200).json(rez);
+  })
+    .catch((err) => {
+      console.log('Error occured: ', err);
+    });
+});
+
+//Rezept LOESCHEN
+app.delete(rezeptUrl + '/delete/:id', (req, res, next) => {
+  console.log('Einzelnes Rezept löschen.');
+  Rezept.deleteOne({_id: req.params.id})
+    .then( result => {
+      console.log('result= ', result);
+    })
+    .catch((err) => {
+      console.log('Error occured: ', err);
+    });
+});
+
 
 
 module.exports = app;

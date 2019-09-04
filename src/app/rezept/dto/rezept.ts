@@ -3,7 +3,7 @@ import {Naehrwerte} from './naehrwerte';
 
 export class Rezept {
 
-  public _id?: string;
+  public id?: string;
   public beschreibung = '';
   public titel = '';
   public zutatenAnzahl = 0;

@@ -40,15 +40,15 @@ export class RezeptComponent implements OnInit, OnDestroy {
 
   editRezept(rezept$: Observable<Rezept>): void {
     rezept$.subscribe((rezept) => {
-      console.log('Id= ', rezept._id);
-      this.router.navigate(['/rezepteerfassen/' + rezept._id]);
+      console.log('Id= ', rezept.id);
+      this.router.navigate(['/rezepteerfassen/' + rezept.id]);
     });
   }
 
   deleteRezept(rezept$: Observable<Rezept>) {
     rezept$.subscribe((rezept) => {
-      console.log('Rezept loeschen mit Id= ', rezept._id);
-      this.rezeptService.deleteRezept(rezept._id).subscribe(() => {
+      console.log('Rezept loeschen mit Id= ', rezept.id);
+      this.rezeptService.deleteRezept(rezept.id).subscribe(() => {
         console.log('Rezept erfolgreich geloescht');
         this.router.navigate(['/rezeptliste/']);
       });
