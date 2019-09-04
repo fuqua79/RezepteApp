@@ -9,7 +9,6 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 var Schema = mongoose.Schema;
 
-var db;
 const app = express();
 const dbName = 'rezepte';
 const collectionName = 'rezept';
