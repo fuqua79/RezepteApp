@@ -1,0 +1,46 @@
+DB:
+MongoDB Account: fuqua
+
+MongoDb Atlas
+mmugglin@hotmail.com
+fuqua
+_123Mike
+
+MongodDB Atlas Credentials
+https://cloud.mongodb.com/v2/59515b3ec0c6e30371baa3a0#clusters/connect?clusterId=Cluster0
+username: ssouser
+password: YLiZYNFOro1JKF8s
+
+
+//// OLD //////
+//dbName= rezepte
+//ds113435/rezepte
+//URL: https://mlab.com/databases/rezepte#collections
+//account-user: fuqua
+//DB-user: mike
+//DB-password: _123mike
+//mongo shell: mongo ds113435.mlab.com:13435/rezepte -u <dbuser> -p <dbpassword>
+//mongoDB Driver: mongodb://mike:_123mike@ds113435.mlab.com:13435/rezepte
+
+
+
+HEROKU:
+mmugglin@hotmail.com
+STD-passwort
+
+
+
+
+
+
+AWS:
+mmugglin@hotmail.com
+STD-passwort
+
+Fuqua Konto
+
+https://us-east-2.console.aws.amazon.com/elasticbeanstalk/home?region=us-east-2#/launchEnvironment?applicationName=Rezepte%20App&environmentId=e-7bz9rcwpcb
+Umgebungs-ID: e-7bz9rcwpcb,
+URL: RezepteApp-env.rpzje2p6sb.us-east-2.elasticbeanstalk.com
+
+http://rezepteapp-env.rpzje2p6sb.us-east-2.elasticbeanstalk.com/api/rezept/list

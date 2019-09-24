@@ -1,0 +1,12 @@
+{
+  "name": "rezepte-app",
+  "version": "0.2.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "body-parser": "1.17.2",
+    "express": "^4.17.1",
+    "mongodb": "3.2.7",
+    "mongoose": "5.6.9"
+  }
+}

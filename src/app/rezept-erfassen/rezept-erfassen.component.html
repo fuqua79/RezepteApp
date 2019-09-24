@@ -20,6 +20,12 @@
       <label class="col-form-label">Beschreibung</label>
       <input type="textarea" class="form-control" id="beschreibung" name="beschreibung" #beschreibung="ngModel"
              [(ngModel)]="rezept.beschreibung" placeholder="Beschreibung" required>
+      <br>
+      <mat-card>
+        <mat-form-field>
+          <input matInput type="textarea">
+        </mat-form-field>
+      </mat-card>
       <div *ngIf="!beschreibung.control.valid && beschreibung.control.touched" class="alert alert-danger">
         <div *ngIf="beschreibung.control.hasError('required')">
           Die Beschreibung ist erforderlich
@@ -73,7 +79,7 @@
     <div id="zutaten" class="form-group">
       <label>Zutaten</label>
       <div *ngFor="let element of rezept.zutaten; let i = index;" class="mt-4">
-        <label>Zutat {{i+1}}</label>
+        <label>Zutat {{i + 1}}</label>
         <button class="btn btn-danger" (click)="removeZutat(i)">
           Zutat löschen
         </button>
@@ -129,13 +135,14 @@
 
     <br>
     <div class="form-group">
-      <label>Image Filename (Muss im Verzeichnis <b>"E:\web_entwicklung\rezepteApp2\RezepteApp2\src\assets\images"</b> liegen)</label>
+      <label>Image Filename (Muss im Verzeichnis <b>"E:\web_entwicklung\rezepteApp2\RezepteApp2\src\assets\images"</b>
+        liegen)</label>
       <input type="text" class="form-control" id="imageFilename" name="imageFilename"
              [(ngModel)]="rezept.imageFilename" readonly>
       <input type="file" class="form-control-file" (change)="onFileChange($event)" accept=".jpg, .jpeg, .png"/>
     </div>
     <br>
-    <input type="button" class="btn btn-primary" value="Speichern" id="speichern" (click)="saveRezept(rezept)">
+    <button mat-raised-button color="primary" id="speichern" (click)="saveRezept(rezept)">Speichern</button>
     <br>
     <!--<input type="button" class="btn btn-secondary" value="Image Speichern" id="imageSpeichern"-->
     <!--(click)="saveImage('TEST')">-->

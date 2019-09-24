@@ -1,8 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MatCardModule, MatInputModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatInputModule} from '@angular/material';
 
 import {FormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
@@ -11,7 +11,7 @@ import {RezeptListeComponent} from './rezept-liste/rezept-liste.component';
 import {RezeptErfassenComponent} from './rezept-erfassen/rezept-erfassen.component';
 
 import {RezeptHomeComponent} from './rezept-home/rezept-home.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
 
 
@@ -41,7 +41,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

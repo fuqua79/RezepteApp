@@ -30,15 +30,6 @@ password: YLiZYNFOro1JKF8s
  */
 
 
-//// OLD //////
-//dbName= rezepte
-//ds113435/rezepte
-//URL: https://mlab.com/databases/rezepte#collections
-//account-user: fuqua
-//DB-user: mike
-//DB-password: _123mike
-//mongo shell: mongo ds113435.mlab.com:13435/rezepte -u <dbuser> -p <dbpassword>
-//mongoDB Driver: mongodb://mike:_123mike@ds113435.mlab.com:13435/rezepte
 
 
 app.use(bodyParser.json());

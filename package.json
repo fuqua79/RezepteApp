@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start-client": "ng serve --proxy-config proxy.conf.json",
-    "start-server": "nodemon server.js",
+    "start-server": "nodemon server/server.js",
     "start-all": "concurrently --kill-others \"npm run start-server\" \"npm run start-client\"",
     "ts-node": "ts-node",
     "ng": "ng",
