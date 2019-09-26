@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/internal/Observable';
 import {Rezept} from '../../model/rezept';
 import {switchMap} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'app-rezept-detail-container',
@@ -12,6 +13,8 @@ import {Subject} from 'rxjs/internal/Subject';
   styleUrls: ['./rezept-detail-container.component.css']
 })
 export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
+
+  public isLoading$: BehaviorSubject<boolean>;
 
   private rezept$: Observable<Rezept>;
   private unsubscribe$: Subject<void> = new Subject<void>();
@@ -22,6 +25,7 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isLoading$ = this.rezeptService.isLoading$;
     this.rezept$ = this.route.params
       .pipe(
         switchMap(params => this.rezeptService.loadRezept(params.id))

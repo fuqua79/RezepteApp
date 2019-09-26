@@ -6,3 +6,7 @@
 .app-liste-item:hover {
 
 }
+
+mat-spinner {
+  margin: auto;
+}

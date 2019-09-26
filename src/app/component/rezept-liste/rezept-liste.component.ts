@@ -14,6 +14,9 @@ export class RezeptListeComponent implements OnInit {
   @Input()
   rezeptListe: Rezept[];
 
+  @Input()
+  isLoading: boolean;
+
   @Output()
   open = new EventEmitter<string>();
 
@@ -30,10 +33,7 @@ export class RezeptListeComponent implements OnInit {
   selectRezept(id: string): void {
     console.log('selektieren Id= ', id);
     for (let i = 0; i < this.rezeptListe.length; i++) {
-      this.rezeptListe[i].selected = false;
-      if (this.rezeptListe[i].id === id) {
-        this.rezeptListe[i].selected = true;
-      }
+      this.rezeptListe[i].selected = this.rezeptListe[i].id === id;
     }
   }
 }

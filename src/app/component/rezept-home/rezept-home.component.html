@@ -1,5 +1,6 @@
 <div (dblclick)="openRezept(randomRezept.id)">
-  <div>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <div *ngIf="!isLoading">
     <h1 class="h1 text-center">
       Zufälliges Rezept
     </h1>

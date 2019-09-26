@@ -13,6 +13,9 @@ export class RezeptComponent implements OnInit, OnDestroy {
   @Input()
   public rezept: Rezept;
 
+  @Input()
+  isLoading: boolean;
+
   @Output()
   delete = new EventEmitter<string>();
 

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RezeptService} from '../../service/rezept.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {Rezept} from '../../model/rezept';
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'app-rezept-list-container',
@@ -10,6 +11,9 @@ import {Rezept} from '../../model/rezept';
   styleUrls: ['./rezept-list-container.component.css']
 })
 export class RezeptListContainerComponent implements OnInit {
+
+  public isLoading$: BehaviorSubject<boolean>;
+
   private rezeptListe$: Observable<Rezept[]>;
 
   constructor(private router: Router,
@@ -18,6 +22,7 @@ export class RezeptListContainerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading$ = this.rezeptService.isLoading$;
     this.rezeptListe$ = this.rezeptService.loadAllRezepte();
   }
 

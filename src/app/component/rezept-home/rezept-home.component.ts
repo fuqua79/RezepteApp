@@ -12,6 +12,9 @@ export class RezeptHomeComponent implements OnInit {
   @Input()
   randomRezept: Rezept;
 
+  @Input()
+  isLoading: boolean;
+
   @Output()
   next = new EventEmitter<boolean>();
 

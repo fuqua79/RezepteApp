@@ -9,17 +9,20 @@
     <br>
   </div>
 </div>
-<ul class="list-group no-list-type">
-  <li class="m-1 rounded app-liste-item border border-muted" *ngFor="let rezept of rezeptListe"
-      (click)="selectRezept(rezept.id)"
-      (dblclick)="openRezept(rezept.id)"
-      [ngClass]="{'bg-primary border-primary ' : rezept.selected}">
-    <h5 class="">{{rezept.titel}}</h5>
-    <div class="">{{rezept.beschreibung}}</div>
-    <div class="row mt-3">
-      <div class="mr-4">{{rezept.zeit}} min</div>
-      <div class="mr-4">{{rezept.naehrwerte.kalorien}} kcal</div>
-      <div class="">{{rezept.art}}</div>
-    </div>
-  </li>
-</ul>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="!isLoading">
+  <ul class="list-group no-list-type">
+    <li class="m-1 rounded app-liste-item border border-muted" *ngFor="let rezept of rezeptListe"
+        (click)="selectRezept(rezept.id)"
+        (dblclick)="openRezept(rezept.id)"
+        [ngClass]="{'bg-primary border-primary ' : rezept.selected}">
+      <h5 class="">{{rezept.titel}}</h5>
+      <div class="">{{rezept.beschreibung}}</div>
+      <div class="row mt-3">
+        <div class="mr-4">{{rezept.zeit}} min</div>
+        <div class="mr-4">{{rezept.naehrwerte.kalorien}} kcal</div>
+        <div class="">{{rezept.art}}</div>
+      </div>
+    </li>
+  </ul>
+</div>

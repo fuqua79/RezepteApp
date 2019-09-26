@@ -18,6 +18,6 @@ li > span {
   float:right;
 }
 
-/*#detail_content {*/
-  /*min-height: 750px;*/
-/*}*/
+mat-spinner {
+  margin: auto;
+}

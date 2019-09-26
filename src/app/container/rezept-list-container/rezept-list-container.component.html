@@ -1,4 +1,5 @@
 <app-rezept-liste
   [rezeptListe]="rezeptListe$ | async"
+  [isLoading]="isLoading$ | async"
   (open)="openRezept($event)">
 </app-rezept-liste>
