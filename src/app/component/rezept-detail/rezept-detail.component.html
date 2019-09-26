@@ -1,0 +1,104 @@
+<div>
+  <div id="detail_content">
+    <div class="mb-4">
+      <h1 class="h1 text-center mt-4">
+        {{rezept?.titel}}
+      </h1>
+      <div class="text-center">
+        <img class="app-detail-image" src={{(rezept$|async)?.imageFilename}}>
+      </div>
+      <h2 class="h2 text-center mt-3">
+        {{rezept?.beschreibung}}
+      </h2>
+    </div>
+    <div id="printArea">
+      <div class="container mt-4" id="detail_container">
+        <div class="row">
+          <div class="col">
+            <div>
+              <h4 class="h4 text-center">
+                Anzahl Personen
+              </h4>
+              <div id="input_div" class="text-center">
+                <input type="button" value="-" id="moins"
+                       (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen - 1">
+                <input class="app-anzahl-personen text-center" id="gewuenschteAnzalPersonen" type="text"
+                       name="gewunschteAnzahlPersonen"
+                       [(ngModel)]="gewunschteAnzahlPersonen" ng-init="gewunschteAnzahlPersonen=1">
+                <input type="button" value="+" id="plus"
+                       (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen + 1">
+              </div>
+              <div *ngIf="rezept?.zutaten?.length > 0">
+                <h4 class="h4 text-center mt-4">
+                  Zutaten
+                </h4>
+                <ul class="list-group">
+                  <li *ngFor="let zutat of rezept?.zutaten; let i = index;" class="list-group-item">
+                    <div>
+                      {{((gewunschteAnzahlPersonen)/(rezept?.zutaten.length)) * (zutat?.menge)}}
+                      {{zutat?.einheit}}
+                      {{zutat?.zutat}}
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-4" id="accordion" role="tablist">
+              <div class="card">
+                <div class="card-header" role="tab" id="headingOne">
+                  <h5 class="mb-0">
+                    <a id="naehrwerte" data-toggle="collapse" href="#collapseOne" aria-expanded="true"
+                       aria-controls="collapseOne">
+                      Nährwerte +
+                      <!--<i class="fa fa-plus-circle"></i>-->
+                    </a>
+                  </h5>
+                </div>
+                <div id="collapseOne" class="collapse hidden" role="tabpanel" aria-labelledby="headingOne"
+                     data-parent="#accordion">
+                  <div class="card-body">
+                    <ul class="no-list-type no-padding">
+                      <li>
+                        Kalorien in kcal:
+                        <span>{{rezept?.naehrwerte?.kalorien|number}}</span>
+                      </li>
+                      <li>
+                        Kohlenhydrate:
+                        <span>{{rezept?.naehrwerte?.kohlenhydrate|number}}</span>
+                      </li>
+                      <li>
+                        Eiweiss:
+                        <span>{{rezept?.naehrwerte?.eiweis|number}}</span>
+                      </li>
+                      <li>
+                        Fett:
+                        <span>{{rezept?.naehrwerte?.fett|number}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <h4>
+              Zubereitung
+            </h4>
+            <textarea class="zubereitung form-control">
+            {{rezept?.zubereitung}}
+          </textarea>
+            <h5 class="h5 mt-4">
+              Zeit: {{rezept?.zeit}} min
+            </h5>
+            <h5 class="h5 mt-1">
+              Schwierigkeitsgrad: {{getTranslationSchwierigkeitsgrad(rezept?.schwierigkeitsgrad)}}
+            </h5>
+            <h5 class="h5 mt-1">
+              Art: {{getTranslationArt(rezept?.art)}}
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/">
+    <mat-icon>home</mat-icon>
+    <span>Home</span>
+  </button>
+  <button mat-menu-item routerLink="/rezeptliste">
+    <mat-icon>list</mat-icon>
+    <span>Liste</span>
+  </button>
+  <button mat-menu-item routerLink="/rezepteerfassen">
+    <mat-icon>create</mat-icon>
+    <span>Erfassen</span>
+  </button>
+</mat-menu>
+
+<span>Mike's Rezepte App</span>

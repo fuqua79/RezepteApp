@@ -1,0 +1,25 @@
+<div class="app-liste-header">
+  <h2 class="h2 text-center m-4">
+    {{rezeptListe?.length}} Rezepte gefunden
+  </h2>
+  <div class="border m-3 border-dark">
+    <br>
+    FILTER / SUCHEKRITERIEN
+    <br>
+    <br>
+  </div>
+</div>
+<ul class="list-group no-list-type">
+  <li class="m-1 rounded app-liste-item border border-muted" *ngFor="let rezept of rezeptListe"
+      (click)="selectRezept(rezept.id)"
+      (dblclick)="openRezept(rezept.id)"
+      [ngClass]="{'bg-primary border-primary ' : rezept.selected}">
+    <h5 class="">{{rezept.titel}}</h5>
+    <div class="">{{rezept.beschreibung}}</div>
+    <div class="row mt-3">
+      <div class="mr-4">{{rezept.zeit}} min</div>
+      <div class="mr-4">{{rezept.naehrwerte.kalorien}} kcal</div>
+      <div class="">{{rezept.art}}</div>
+    </div>
+  </li>
+</ul>

@@ -2,28 +2,24 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MatButtonModule, MatCardModule, MatInputModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatMenuModule, MatTooltipModule} from '@angular/material';
 
 import {FormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
-import {RezeptComponent} from './rezept-detail/rezept-detail.component';
-import {RezeptListeComponent} from './rezept-liste/rezept-liste.component';
-import {RezeptErfassenComponent} from './rezept-erfassen/rezept-erfassen.component';
+import {RezeptComponent} from './component/rezept-detail/rezept-detail.component';
+import {RezeptListeComponent} from './component/rezept-liste/rezept-liste.component';
+import {RezeptErfassenComponent} from './component/rezept-erfassen/rezept-erfassen.component';
 
-import {RezeptHomeComponent} from './rezept-home/rezept-home.component';
-import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {RezeptHomeComponent} from './component/rezept-home/rezept-home.component';
+import {PageNotFoundComponent} from './component/page-not-found/page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
+import {HeaderComponent} from './component/header/header.component';
+import {RezeptDetailContainerComponent} from './container/rezept-detail-container/rezept-detail-container.component';
+import { RezeptHomeContainerComponent } from './container/rezept-home-container/rezept-home-container.component';
+import { RezeptListContainerComponent } from './container/rezept-list-container/rezept-list-container.component';
+import { RezeptErfassenContainerComponent } from './container/rezept-erfassen-container/rezept-erfassen-container.component';
+import {AppRoutingModule} from './app-routing.module';
 
-
-const appRoutes: Routes = [
-  {path: 'rezeptliste', component: RezeptListeComponent, data: {title: 'Rezeptliste -  Titel'}},
-  {path: 'rezept/:id', component: RezeptComponent, data: {title: 'Rezept -  Titel'}},
-  {path: 'rezepteerfassen', component: RezeptErfassenComponent, data: {title: 'Rezept Erfassen -  Titel'}},
-  {path: 'rezepteerfassen/:id', component: RezeptErfassenComponent, data: {title: 'Rezept Erfassen -  Titel2'}},
-  {path: 'home', component: RezeptHomeComponent, data: {title: 'HOME -  Titel'}},
-  {path: '', redirectTo: '/home', pathMatch: 'full'}, // empty path is the default path
-  {path: '**', component: PageNotFoundComponent, data: {title: 'IRGENDWAS -  Titel'}}
-];
 
 @NgModule({
   declarations: [
@@ -32,17 +28,25 @@ const appRoutes: Routes = [
     RezeptListeComponent,
     RezeptErfassenComponent,
     RezeptHomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HeaderComponent,
+    RezeptDetailContainerComponent,
+    RezeptHomeContainerComponent,
+    RezeptListContainerComponent,
+    RezeptErfassenContainerComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

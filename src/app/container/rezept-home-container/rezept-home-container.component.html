@@ -1,0 +1,4 @@
+<app-rezept-home [randomRezept]="randomRezept$ | async"
+                 (next)="getRandomRezept()"
+                 (open)="openRezept($event)">
+</app-rezept-home>

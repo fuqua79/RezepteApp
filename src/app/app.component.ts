@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {RezeptService} from './rezept/rezept.service';
+import {Component} from '@angular/core';
+import {RezeptService} from './service/rezept.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,6 @@ import {RezeptService} from './rezept/rezept.service';
 export class AppComponent {
 
   constructor() {
-    console.log('AppComponent started...');
   }
 }
 

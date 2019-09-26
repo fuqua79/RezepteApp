@@ -1,0 +1,21 @@
+<div (dblclick)="openRezept(randomRezept.id)">
+  <div>
+    <h1 class="h1 text-center">
+      Zufälliges Rezept
+    </h1>
+  </div>
+  <div class="text-center mt-4 mb-4">
+    <h2>
+      {{randomRezept?.titel}}
+    </h2>
+    <h3>
+      {{randomRezept?.beschreibung}}
+    </h3>
+  </div>
+</div>
+<div class="text-center">
+  <button mat-raised-button matTooltip="Holt ein neues zufälliges Rezept" matTooltipPosition="below"
+          (click)="getNextRezept()">
+    Nächstes Rezept
+  </button>
+</div>
