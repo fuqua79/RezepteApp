@@ -4,9 +4,6 @@
       <h1 class="h1 text-center mt-4">
         {{rezept?.titel}}
       </h1>
-      <div class="text-center">
-        <img class="app-detail-image" src={{(rezept$|async)?.imageFilename}}>
-      </div>
       <h2 class="h2 text-center mt-3">
         {{rezept?.beschreibung}}
       </h2>
@@ -24,7 +21,7 @@
                        (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen - 1">
                 <input class="app-anzahl-personen text-center" id="gewuenschteAnzalPersonen" type="text"
                        name="gewunschteAnzahlPersonen"
-                       [(ngModel)]="gewunschteAnzahlPersonen" ng-init="gewunschteAnzahlPersonen=1">
+                       [(ngModel)]="gewunschteAnzahlPersonen">
                 <input type="button" value="+" id="plus"
                        (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen + 1">
               </div>
@@ -35,7 +32,7 @@
                 <ul class="list-group">
                   <li *ngFor="let zutat of rezept?.zutaten; let i = index;" class="list-group-item">
                     <div>
-                      {{((gewunschteAnzahlPersonen)/(rezept?.zutaten.length)) * (zutat?.menge)}}
+                      {{((gewunschteAnzahlPersonen) / (rezept?.zutaten.length)) * (zutat?.menge)}}
                       {{zutat?.einheit}}
                       {{zutat?.zutat}}
                     </div>
@@ -45,18 +42,14 @@
             </div>
             <div class="mt-4" id="accordion" role="tablist">
               <div class="card">
-                <div class="card-header" role="tab" id="headingOne">
-                  <h5 class="mb-0">
-                    <a id="naehrwerte" data-toggle="collapse" href="#collapseOne" aria-expanded="true"
-                       aria-controls="collapseOne">
-                      Nährwerte +
-                      <!--<i class="fa fa-plus-circle"></i>-->
-                    </a>
-                  </h5>
-                </div>
-                <div id="collapseOne" class="collapse hidden" role="tabpanel" aria-labelledby="headingOne"
-                     data-parent="#accordion">
-                  <div class="card-body">
+                <mat-accordion>
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        Nährwerte
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+
                     <ul class="no-list-type no-padding">
                       <li>
                         Kalorien in kcal:
@@ -75,8 +68,8 @@
                         <span>{{rezept?.naehrwerte?.fett|number}}</span>
                       </li>
                     </ul>
-                  </div>
-                </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
               </div>
             </div>
           </div>
@@ -84,7 +77,7 @@
             <h4>
               Zubereitung
             </h4>
-            <textarea class="zubereitung form-control">
+            <textarea readonly class="zubereitung form-control">
             {{rezept?.zubereitung}}
           </textarea>
             <h5 class="h5 mt-4">
@@ -102,3 +95,6 @@
     </div>
   </div>
 </div>
+<button (click)="printRezept(rezept?.id)">DRUCKEN</button>
+<button (click)="openRezept(rezept?.id)">BEARBEITEN</button>
+<button (click)="deleteRezept(rezept?.id)">LÖSCHEN</button>

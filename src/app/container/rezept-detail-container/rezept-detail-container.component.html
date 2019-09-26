@@ -1,7 +1,6 @@
-<app-rezept [rezept]="rezept$ | async"></app-rezept>
-<br>
-<button (click)="printIt()">DRUCKEN</button>
-<button (click)="editRezept()">BEARBEITEN</button>
-<button (click)="deleteRezept()">LÖSCHEN</button>
-<br>
-
+<app-rezept
+  [rezept]="rezept$ | async"
+  (delete)="deleteRezept($event)"
+  (open)="openRezept($event)"
+  (print)="printRezept($event)">
+</app-rezept>

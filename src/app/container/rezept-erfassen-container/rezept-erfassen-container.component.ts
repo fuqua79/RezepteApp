@@ -26,7 +26,7 @@ export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
     this.routeSubscription = this.route.params.subscribe(params => {
       this.rezeptId = (params['id']);
       if (this.rezeptId) {
-        console.log('Rezept mit Id: ', this.rezeptId, ' holen')
+        console.log('Rezept mit Id: ', this.rezeptId, ' holen');
         this.rezept$ = this.rezeptService.loadRezept(this.rezeptId);
       } else {
         console.log('Rezept neu erfassen');
@@ -40,9 +40,10 @@ export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
   }
 
   saveRezept(rezept: Rezept): void {
-    this.rezeptService.saveRezept(rezept).subscribe(result => {
+    this.rezeptService.saveRezept(rezept).subscribe(() => {
       console.log('Rezept ist erfolgreich gespeichert worden...');
       this.router.navigate(['/rezeptliste/']);
     });
   }
 }
+

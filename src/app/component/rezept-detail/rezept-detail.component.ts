@@ -1,8 +1,5 @@
-import {Component, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable, Subscription} from 'rxjs';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Rezept} from '../../model/rezept';
-import {RezeptService} from '../../service/rezept.service';
 import * as model from '../../model/model-interfaces';
 
 
@@ -16,11 +13,18 @@ export class RezeptComponent implements OnInit, OnDestroy {
   @Input()
   public rezept: Rezept;
 
+  @Output()
+  delete = new EventEmitter<string>();
+
+  @Output()
+  open = new EventEmitter<string>();
+
+  @Output()
+  print = new EventEmitter<string>();
+
   public gewunschteAnzahlPersonen = 1;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private rezeptService: RezeptService) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -29,21 +33,16 @@ export class RezeptComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  editRezept(rezept$: Observable<Rezept>): void {
-    rezept$.subscribe((rezept) => {
-      console.log('Id= ', rezept.id);
-      this.router.navigate(['/rezepteerfassen/' + rezept.id]);
-    });
+  openRezept(rezeptId: string): void {
+    this.open.emit(rezeptId);
   }
 
-  deleteRezept(rezept$: Observable<Rezept>) {
-    rezept$.subscribe((rezept) => {
-      console.log('Rezept loeschen mit Id= ', rezept.id);
-      this.rezeptService.deleteRezept(rezept.id).subscribe(() => {
-        console.log('Rezept erfolgreich geloescht');
-        this.router.navigate(['/rezeptliste/']);
-      });
-    });
+  deleteRezept(rezeptId: string) {
+    this.delete.emit(rezeptId);
+  }
+
+  printRezept(rezeptId: string) {
+    this.print.emit(rezeptId);
   }
 
   getTranslationSchwierigkeitsgrad(name: string): string {

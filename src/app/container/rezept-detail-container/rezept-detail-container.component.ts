@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RezeptService} from '../../service/rezept.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {Rezept} from '../../model/rezept';
-import {switchMap, takeUntil} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
 
 @Component({
@@ -33,22 +33,18 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  printIt() {
-    // TODO:implement
-    console.log('Jetzt sollte das Rezet gedruckt werden....')
-  }
-
-  deleteRezept() {
-    this.rezept$.pipe(takeUntil(this.unsubscribe$)).subscribe((rezept) => {
-      this.rezeptService.deleteRezept(rezept.id).subscribe(() => {
-        this.router.navigate(['/rezeptliste/']);
-      });
+  deleteRezept(rezeptId: string) {
+    this.rezeptService.deleteRezept(rezeptId).subscribe(() => {
+      this.router.navigate(['/rezeptliste/']);
     });
   }
 
-  editRezept() {
-    this.rezept$.pipe(takeUntil(this.unsubscribe$)).subscribe((rezept) => {
-      this.router.navigate(['/rezepteerfassen/' + rezept.id]);
-    });
+  openRezept(rezeptId: string) {
+    this.router.navigate(['/rezepteerfassen/' + rezeptId]);
+  }
+
+  printRezept(rezeptId: string) {
+    // TODO: to implement
+    console.log('Jetzt sollte das Rezet gedruckt werden....');
   }
 }
