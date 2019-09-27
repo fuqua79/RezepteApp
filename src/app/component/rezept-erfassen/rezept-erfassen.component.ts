@@ -80,6 +80,7 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
         'image': this.rezeptInput.imagePath
       });
       this.patchZutaten(this.rezeptInput.zutaten);
+      this.imagePreview = this.rezeptInput.imagePath;
     }
   }
 
