@@ -66,7 +66,7 @@ export class RezeptService {
 
   saveRezept(form: any): Observable<any> {
     console.log('--Neues Form im Backend speichern-- FORM: ', form);
-    if (form.image) {
+    if (form.image && typeof form.image === 'object') {
       const subject = new Subject();
       const imageData = new FormData();
       imageData.append('image', form.image);
@@ -109,6 +109,7 @@ export class RezeptService {
 
   private mapFormToRezept(form: any, response: any): Rezept {
     const rezeptToSave = createInitialRezept();
+    rezeptToSave.id = form.id;
     rezeptToSave.beschreibung = form.beschreibung;
     rezeptToSave.titel = form.titel;
     rezeptToSave.anzahlPersonen = form.anzahlPersonen;
@@ -123,6 +124,8 @@ export class RezeptService {
     rezeptToSave.naehrwerte.kohlenhydrate = form.kohlenhydrate;
     if (response !== null && response.imagePath !== '') {
       rezeptToSave.imagePath = response.imagePath;
+    } else if (typeof form.image === 'string') {
+      rezeptToSave.imagePath = form.image;
     }
 
     return rezeptToSave;

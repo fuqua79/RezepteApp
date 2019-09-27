@@ -1,7 +1,6 @@
 <div>
   <form [formGroup]="formGroup">
     <mat-form-field>
-      <div>{{rezeptInput?.titel}}</div>
       <input matInput type="text" formControlName="titel" placeholder="Titel">
       <mat-error *ngIf="formGroup.get('titel').invalid">Bitte tragen Sie einen Titel ein.</mat-error>
     </mat-form-field>
@@ -39,7 +38,7 @@
       <mat-error *ngIf="formGroup.get('zubereitung').invalid">Bitte tragen Sie die Zubereitung ein.</mat-error>
     </mat-form-field>
     <label>Zutaten:</label>
-    <button matButton type="button" (click)="addZutat()">
+    <button matButton type="button" (click)="addEmptyZutat()">
       Zutat hinzufügen
     </button>
     <div formArrayName="zutaten">

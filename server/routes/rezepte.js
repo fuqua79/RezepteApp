@@ -130,6 +130,7 @@ router.delete('/delete/:id', (req, res, next) => {
   Rezept.deleteOne({_id: req.params.id})
     .then(result => {
       console.log('result= ', result);
+      res.status(200).json(result);
     })
     .catch((err) => {
       console.log('Error occured: ', err);
