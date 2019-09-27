@@ -1,152 +1,111 @@
 <div>
-  <form novalidate #rezepteForm="ngForm" class="form_erfassen form-group"
-        name="form_erfassen">
-    <div class="form-group">
-      <label class="col-form-label">Titel</label>
-      <input type="text" class="form-control" id="titel" name="titel" #title="ngModel" [ngModel]="rezeptInput?.titel"
-             required minlength="5"
-             placeholder="Titel">
-      <div *ngIf="!title.control.valid && title.control.touched" class="alert alert-danger">
-        <div *ngIf="title.control.hasError('required')">
-          Der Titel ist erforderlich
-        </div>
-        <div *ngIf="title.control.hasError('minlength')">
-          Der Titel muss mindestens {{title.control.getError('minlength').requiredLength}} Zeichen haben
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-form-label">Beschreibung</label>
-      <input type="textarea" class="form-control" id="beschreibung" name="beschreibung" #beschreibung="ngModel"
-             [ngModel]="rezeptInput?.beschreibung" placeholder="Beschreibung" required>
-      <br>
-      <mat-card>
-        <mat-form-field>
-          <input matInput type="textarea">
-        </mat-form-field>
-      </mat-card>
-      <div *ngIf="!beschreibung.control.valid && beschreibung.control.touched" class="alert alert-danger">
-        <div *ngIf="beschreibung.control.hasError('required')">
-          Die Beschreibung ist erforderlich
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="">Schwierigkeitsgrad</label>
-      <select name="schwierigkeitsgrad" [ngModel]="rezeptInput?.schwierigkeitsgrad" class="form-control">
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+      <div>{{rezeptInput?.titel}}</div>
+      <input matInput type="text" formControlName="titel" placeholder="Titel">
+      <mat-error *ngIf="formGroup.get('titel').invalid">Bitte tragen Sie einen Titel ein.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput rows=6 formControlName="beschreibung" placeholder="Beschreibung"></textarea>
+      <mat-error *ngIf="formGroup.get('beschreibung').invalid">Bitte tragen Sie eine Beschreibung ein.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Schwierigkeitsgrad</mat-label>
+      <select matNativeControl
+              name="schwierigkeitsgrad"
+              formControlName="schwierigkeitsgrad">
         <option value="">--- Bitte auswählen ---</option>
         <option *ngFor="let grad of model.schwierigkeitsgrad" class="" [ngValue]="grad.name">
           {{grad.value}}
         </option>
       </select>
-    </div>
-
-    <div class="form-group">
-      <label>Art</label>
-      <div class="radio" *ngFor="let art of model.art">
-        <label>
-          <input type="radio" name="art" [ngModel]="rezeptInput?.art" [value]="art.name" required>
-          {{art.value}}
-        </label>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="">Zeit in min</label>
-      <input type="number" class="form-control" id="zeit" name="zeit" [ngModel]="rezeptInput?.zeit"
-             required min="0">
-    </div>
-
-    <div class="form-group">
-      <label>Zubereitung</label>
-      <textarea class="form-control zubereitung" id="zubereitung2" name="zubereitung"
-                [ngModel]="rezeptInput?.zubereitung"
-                required placeholder="Zubereitung"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Anzahl Personen</label>
-      <input type="text" class="form-control" id="zutatenAnzahl" name="zutatenAnzahl" #zutatenAnzahl="ngModel"
-             [ngModel]="rezeptInput?.zutatenAnzahl" required>
-      <div *ngIf="!zutatenAnzahl.control.valid && zutatenAnzahl.control.touched" class="alert alert-danger">
-        <div *ngIf="zutatenAnzahl.control.hasError('required')">
-          Die Anzahl Personen ist erforderlich
+      <mat-error *ngIf="formGroup.get('schwierigkeitsgrad').invalid">Bitte tragen Sie einen Schwierigkeitsgrad ein.
+      </mat-error>
+    </mat-form-field>
+    <label>Art</label>
+    <mat-radio-group
+      class="radio-group"
+      formControlName="art">
+      <mat-radio-button class="radio-button" *ngFor="let art of model.art" [value]="art.name">
+        {{art.value}}
+      </mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field>
+      <input matInput type="number" formControlName="zeit" placeholder="Zeit in min">
+      <mat-error *ngIf="formGroup.get('zeit').invalid">Bitte tragen Sie die benötigte Zeit ein.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput rows=6 formControlName="zubereitung" placeholder="Zubereitung"></textarea>
+      <mat-error *ngIf="formGroup.get('zubereitung').invalid">Bitte tragen Sie die Zubereitung ein.</mat-error>
+    </mat-form-field>
+    <label>Zutaten:</label>
+    <button matButton type="button" (click)="addZutat()">
+      Zutat hinzufügen
+    </button>
+    <div formArrayName="zutaten">
+      <div *ngFor="let zutat of zutatenFormGroup.controls; let i = index">
+        <div [formGroupName]="i">
+          <label>Zutat {{i + 1}}</label>
+          <button matButton type="button" (click)="removeZutat(i)">
+            Zutat löschen
+          </button>
+          <mat-form-field>
+            <input matInput type="number" formControlName="menge" placeholder="Menge">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" formControlName="einheit" placeholder="Einheit">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" formControlName="zutat" placeholder="Zutat">
+          </mat-form-field>
         </div>
       </div>
     </div>
-    <div id="zutaten" class="form-group">
-      <label>Zutaten</label>
-      <div *ngFor="let element of rezeptInput?.zutaten; let i = index;" class="mt-4">
-        <label>Zutat {{i + 1}}</label>
-        <button class="btn btn-danger" (click)="removeZutat(i)">
-          Zutat löschen
-        </button>
-        <br>
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <label>Menge</label>
-              <input type="text" class="form-control" id="menge" name="menge_{{i}}"
-                     [ngModel]="element?.menge">
-            </div>
-            <div class="col">
-              <label>Einheit</label>
-              <input type="text" class="form-control" id="einheit" name="einheit_{{i}}"
-                     [ngModel]="element?.einheit">
-            </div>
-            <div class="col-6">
-              <label>Zutat</label>
-              <input type="text" class="form-control" id="zutat" name="zutat_{{i}}"
-                     [ngModel]="element?.zutat">
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
-      <button class="btn btn-success" (click)="addZutat()">
-        Zutat hinzufügen
-      </button>
+    <mat-form-field>
+      <input matInput type="number" formControlName="anzahlPersonen" placeholder="Anzahl Personen">
+      <mat-error *ngIf="formGroup.get('anzahlPersonen').invalid">Bitte tragen Sie die Anzahl der Personen ein.
+      </mat-error>
+    </mat-form-field>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Nährwerte
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ul class="no-list-type no-padding">
+          <li>
+            <mat-form-field>
+              <input matInput type="number" formControlName="kalorien" placeholder="Kalorien in kcal">
+            </mat-form-field>
+          </li>
+          <li>
+            <mat-form-field>
+              <input matInput type="number" formControlName="fett" placeholder="Fett">
+            </mat-form-field>
+          </li>
+          <li>
+            <mat-form-field>
+              <input matInput type="number" formControlName="eiweiss" placeholder="Eiweiss">
+            </mat-form-field>
+          </li>
+          <li>
+            <mat-form-field>
+              <input matInput type="number" formControlName="kohlenhydrate" placeholder="Kohlenhydrate">
+            </mat-form-field>
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+      <input type="file" #filePicker (change)="onImagePicked($event)">
     </div>
-
-    <div class="form-group" *ngIf="rezeptInput?.naehrwerte">
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-              aria-expanded="false" aria-controls="collapseExample">
-        Nähwerte
-      </button>
-      <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-          <label>Kalorien</label>
-          <input type="number" class="form-control" id="kalorien" name="kalorien" #kalorien="ngModel"
-                 [ngModel]="rezeptInput?.naehrwerte?.kalorien" min="0">
-          <label>Fett</label>
-          <input type="number" class="form-control" id="fett" name="fett" #fett="ngModel"
-                 [ngModel]="rezeptInput?.naehrwerte?.fett" min="0">
-          <label>Eiweiss</label>
-          <input type="number" class="form-control" id="eiweiss" name="eiweiss" #eiweiss="ngModel"
-                 [ngModel]="rezeptInput?.naehrwerte?.eiweis" min="0">
-          <label>Kohlenhydrate</label>
-          <input type="number" class="form-control" id="kohlenhydrate" name="kohlenhydrate" #kohlenhydrate="ngModel"
-                 [ngModel]="rezeptInput?.naehrwerte?.kohlenhydrate" min="0">
-        </div>
-      </div>
-    </div>
-
-    <br>
-    <div class="form-group">
-      <label>Image Filename (Muss im Verzeichnis <b>"E:\web_entwicklung\rezepteApp2\RezepteApp2\src\assets\images"</b>
-        liegen)</label>
-      <input type="text" class="form-control" id="imageFilename" name="imageFilename"
-             [ngModel]="rezeptInput?.imageFilename" readonly>
-      <input type="file" class="form-control-file" (change)="onFileChange($event)" accept=".jpg, .jpeg, .png"/>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && formGroup.get('image').valid">
+      <img [src]="imagePreview" [alt]="formGroup.value.title">
     </div>
     <br>
-    <button mat-raised-button color="primary" id="speichern" (click)="saveRezept(rezeptInput)">Speichern</button>
+    <button mat-raised-button color="primary" id="speichern" (click)="saveRezept()">Speichern</button>
     <br>
-    <!--<input type="button" class="btn btn-secondary" value="Image Speichern" id="imageSpeichern"-->
-    <!--(click)="saveImage('TEST')">-->
-    <!--<br>-->
-    <!--<input type="button" class="btn btn-secondary" value="Image holen" id="imageLaden" (click)="loadImage('TEST')">-->
   </form>
 </div>

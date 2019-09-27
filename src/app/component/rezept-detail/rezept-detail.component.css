@@ -21,3 +21,12 @@ li > span {
 mat-spinner {
   margin: auto;
 }
+
+.home-image {
+  height: 200px;
+}
+
+.home-image img {
+  height: 100%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}

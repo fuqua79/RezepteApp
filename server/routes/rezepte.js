@@ -1,8 +1,49 @@
 const express = require("express");
+const mongoose = require('mongoose');
+const multer = require('multer');
 
 const Rezept = require('../models/rezept');
 
 const router = express.Router();
+
+const MIME_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpeg": "jpg",
+  "image/jpg": "jpg"
+};
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const isValid = MIME_TYPE_MAP[file.mimetype];
+    let error = new Error("Invalid mime type");
+    if (isValid) {
+      error = null;
+    }
+    cb(error, "server/assets/images");
+  },
+  filename: (req, file, cb) => {
+    const name = file.originalname
+      .toLowerCase()
+      .split(" ")
+      .join("-");
+    const ext = MIME_TYPE_MAP[file.mimetype];
+    cb(null, name + "-" + Date.now() + "." + ext);
+  }
+});
+
+
+//FILE speichern
+router.post(
+  '/file/save',
+  multer({storage: storage}).single("image"),
+  (req, res, next) => {
+    // url
+    const url = req.protocol + "://" + req.get("host");
+    res.status(201).json({
+      'imagePath': url + '/images/' + req.file.filename
+    });
+  }
+);
 
 //Rezept SPEICHERN
 router.post('/save', (req, res, next) => {
@@ -19,14 +60,14 @@ router.post('/save', (req, res, next) => {
       $set: {
         beschreibung: req.body.beschreibung,
         titel: req.body.titel,
-        zutatenAnzahl: req.body.zutatenAnzahl,
+        anzahlPersonen: req.body.anzahlPersonen,
         zutaten: req.body.zutaten,
         naehrwerte: req.body.naehrwerte,
         schwierigkeitsgrad: req.body.schwierigkeitsgrad,
         zeit: req.body.zeit,
         zubereitung: req.body.zubereitung,
         art: req.body.art,
-        imageFilename: req.body.imageFilename
+        imagePath: req.body.imagePath
       }
     },
     //options
@@ -43,7 +84,6 @@ router.post('/save', (req, res, next) => {
       console.log('Error occured: ', err);
     });
 });
-
 
 //ALLE Rezepte LADEN
 router.get('/list', (req, res, next) => {

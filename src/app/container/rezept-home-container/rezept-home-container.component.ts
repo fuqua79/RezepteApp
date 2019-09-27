@@ -26,7 +26,6 @@ export class RezeptHomeContainerComponent implements OnInit {
   }
 
   getRandomRezept(): void {
-    console.log('neues reept holen...');
     this.randomRezept$ = this.rezeptService.loadRandomRezept();
   }
 

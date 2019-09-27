@@ -9,6 +9,9 @@
         <h2 class="h2 text-center mt-3">
           {{rezept?.beschreibung}}
         </h2>
+        <div *ngIf="rezept?.imagePath != ''">
+          <img [src]="rezept?.imagePath" [alt]="rezept?.titel" class="home-image">
+        </div>
       </div>
       <div id="printArea">
         <div class="container mt-4" id="detail_container">
@@ -63,7 +66,7 @@
                         </li>
                         <li>
                           Eiweiss:
-                          <span>{{rezept?.naehrwerte?.eiweis|number}}</span>
+                          <span>{{rezept?.naehrwerte?.eiweiss|number}}</span>
                         </li>
                         <li>
                           Fett:

@@ -1,17 +1,22 @@
 <div (dblclick)="openRezept(randomRezept.id)">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <div *ngIf="!isLoading">
-    <h1 class="h1 text-center">
-      Zufälliges Rezept
-    </h1>
-  </div>
-  <div class="text-center mt-4 mb-4">
-    <h2>
-      {{randomRezept?.titel}}
-    </h2>
-    <h3>
-      {{randomRezept?.beschreibung}}
-    </h3>
+    <div>
+      <h1 class="h1 text-center">
+        Zufälliges Rezept
+      </h1>
+    </div>
+    <div class="text-center mt-4 mb-4">
+      <h2>
+        {{randomRezept?.titel}}
+      </h2>
+      <h3>
+        {{randomRezept?.beschreibung}}
+      </h3>
+      <div *ngIf="randomRezept?.imagePath != ''">
+        <img [src]="randomRezept?.imagePath" [alt]="randomRezept?.titel" class="home-image">
+      </div>
+    </div>
   </div>
 </div>
 <div class="text-center">

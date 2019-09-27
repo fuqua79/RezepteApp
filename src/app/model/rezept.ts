@@ -6,15 +6,15 @@ export interface Rezept {
   id?: string;
   beschreibung: string;
   titel: string;
-  zutatenAnzahl: number;
+  anzahlPersonen: number;
   zutaten: Array<Zutat>;
   schwierigkeitsgrad: string;
   zeit: number;
   zubereitung: string;
   art: string;
   selected: boolean;
-  imageFilename: string;
   naehrwerte: Naehrwerte;
+  imagePath: string;
 
 }
 
@@ -22,14 +22,14 @@ export function createInitialRezept(): Rezept {
   return {
     beschreibung: '',
     titel: '',
-    zutatenAnzahl: 0,
+    anzahlPersonen: 1,
     zutaten: [createInitialZutat()],
     schwierigkeitsgrad: '',
     zeit: 0,
     zubereitung: '',
     art: '',
     selected: false,
-    imageFilename: '',
+    imagePath: '',
     naehrwerte: createInitialNaehrwerte()
   }
 

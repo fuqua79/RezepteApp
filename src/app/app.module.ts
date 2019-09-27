@@ -7,11 +7,11 @@ import {
   MatExpansionModule,
   MatIconModule,
   MatInputModule,
-  MatMenuModule, MatProgressSpinnerModule,
+  MatMenuModule, MatProgressSpinnerModule, MatRadioModule,
   MatTooltipModule
 } from '@angular/material';
 
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {RezeptComponent} from './component/rezept-detail/rezept-detail.component';
 import {RezeptListeComponent} from './component/rezept-liste/rezept-liste.component';
@@ -46,6 +46,7 @@ import {AppRoutingModule} from './app-routing.module';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatInputModule,
@@ -55,7 +56,8 @@ import {AppRoutingModule} from './app-routing.module';
     MatIconModule,
     MatTooltipModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

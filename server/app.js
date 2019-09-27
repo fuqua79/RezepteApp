@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -16,24 +17,9 @@ mongoose.connect('mongodb+srv://ssouser:YLiZYNFOro1JKF8s@cluster0-vqzry.mongodb.
   .catch(() => {
     console.log('Connection to databse failed !')
   });
-/*
-MongoDB Account: fuqua
-
-MongoDb Atlas
-mmugglin@hotmail.com
-fuqua
-_123Mike
-
-MongodDB Atlas Credentials
-https://cloud.mongodb.com/v2/59515b3ec0c6e30371baa3a0#clusters/connect?clusterId=Cluster0
-username: ssouser
-password: YLiZYNFOro1JKF8s
- */
-
-
-
 
 app.use(bodyParser.json());
+app.use("/images", express.static(path.join('server/assets/images')));
 
 //Header-Handling
 app.use((req, res, next) => {

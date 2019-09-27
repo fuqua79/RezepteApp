@@ -10,6 +10,6 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .then(success => console.log(`Bootstrap success`))
+  .then(() => console.log(`Angular App successfully started...`))
   .catch(err => console.error(err));
 

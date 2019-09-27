@@ -2,8 +2,9 @@ DB:
 MongoDB Account: fuqua
 
 MongoDb Atlas
+https://cloud.mongodb.com/user#/atlas/login
+(fuqua ??)
 mmugglin@hotmail.com
-fuqua
 _123Mike
 
 MongodDB Atlas Credentials

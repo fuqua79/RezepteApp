@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {createInitialZutat} from '../../model/zutat';
-import {createInitialRezept, Rezept} from '../../model/rezept';
+import {Rezept} from '../../model/rezept';
 import * as model from '../../model/model-interfaces';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -15,37 +15,74 @@ export class RezeptErfassenComponent implements OnInit {
   rezeptInput: Rezept;
 
   @Output()
-  save = new EventEmitter<Rezept>();
+  save = new EventEmitter<any>();
 
   public model = model;
+  public formGroup: FormGroup;
+  public zutatenListe: FormArray;
+  public imagePreview: string;
 
-  constructor() {
+  constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
+    this.formGroup = this.formBuilder.group(
+      {
+        'beschreibung': [this.rezeptInput.beschreibung, [Validators.required, Validators.minLength(3)]],
+        'titel': [this.rezeptInput.titel, [Validators.required, Validators.minLength(3)]],
+        'schwierigkeitsgrad': [this.rezeptInput.schwierigkeitsgrad, Validators.required],
+        'art': [this.rezeptInput.art],
+        'zeit': [this.rezeptInput.zeit, Validators.required],
+        'zubereitung': [this.rezeptInput.zubereitung, Validators.required],
+        'anzahlPersonen': [this.rezeptInput.anzahlPersonen, Validators.required],
+        'zutaten': this.formBuilder.array([]),
+        'kalorien': [this.rezeptInput.naehrwerte.kalorien],
+        'fett': [this.rezeptInput.naehrwerte.fett],
+        'eiweiss': [this.rezeptInput.naehrwerte.eiweiss],
+        'kohlenhydrate': [this.rezeptInput.naehrwerte.kohlenhydrate],
+        'image': ['']
+      }
+    );
+    this.zutatenListe = this.formGroup.get('zutaten') as FormArray;
+  }
+
+  private createZutat(): FormGroup {
+    return this.formBuilder.group({
+      'menge': [0],
+      'einheit': [''],
+      'zutat': ['']
+    });
   }
 
   addZutat(): void {
-    const zutat = createInitialZutat();
-    this.rezeptInput.zutaten.push(zutat);
+    this.zutatenListe.push(this.createZutat());
   }
 
-  removeZutat(arrayIndex: number): boolean {
-    this.rezeptInput.zutaten.splice(arrayIndex, 1);
-    return false;
+  removeZutat(arrayIndex: number): void {
+    this.zutatenListe.removeAt(arrayIndex);
   }
 
-  saveRezept(rezept: Rezept): void {
-    this.save.emit(rezept);
+  get zutatenFormGroup() {
+    return this.formGroup.get('zutaten') as FormArray;
   }
 
-  onFileChange(fileInput) {
-    console.log('FILE SAVEN, fileInput:', fileInput);
-    const file = fileInput.target.files[0].name;
-    console.log('FILE SAVEN, file :', file);
-    this.rezeptInput.imageFilename = file;
-    // let fileName = file.name;
+  saveRezept(): void {
+    if (this.formGroup.invalid) {
+      return;
+    }
+    this.save.emit(this.formGroup.value);
   }
 
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.formGroup.patchValue({image: file});
+    this.formGroup.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+
+  }
 }
 
