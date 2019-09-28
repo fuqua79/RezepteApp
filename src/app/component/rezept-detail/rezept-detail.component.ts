@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Rezept} from '../../model/rezept';
 import * as model from '../../model/model-interfaces';
+import {AuthService} from '../../auth/auth.service';
+import {Subscription} from 'rxjs/internal/Subscription';
 
 
 @Component({
@@ -26,14 +28,22 @@ export class RezeptComponent implements OnInit, OnDestroy {
   print = new EventEmitter<string>();
 
   public gewunschteAnzahlPersonen = 1;
+  private authListenerSubs: Subscription;
+  private userIsAuthenticated= false;
 
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
   }
 
   ngOnDestroy() {
+    this.authListenerSubs.unsubscribe();
   }
 
   openRezept(rezeptId: string): void {

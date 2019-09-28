@@ -19,18 +19,23 @@ import {RezeptErfassenComponent} from './component/rezept-erfassen/rezept-erfass
 
 import {RezeptHomeComponent} from './component/rezept-home/rezept-home.component';
 import {PageNotFoundComponent} from './component/page-not-found/page-not-found.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HeaderComponent} from './component/header/header.component';
 import {RezeptDetailContainerComponent} from './container/rezept-detail-container/rezept-detail-container.component';
 import {RezeptHomeContainerComponent} from './container/rezept-home-container/rezept-home-container.component';
 import {RezeptListContainerComponent} from './container/rezept-list-container/rezept-list-container.component';
 import {RezeptErfassenContainerComponent} from './container/rezept-erfassen-container/rezept-erfassen-container.component';
 import {AppRoutingModule} from './app-routing.module';
+import {LoginComponent} from './auth/login/login.component';
+import {SignupComponent} from './auth/signup/signup.component';
+import {AuthInterceptor} from './auth/auth-interceptor';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
+    SignupComponent,
     RezeptComponent,
     RezeptListeComponent,
     RezeptErfassenComponent,
@@ -59,7 +64,7 @@ import {AppRoutingModule} from './app-routing.module';
     MatProgressSpinnerModule,
     MatRadioModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -4,6 +4,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "1.17.2",
     "express": "^4.17.1",
     "mongodb": "3.2.7",

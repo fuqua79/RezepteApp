@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RezeptService} from './service/rezept.service';
+import {AuthService} from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,13 @@ import {RezeptService} from './service/rezept.service';
   styleUrls: ['./app.component.css'],
   providers: [RezeptService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor() {
+  constructor(private authService: AuthService) {
+  }
+
+  ngOnInit(): void {
+    this.authService.autoAuthUser();
   }
 }
 
