@@ -15,7 +15,7 @@ export interface Rezept {
   selected: boolean;
   naehrwerte: Naehrwerte;
   imagePath: string;
-
+  creator: string
 }
 
 export function createInitialRezept(): Rezept {
@@ -30,7 +30,8 @@ export function createInitialRezept(): Rezept {
     art: '',
     selected: false,
     imagePath: '',
-    naehrwerte: createInitialNaehrwerte()
+    naehrwerte: createInitialNaehrwerte(),
+    creator: ''
   }
 
 }

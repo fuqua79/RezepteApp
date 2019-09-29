@@ -30,7 +30,7 @@ router.post("/signup", (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
   let fetchedUser;
-  User.findOne({ email: req.body.email })
+  User.findOne({email: req.body.email})
     .then(user => {
       if (!user) {
         return res.status(401).json({
@@ -47,9 +47,9 @@ router.post("/login", (req, res, next) => {
         });
       }
       const token = jwt.sign(
-        { email: fetchedUser.email, userId: fetchedUser._id },
+        {email: fetchedUser.email, userId: fetchedUser._id},
         "secret_this_should_be_longer",
-        { expiresIn: "1h" }
+        {expiresIn: "1h"}
       );
       res.status(200).json({
         token: token,
@@ -57,10 +57,28 @@ router.post("/login", (req, res, next) => {
       });
     })
     .catch(err => {
+      console.log(err);
       return res.status(401).json({
         message: "Auth failed"
       });
     });
 });
+
+
+router.get(
+  '/:id',
+  (req, res, next) => {
+    console.log("User holen mit Id= " + req.params.id);
+    User.findById(req.params.id)
+      .then(usr => {
+        console.log("usr: " + usr);
+        res.status(200).json(usr.email);
+      })
+      .catch((err) => {
+        console.log('Error occured: ', err);
+      });
+  }
+);
+
 
 module.exports = router;

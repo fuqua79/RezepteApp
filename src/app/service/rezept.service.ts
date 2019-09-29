@@ -65,17 +65,45 @@ export class RezeptService {
   }
 
   saveRezept(form: any): Observable<any> {
-    console.log('--Neues Form im Backend speichern-- FORM: ', form);
-    if (form.image && typeof form.image === 'object') {
+    if (form.id && form.id !== '') {
+      console.log('rezept.service: Update Rezept...');
+      return this.updateRezept(form);
+    } else {
+      console.log('rezept.service: Insert Rezept...');
+      return this.insertRezept(form);
+    }
+  }
+
+  updateRezept(form: any): Observable<any> {
+    console.log('--Bestehendes Rezet im Backend updaten-- id:', form.id);
+    if (this.checkNewImage(form)) {
       const subject = new Subject();
-      const imageData = new FormData();
-      imageData.append('image', form.image);
-      const urlFile = this.rezeptUrl + '/file/save';
-      console.log('--Neues File im Backend speichern-- FILE');
-      this.httpClient.post(urlFile, imageData).subscribe((response) => {
+      this.saveImage(form.image).subscribe((response) => {
+        const urlRezept = this.rezeptUrl + '/' + form.id;
+        const rezept = this.mapFormToRezept(form, response);
+        console.log('--Neues Rezept im Backend updaten-- Rezept: ');
+        this.httpClient.put(urlRezept, rezept).subscribe(() => {
+          subject.next();
+          subject.complete();
+        });
+      });
+      return subject;
+    } else {
+      const urlRezept = this.rezeptUrl + '/' + form.id;
+      const rezept = this.mapFormToRezept(form, null);
+      console.log('--Neues Rezept im Backend updaten-- Rezept: ');
+      return this.httpClient.put(urlRezept, rezept);
+    }
+  }
+
+  insertRezept(form: any): Observable<any> {
+    console.log('--Neues Form im Backend inserten-- FORM: ', form);
+    if (this.checkNewImage(form)) {
+      const subject = new Subject();
+      this.saveImage(form.image).subscribe((response) => {
         const urlRezept = this.rezeptUrl + '/save';
         const rezept = this.mapFormToRezept(form, response);
-        console.log('--Neues Rezept im Backend speichern-- Rezept: ');
+        console.log('--Neues Rezept im Backend inserten-- Rezept: ');
         this.httpClient.post(urlRezept, rezept).subscribe(() => {
           subject.next();
           subject.complete();
@@ -85,11 +113,10 @@ export class RezeptService {
     } else {
       const urlRezept = this.rezeptUrl + '/save';
       const rezept = this.mapFormToRezept(form, null);
-      console.log('--Neues Rezept im Backend speichern-- Rezept: ');
+      console.log('--Neues Rezept im Backend inserten-- Rezept: ');
       return this.httpClient.post(urlRezept, rezept);
     }
   }
-
 
   deleteRezept(id: string): Observable<Object> {
     this.startLoading();
@@ -99,12 +126,18 @@ export class RezeptService {
     return this.httpClient.delete(url);
   }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////
   private startLoading(): void {
     this.isLoading$.next(true);
   }
 
   private stopLoading(): void {
     this.isLoading$.next(false);
+  }
+
+  private checkNewImage(form: any): boolean {
+    return form && form.image && typeof form.image === 'object';
   }
 
   private mapFormToRezept(form: any, response: any): Rezept {
@@ -130,4 +163,13 @@ export class RezeptService {
 
     return rezeptToSave;
   }
+
+  private saveImage(image: any): Observable<any> {
+    const imageData = new FormData();
+    imageData.append('image', image);
+    const urlFile = this.rezeptUrl + '/file/save';
+    console.log('--Neues File im Backend speichern-- FILE');
+    return this.httpClient.post(urlFile, imageData);
+  }
+
 }

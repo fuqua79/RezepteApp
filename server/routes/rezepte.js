@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require('mongoose');
 const multer = require('multer');
 
 const Rezept = require('../models/rezept');
@@ -13,6 +12,8 @@ const MIME_TYPE_MAP = {
   "image/jpg": "jpg"
 };
 
+
+// Helper-Logik zum File speichern
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
@@ -32,7 +33,6 @@ const storage = multer.diskStorage({
   }
 });
 
-
 //FILE speichern
 router.post(
   '/file/save',
@@ -47,20 +47,48 @@ router.post(
   }
 );
 
-//Rezept SPEICHERN
+
+//Rezept INSERTEN
 router.post(
   '/save',
   checkAuth,
   (req, res, next) => {
-    console.log('Rezept speichern.');
-    var query = {_id: req.body.id};
-    if (!query._id) {
-      query._id = new mongoose.mongo.ObjectID();
-    }
-    //if(req.body.id)
-    Rezept.findOneAndUpdate(
-      //Query, was updaten
-      query,
+    console.log('Rezept inserten.');
+    const rezept = new Rezept({
+      beschreibung: req.body.beschreibung,
+      titel: req.body.titel,
+      anzahlPersonen: req.body.anzahlPersonen,
+      zutaten: req.body.zutaten,
+      schwierigkeitsgrad: req.body.schwierigkeitsgrad,
+      zeit: req.body.zeit,
+      zubereitung: req.body.zubereitung,
+      art: req.body.art,
+      naehrwerte: req.body.naehrwerte,
+      imagePath: req.body.imagePath,
+      creator: req.userData.userId
+    });
+    rezept.save()
+      .then((result) => {
+        console.log('INSERT result: ', result);
+        res.status(201).json(result);
+      })
+      .catch((err) => {
+        console.log('Error occured: ', err);
+      });
+  }
+);
+
+
+//Rezept UPDATEN
+router.put(
+  '/:id',
+  checkAuth,
+  (req, res, next) => {
+    console.log('Rezept updaten, id: ' + req.params.id);
+    Rezept.updateOne(
+      // filter
+      {_id: req.params.id, creator: req.userData.userId},
+      // data
       {
         $set: {
           beschreibung: req.body.beschreibung,
@@ -72,23 +100,29 @@ router.post(
           zeit: req.body.zeit,
           zubereitung: req.body.zubereitung,
           art: req.body.art,
-          imagePath: req.body.imagePath
+          imagePath: req.body.imagePath,
+          creator: req.userData.userId
         }
       },
-      //options
+      // options
       {
         sort: {_id: -1}, //neuster Eintrag suchen
         upsert: true //falls keine gefunden, dann einen neuen erstellen
       }
     )
       .then((result) => {
-        console.log('result: ', result);
-        res.status(201).json(result);
+        console.log('SAVE result: ', result);
+        if (result.nModified > 0) {
+          res.status(200).json(result);
+        } else {
+          res.status(401).json("User not authorized to update this rezept, id: " + req.params.id);
+        }
       })
       .catch((err) => {
         console.log('Error occured: ', err);
       });
   });
+
 
 //ALLE Rezepte LADEN
 router.get(
