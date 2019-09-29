@@ -5,19 +5,26 @@ import {RezeptDetailContainerComponent} from './container/rezept-detail-containe
 import {RezeptErfassenContainerComponent} from './container/rezept-erfassen-container/rezept-erfassen-container.component';
 import {RezeptHomeContainerComponent} from './container/rezept-home-container/rezept-home-container.component';
 import {PageNotFoundComponent} from './component/page-not-found/page-not-found.component';
-import {LoginComponent} from './auth/login/login.component';
-import {SignupComponent} from './auth/signup/signup.component';
 import {AuthGuard} from './auth/auth.guard';
 
 
 const routes: Routes = [
   {path: 'rezeptliste', component: RezeptListContainerComponent, data: {title: 'Rezeptliste -  Titel'}},
   {path: 'rezept/:id', component: RezeptDetailContainerComponent, data: {title: 'Rezept -  Titel'}},
-  {path: 'rezepteerfassen', component: RezeptErfassenContainerComponent, data: {title: 'Rezept Erfassen -  Titel'},  canActivate: [AuthGuard] },
-  {path: 'rezepteerfassen/:id', component: RezeptErfassenContainerComponent, data: {title: 'Rezept Erfassen -  Titel2'},  canActivate: [AuthGuard] },
+  {
+    path: 'rezepteerfassen',
+    component: RezeptErfassenContainerComponent,
+    data: {title: 'Rezept Erfassen -  Titel'},
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'rezepteerfassen/:id',
+    component: RezeptErfassenContainerComponent,
+    data: {title: 'Rezept Erfassen -  Titel2'},
+    canActivate: [AuthGuard]
+  },
+  {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
   {path: 'home', component: RezeptHomeContainerComponent, data: {title: 'HOME -  Titel'}},
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignupComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'}, // empty path is the default path
   {path: '**', component: PageNotFoundComponent, data: {title: 'IRGENDWAS -  Titel'}}
 ];

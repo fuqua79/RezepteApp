@@ -6,7 +6,7 @@ import {Rezept} from '../../model/rezept';
 import {switchMap, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
-import {AuthService} from '../../auth/auth.service';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-rezept-detail-container',

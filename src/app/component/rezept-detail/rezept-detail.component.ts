@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Rezept} from '../../model/rezept';
 import * as model from '../../model/model-interfaces';
-import {AuthService} from '../../auth/auth.service';
+import {AuthService} from '../../service/auth.service';
 import {Subscription} from 'rxjs/internal/Subscription';
 
 

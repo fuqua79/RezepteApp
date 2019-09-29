@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 
-import {AuthData} from './auth-data.model';
+import {AuthData} from '../auth/auth-data.model';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({providedIn: 'root'})
