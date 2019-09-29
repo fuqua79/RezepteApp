@@ -24,14 +24,12 @@ export class RezeptService {
     return this.httpClient.get(url)
       .pipe(
         map((rezepteliste: any) => {
-          console.log('CLient: Rezeptliste= ', rezepteliste);
           for (const rezept of rezepteliste) {
             rezept.id = rezept._id;
           }
           this.stopLoading();
           return rezepteliste;
         })
-        // ,catchError(this.handleError)
       );
   }
 
@@ -42,11 +40,9 @@ export class RezeptService {
     return this.httpClient.get(url)
       .pipe(map((rezept: any) => {
           rezept.id = rezept._id;
-          console.log('MIKE Rezept: ', rezept);
           this.stopLoading();
           return rezept;
         })
-        // ,catchError(this.handleError)
       );
   }
 
@@ -58,7 +54,6 @@ export class RezeptService {
       .pipe(map((rezept: any) => {
           if (rezept) {
             rezept.id = rezept._id;
-            console.log('randomRezept: ' + rezept.id);
           }
           this.stopLoading();
           return rezept;

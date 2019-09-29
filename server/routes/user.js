@@ -21,8 +21,9 @@ router.post("/signup", (req, res, next) => {
         });
       })
       .catch(err => {
+        console.log(err);
         res.status(500).json({
-          error: err
+          message: 'Invalid signup credentials!'
         });
       });
   });
@@ -34,16 +35,19 @@ router.post("/login", (req, res, next) => {
     .then(user => {
       if (!user) {
         return res.status(401).json({
-          message: "Auth failed"
+          message: "User not registered!"
         });
       }
       fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password);
     })
     .then(result => {
+      if(!fetchedUser){
+        return;
+      }
       if (!result) {
         return res.status(401).json({
-          message: "Auth failed"
+          message: "Password is wrong!"
         });
       }
       const token = jwt.sign(
@@ -60,7 +64,7 @@ router.post("/login", (req, res, next) => {
     .catch(err => {
       console.log(err);
       return res.status(401).json({
-        message: "Auth failed"
+        message: "Invalid login credentials!"
       });
     });
 });

@@ -69,11 +69,12 @@ router.post(
     });
     rezept.save()
       .then((result) => {
-        console.log('INSERT result: ', result);
         res.status(201).json(result);
       })
-      .catch((err) => {
-        console.log('Error occured: ', err);
+      .catch(error => {
+        res.status(500).json({
+          message: "Creating a rezept failed!"
+        });
       });
   }
 );
@@ -111,15 +112,16 @@ router.put(
       }
     )
       .then((result) => {
-        console.log('SAVE result: ', result);
         if (result.nModified > 0) {
           res.status(200).json(result);
         } else {
           res.status(401).json("User not authorized to update this rezept, id: " + req.params.id);
         }
       })
-      .catch((err) => {
-        console.log('Error occured: ', err);
+      .catch(error => {
+        res.status(500).json({
+          message: "Updating a rezept failed!"
+        });
       });
   });
 
@@ -131,12 +133,13 @@ router.get(
     console.log('Alle Rezepte laden.');
     Rezept.find()
       .then(rezeptListe => {
-        console.log('rezeptListe= ', rezeptListe);
         res.status(200).json(rezeptListe);
       })
-      .catch((err) => {
-        console.log('Error occured: ', err);
-      })
+      .catch(error => {
+        res.status(500).json({
+          message: "Get all Rezepte failed!"
+        });
+      });
   });
 
 //Random Rezept lesen
@@ -146,11 +149,12 @@ router.get(
     console.log("Random Rezept laden.");
     Rezept.aggregate([{$sample: {size: 1}}])
       .then(rez => {
-        console.log("rez: ", rez);
         res.status(200).json(rez[0]);
       })
-      .catch((err) => {
-        console.log('Error occured: ', err);
+      .catch(error => {
+        res.status(500).json({
+          message: "Get random rezept failed!"
+        });
       });
   });
 
@@ -161,11 +165,12 @@ router.get(
     console.log('Einzelnes Rezept laden.');
     Rezept.findById(req.params.id)
       .then(rez => {
-        console.log("rez: ", rez);
         res.status(200).json(rez);
       })
-      .catch((err) => {
-        console.log('Error occured: ', err);
+      .catch(error => {
+        res.status(500).json({
+          message: "Get specified rezept failed!"
+        });
       });
   });
 
@@ -177,15 +182,16 @@ router.delete(
     console.log('Einzelnes Rezept löschen.');
     Rezept.deleteOne({_id: req.params.id,  creator: req.userData.userId})
       .then(result => {
-        console.log('result= ', result);
         if(result.n > 0) {
           res.status(200).json(result);
         } else {
           res.status(401).json("User not authorized to delete this rezept, id: " + req.params.id);
         }
       })
-      .catch((err) => {
-        console.log('Error occured: ', err);
+      .catch(error => {
+        res.status(500).json({
+          message: "Deleting a rezept failed!"
+        });
       });
   });
 
