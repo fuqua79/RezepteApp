@@ -175,10 +175,14 @@ router.delete(
   checkAuth,
   (req, res, next) => {
     console.log('Einzelnes Rezept löschen.');
-    Rezept.deleteOne({_id: req.params.id})
+    Rezept.deleteOne({_id: req.params.id,  creator: req.userData.userId})
       .then(result => {
         console.log('result= ', result);
-        res.status(200).json(result);
+        if(result.n > 0) {
+          res.status(200).json(result);
+        } else {
+          res.status(401).json("User not authorized to delete this rezept, id: " + req.params.id);
+        }
       })
       .catch((err) => {
         console.log('Error occured: ', err);
