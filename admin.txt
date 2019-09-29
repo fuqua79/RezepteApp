@@ -13,6 +13,31 @@ username: ssouser
 password: YLiZYNFOro1JKF8s
 
 
+
+AWS:
+mmugglin@hotmail.com
+STD-passwort
+
+Alle Anwendungen rezepte-app RezepteApp-env
+Umgebungs-ID: e-sdy62pwn3w,
+URL: RezepteApp-env.rbquq4kpph.us-east-1.elasticbeanstalk.com
+RezepteApp-env.rbquq4kpph.us-east-1.elasticbeanstalk.com
+
+//OLD
+https://us-east-2.console.aws.amazon.com/elasticbeanstalk/home?region=us-east-2#/launchEnvironment?applicationName=Rezepte%20App&environmentId=e-7bz9rcwpcb
+Umgebungs-ID: e-7bz9rcwpcb,
+URL: RezepteApp-env.rpzje2p6sb.us-east-2.elasticbeanstalk.com
+
+
+
+
+HEROKU:
+mmugglin@hotmail.com
+STD-passwort
+
+
+
+
 //// OLD //////
 //dbName= rezepte
 //ds113435/rezepte
@@ -24,24 +49,3 @@ password: YLiZYNFOro1JKF8s
 //mongoDB Driver: mongodb://mike:_123mike@ds113435.mlab.com:13435/rezepte
 
 
-
-HEROKU:
-mmugglin@hotmail.com
-STD-passwort
-
-
-
-
-
-
-AWS:
-mmugglin@hotmail.com
-STD-passwort
-
-Fuqua Konto
-
-https://us-east-2.console.aws.amazon.com/elasticbeanstalk/home?region=us-east-2#/launchEnvironment?applicationName=Rezepte%20App&environmentId=e-7bz9rcwpcb
-Umgebungs-ID: e-7bz9rcwpcb,
-URL: RezepteApp-env.rpzje2p6sb.us-east-2.elasticbeanstalk.com
-
-http://rezepteapp-env.rpzje2p6sb.us-east-2.elasticbeanstalk.com/api/rezept/list
