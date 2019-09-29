@@ -3,9 +3,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RezeptService} from '../../service/rezept.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {Rezept} from '../../model/rezept';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-rezept-detail-container',
@@ -18,10 +19,12 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
 
   private rezept$: Observable<Rezept>;
   private unsubscribe$: Subject<void> = new Subject<void>();
+  private userId: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private rezeptService: RezeptService) {
+              private rezeptService: RezeptService,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -30,6 +33,11 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap(params => this.rezeptService.loadRezept(params.id))
       );
+    this.authService.getAuthUserIdListener()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((userId) => {
+        this.userId = userId;
+      });
   }
 
   ngOnDestroy() {

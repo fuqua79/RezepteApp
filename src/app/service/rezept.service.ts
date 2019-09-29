@@ -56,8 +56,10 @@ export class RezeptService {
     const url = this.rezeptUrl + '/random';
     return this.httpClient.get(url)
       .pipe(map((rezept: any) => {
-          rezept.id = rezept._id;
-          console.log('randomRezept: ' + rezept.id);
+          if (rezept) {
+            rezept.id = rezept._id;
+            console.log('randomRezept: ' + rezept.id);
+          }
           this.stopLoading();
           return rezept;
         })

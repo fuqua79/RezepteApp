@@ -18,6 +18,9 @@ export class RezeptComponent implements OnInit, OnDestroy {
   @Input()
   isLoading: boolean;
 
+  @Input()
+  userId: string;
+
   @Output()
   delete = new EventEmitter<string>();
 
@@ -29,7 +32,7 @@ export class RezeptComponent implements OnInit, OnDestroy {
 
   public gewunschteAnzahlPersonen = 1;
   private authListenerSubs: Subscription;
-  private userIsAuthenticated= false;
+  private userIsAuthenticated = false;
 
   constructor(private authService: AuthService) {
   }
@@ -56,6 +59,13 @@ export class RezeptComponent implements OnInit, OnDestroy {
 
   printRezept(rezeptId: string) {
     this.print.emit(rezeptId);
+  }
+
+  isCreatorLoggedInUser() {
+    if (this.rezept) {
+      return this.rezept.creator === this.userId;
+    }
+    return false;
   }
 
   getTranslationSchwierigkeitsgrad(name: string): string {

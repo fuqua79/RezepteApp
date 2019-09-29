@@ -1,5 +1,6 @@
 <app-rezept
   [rezept]="rezept$ | async"
+  [userId]="userId"
   [isLoading]="isLoading$ | async"
   (delete)="deleteRezept($event)"
   (open)="openRezept($event)"
