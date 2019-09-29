@@ -16,10 +16,10 @@ import {AuthService} from '../../service/auth.service';
 export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
 
   public isLoading$: BehaviorSubject<boolean>;
+  public rezept$: Observable<Rezept>;
+  public userId: string;
 
-  private rezept$: Observable<Rezept>;
   private unsubscribe$: Subject<void> = new Subject<void>();
-  private userId: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -57,6 +57,6 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
 
   printRezept(rezeptId: string) {
     // TODO: to implement
-    console.log('Jetzt sollte das Rezet gedruckt werden....');
+    console.log('Jetzt sollte das Rezet gedruckt werden....' + rezeptId);
   }
 }

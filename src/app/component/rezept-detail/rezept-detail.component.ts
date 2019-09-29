@@ -31,8 +31,8 @@ export class RezeptComponent implements OnInit, OnDestroy {
   print = new EventEmitter<string>();
 
   public gewunschteAnzahlPersonen = 1;
+  public userIsAuthenticated = false;
   private authListenerSubs: Subscription;
-  private userIsAuthenticated = false;
 
   constructor(private authService: AuthService) {
   }

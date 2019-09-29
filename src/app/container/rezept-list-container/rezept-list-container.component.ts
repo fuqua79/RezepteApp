@@ -13,8 +13,7 @@ import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 export class RezeptListContainerComponent implements OnInit {
 
   public isLoading$: BehaviorSubject<boolean>;
-
-  private rezeptListe$: Observable<Rezept[]>;
+  public rezeptListe$: Observable<Rezept[]>;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
