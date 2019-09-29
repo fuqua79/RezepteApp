@@ -48,11 +48,12 @@ export class AuthService {
 
   createUser(email: string, password: string) {
     const authData: AuthData = {email: email, password: password};
-    this.http
-      .post(this.url + '/signup', authData)
-      .subscribe(response => {
-        console.log(response);
-      });
+    this.http.post(this.url + '/signup', authData).subscribe(() => {
+      this.router.navigate(['/']);
+    }, error => {
+      console.log(error);
+      this.authStatusListener.next(false);
+    });
   }
 
   login(email: string, password: string) {
@@ -78,6 +79,9 @@ export class AuthService {
           this.saveAuthData(token, expirationDate, response.userId);
           this.router.navigate(['/']);
         }
+      }, error => {
+        console.log(error);
+        this.authStatusListener.next(false);
       });
   }
 
