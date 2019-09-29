@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 
 import {AuthData} from '../auth/auth-data.model';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {environment} from '../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
   private tokenTimer: any;
   private authStatusListener = new BehaviorSubject<boolean>(false);
   private authUserIdListener = new BehaviorSubject<string>(null);
-  private url = 'http://localhost:3000/api/user';
+  private URL = environment.apiUrl + '/user';
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -27,7 +28,7 @@ export class AuthService {
   }
 
   getUserName(): any {
-    this.http.get(this.url + '/:id')
+    this.http.get(this.URL + '/:id')
       .subscribe((user) => {
         console.log('user: ' + user);
         return user;
@@ -48,7 +49,7 @@ export class AuthService {
 
   createUser(email: string, password: string) {
     const authData: AuthData = {email: email, password: password};
-    this.http.post(this.url + '/signup', authData).subscribe(() => {
+    this.http.post(this.URL + '/signup', authData).subscribe(() => {
       this.router.navigate(['/']);
     }, error => {
       console.log(error);
@@ -60,7 +61,7 @@ export class AuthService {
     const authData: AuthData = {email: email, password: password};
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
-        this.url + '/login',
+        this.URL + '/login',
         authData
       )
       .subscribe(response => {

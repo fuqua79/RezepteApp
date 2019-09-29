@@ -11,8 +11,7 @@ const app = express();
 mongoose.set('useFindAndModify', false);
 
 // TODO: test mit korrekter DB-Name austauschen
-// mongoose.connect('mongodb+srv://ssouser:YLiZYNFOro1JKF8s@cluster0-vqzry.mongodb.net/test?w=majority', {useNewUrlParser: true})
-mongoose.connect('mongodb+srv://ssouser:YLiZYNFOro1JKF8s@cluster0-vqzry.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true})
+mongoose.connect('mongodb+srv://ssouser:' +process.env.MONGO_ATLAS_PW + '@cluster0-vqzry.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true})
   .then(() => {
     console.log('Connected to database');
   })
