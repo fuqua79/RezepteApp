@@ -8,8 +8,6 @@ const userRoutes = require("./routes/user");
 
 const app = express();
 
-mongoose.set('useFindAndModify', false);
-
 // TODO: test mit korrekter DB-Name austauschen
 mongoose.connect('mongodb+srv://ssouser:' +process.env.MONGO_ATLAS_PW + '@cluster0-vqzry.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true})
   .then(() => {
@@ -21,7 +19,7 @@ mongoose.connect('mongodb+srv://ssouser:' +process.env.MONGO_ATLAS_PW + '@cluste
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/images", express.static(path.join(__dirname, 'server/assets/images')));
+app.use("/images", express.static(path.join(__dirname, 'assets/images')));
 app.use("/", express.static(path.join(__dirname, "angular")));
 
 //Header-Handling

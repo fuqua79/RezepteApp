@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     if (isValid) {
       error = null;
     }
-    cb(error, "server/assets/images");
+    cb(error, "assets/images");
   },
   filename: (req, file, cb) => {
     const name = file.originalname

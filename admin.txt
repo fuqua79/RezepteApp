@@ -14,17 +14,25 @@ password: YLiZYNFOro1JKF8s
 
 
 
+
+
 AWS:
 mmugglin@hotmail.com
 STD-passwort
 
-Alle Anwendungen rezepte-app RezepteApp-env
-Umgebungs-ID: e-sdy62pwn3w,
+https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/environment/configuration?applicationName=RezepteApp_v2&environmentId=e-vkqsv5dwgs
+RezepteApp_v2
+IP:Created EIP: 52.1.36.231
+Umgebungs-ID: e-vkqsv5dwgs,
+URL: rezepteappV2-env.7ddcbfhuct.us-east-1.elasticbeanstalk.com
+http://rezepteappV2-env.7ddcbfhuct.us-east-1.elasticbeanstalk.com/home
+
+
+rezepte-app:
+Umgebungs-ID: e-mdgmu4kwsk,
 URL: RezepteApp-env.rbquq4kpph.us-east-1.elasticbeanstalk.com
-RezepteApp-env.rbquq4kpph.us-east-1.elasticbeanstalk.com
 
 //OLD
-https://us-east-2.console.aws.amazon.com/elasticbeanstalk/home?region=us-east-2#/launchEnvironment?applicationName=Rezepte%20App&environmentId=e-7bz9rcwpcb
 Umgebungs-ID: e-7bz9rcwpcb,
 URL: RezepteApp-env.rpzje2p6sb.us-east-2.elasticbeanstalk.com
 
@@ -34,6 +42,10 @@ URL: RezepteApp-env.rpzje2p6sb.us-east-2.elasticbeanstalk.com
 HEROKU:
 mmugglin@hotmail.com
 STD-passwort
+
+https://www.youtube.com/watch?v=MxfxiR8TVNU
+
+
 
 
 
