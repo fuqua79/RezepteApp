@@ -5,7 +5,7 @@ MongoDb Atlas
 https://cloud.mongodb.com/user#/atlas/login
 (fuqua ??)
 mmugglin@hotmail.com
-_123Mike
+_123M...
 
 MongodDB Atlas Credentials
 https://cloud.mongodb.com/v2/59515b3ec0c6e30371baa3a0#clusters/connect?clusterId=Cluster0
