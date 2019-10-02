@@ -20,8 +20,8 @@ AWS:
 mmugglin@hotmail.com
 STD-passwort
 Security Access parameter:
-AWSAccessKeyId=AKIAIX3GPS75RW56AYHA
-AWSSecretKey=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
+AWSAccessKeyId=
+AWSSecretKeyId=
 
 
 
