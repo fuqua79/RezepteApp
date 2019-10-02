@@ -1,12 +1,5 @@
 const Rezept = require('../models/rezept');
 
-exports.saveFile = (req, res, next) => {
-  // url
-  const url = req.protocol + "://" + req.get("host");
-  res.status(201).json({
-    'imagePath': url + '/images/' + req.file.filename
-  });
-};
 
 exports.insertRezept = (req, res, next) => {
   console.log('Rezept inserten.');

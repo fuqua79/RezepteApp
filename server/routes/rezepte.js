@@ -2,12 +2,8 @@ const express = require("express");
 
 const RezeptController = require('../controllers/rezepte');
 const checkAuth = require('../middleware/check-auth');
-const extractFile = require('../middleware/file');
 
 const router = express.Router();
-
-//FILE speichern
-router.post('/file/save', checkAuth, extractFile, RezeptController.saveFile);
 
 //Rezept INSERTEN
 router.post('/save', checkAuth, RezeptController.insertRezept);

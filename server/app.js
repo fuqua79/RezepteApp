@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const rezepteRoutes = require("./routes/rezepte");
 const userRoutes = require("./routes/user");
+const filesRoutes = require("./routes/files");
 
 const app = express();
 
@@ -19,7 +20,6 @@ mongoose.connect('mongodb+srv://ssouser:' +process.env.MONGO_ATLAS_PW + '@cluste
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/images", express.static(path.join(__dirname, 'assets/images')));
 app.use("/", express.static(path.join(__dirname, "angular")));
 
 //Header-Handling
@@ -32,6 +32,7 @@ app.use((req, res, next) => {
 
 app.use("/api/rezept", rezepteRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/files",filesRoutes);
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "angular", "index.html"));
 });

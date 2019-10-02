@@ -19,6 +19,12 @@ password: YLiZYNFOro1JKF8s
 AWS:
 mmugglin@hotmail.com
 STD-passwort
+Security Access parameter:
+AWSAccessKeyId=AKIAIX3GPS75RW56AYHA
+AWSSecretKey=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
+
+
+
 
 https://console.aws.amazon.com/elasticbeanstalk/home?region=us-east-1#/environment/configuration?applicationName=RezepteApp_v2&environmentId=e-vkqsv5dwgs
 RezepteApp_v2
@@ -32,9 +38,11 @@ rezepte-app:
 Umgebungs-ID: e-mdgmu4kwsk,
 URL: RezepteApp-env.rbquq4kpph.us-east-1.elasticbeanstalk.com
 
-//OLD
-Umgebungs-ID: e-7bz9rcwpcb,
-URL: RezepteApp-env.rpzje2p6sb.us-east-2.elasticbeanstalk.com
+
+
+S3:
+https://rezepteappimages.s3.eu-central-1.amazonaws.com/images/package.json
+
 
 
 
@@ -44,20 +52,4 @@ mmugglin@hotmail.com
 STD-passwort
 
 https://www.youtube.com/watch?v=MxfxiR8TVNU
-
-
-
-
-
-
-//// OLD //////
-//dbName= rezepte
-//ds113435/rezepte
-//URL: https://mlab.com/databases/rezepte#collections
-//account-user: fuqua
-//DB-user: mike
-//DB-password: _123mike
-//mongo shell: mongo ds113435.mlab.com:13435/rezepte -u <dbuser> -p <dbpassword>
-//mongoDB Driver: mongodb://mike:_123mike@ds113435.mlab.com:13435/rezepte
-
 

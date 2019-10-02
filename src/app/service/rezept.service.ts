@@ -14,6 +14,7 @@ export class RezeptService {
   public isLoading$ = new BehaviorSubject<boolean>(false);
 
   private REZEPTURL = environment.apiUrl + '/rezept';
+  private FILEURL = environment.apiUrl + '/files';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -165,8 +166,8 @@ export class RezeptService {
   private saveImage(image: any): Observable<any> {
     const imageData = new FormData();
     imageData.append('image', image);
-    const urlFile = this.REZEPTURL + '/file/save';
-    console.log('--Neues File im Backend speichern-- FILE');
+    const urlFile = this.FILEURL + '/saveto3s';
+    console.log('AWS S3 speichern');
     return this.httpClient.post(urlFile, imageData);
   }
 
