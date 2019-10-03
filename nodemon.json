@@ -2,8 +2,8 @@
   "env": {
     "MONGO_ATLAS_PW": "YLiZYNFOro1JKF8s",
     "JWT_KEY": "secret_this_should_be_longer",
-    "AWS_ACCESS_KEY_ID": "AKIAIX3GPS75RW56AYHA",
-    "AWS_SECRET_ACCESS_KEY": "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",
+    "AWS_ACCESS_KEY_ID": "xxxx",
+    "AWS_SECRET_ACCESS_KEY": "yyyyy",
     "AWS_BUCKET_NAME": "rezepteappimages"
   }
 }
