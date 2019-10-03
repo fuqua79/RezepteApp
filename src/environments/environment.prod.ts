@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://rezepteappv2-env.7ddcbfhuct.us-east-1.elasticbeanstalk.com/api'
+  apiUrl: 'http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/api'
 };
