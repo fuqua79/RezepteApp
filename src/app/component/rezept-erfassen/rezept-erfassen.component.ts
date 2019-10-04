@@ -25,7 +25,7 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
   public formGroup: FormGroup;
   public zutatenListe: FormArray;
   public imagePreview: string;
-  public filteredOptions: Observable<string[]>;
+  public filteredOptions$: Observable<string[]>;
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -50,10 +50,10 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
       }
     );
     this.zutatenListe = this.formGroup.get('zutaten') as FormArray;
-    this.filteredOptions = this.formGroup.get('art').valueChanges
+    this.filteredOptions$ = this.formGroup.get('art').valueChanges
       .pipe(
         startWith(''),
-        map(value => this._filter(value))
+        map(value => this.filterOptionsArt(value))
       );
   }
 
@@ -111,7 +111,7 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
     });
   }
 
-  private _filter(value: string): string[] {
+  private filterOptionsArt(value: string): string[] {
     if (this.optionsArt) {
       const filterValue = value.toLowerCase();
       return this.optionsArt.filter(option => option.toLowerCase().includes(filterValue));
