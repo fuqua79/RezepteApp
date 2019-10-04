@@ -1,5 +1,31 @@
 const Rezept = require('../models/rezept');
 
+exports.findRezept = (req, res, next) => {
+
+  console.log('text: ' +req.query.text);
+  console.log('zeit: ' +req.query.zeit);
+  console.log('art: ' +req.query.art);
+
+  let query = {};
+  if (req.query.text){
+    query = {...query, $text: { $search: req.query.text }};
+  }
+  if(req.query.zeit){
+    query = {...query, "zeit": { $gte: req.query.zeit }};
+  }
+  if(req.query.art){
+    query = {...query, "art": req.query.art};
+  }
+  Rezept.find(query)
+    .then(rezeptListe => {
+      res.status(200).json(rezeptListe);
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Search Rezept failed!"
+      });
+    });
+};
 
 exports.insertRezept = (req, res, next) => {
   console.log('Rezept inserten.');
@@ -8,8 +34,8 @@ exports.insertRezept = (req, res, next) => {
     titel: req.body.titel,
     anzahlPersonen: req.body.anzahlPersonen,
     zutaten: req.body.zutaten,
-    schwierigkeitsgrad: req.body.schwierigkeitsgrad,
     zeit: req.body.zeit,
+    aktiveZeit: req.body.aktiveZeit,
     zubereitung: req.body.zubereitung,
     art: req.body.art,
     naehrwerte: req.body.naehrwerte,
@@ -40,8 +66,8 @@ exports.updateRezept = (req, res, next) => {
         anzahlPersonen: req.body.anzahlPersonen,
         zutaten: req.body.zutaten,
         naehrwerte: req.body.naehrwerte,
-        schwierigkeitsgrad: req.body.schwierigkeitsgrad,
         zeit: req.body.zeit,
+        aktiveZeit: req.body.aktiveZeit,
         zubereitung: req.body.zubereitung,
         art: req.body.art,
         imagePath: req.body.imagePath,

@@ -68,15 +68,6 @@ export class RezeptComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  getTranslationSchwierigkeitsgrad(name: string): string {
-    for (const elem in model.schwierigkeitsgrad) {
-      if (model.schwierigkeitsgrad[elem].name === name) {
-        return model.schwierigkeitsgrad[elem].value;
-      }
-    }
-    return null;
-  }
-
   getTranslationArt(name: string): string {
     for (const elem in model.art) {
       if (model.art[elem].name === name) {

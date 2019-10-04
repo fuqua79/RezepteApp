@@ -8,19 +8,6 @@
       <textarea matInput rows=6 formControlName="beschreibung" placeholder="Beschreibung"></textarea>
       <mat-error *ngIf="formGroup.get('beschreibung').invalid">Bitte tragen Sie eine Beschreibung ein.</mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Schwierigkeitsgrad</mat-label>
-      <select matNativeControl
-              name="schwierigkeitsgrad"
-              formControlName="schwierigkeitsgrad">
-        <option value="">--- Bitte auswählen ---</option>
-        <option *ngFor="let grad of model.schwierigkeitsgrad" class="" [ngValue]="grad.name">
-          {{grad.value}}
-        </option>
-      </select>
-      <mat-error *ngIf="formGroup.get('schwierigkeitsgrad').invalid">Bitte tragen Sie einen Schwierigkeitsgrad ein.
-      </mat-error>
-    </mat-form-field>
     <label>Art</label>
     <mat-radio-group
       class="radio-group"
@@ -30,8 +17,12 @@
       </mat-radio-button>
     </mat-radio-group>
     <mat-form-field>
-      <input matInput type="number" formControlName="zeit" placeholder="Zeit in min">
+      <input matInput type="number" formControlName="zeit" placeholder="Total Zeit in min">
       <mat-error *ngIf="formGroup.get('zeit').invalid">Bitte tragen Sie die benötigte Zeit ein.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" formControlName="aktiveZeit" placeholder="Aktive Zeit in min">
+      <mat-error *ngIf="formGroup.get('aktiveZeit').invalid">Bitte tragen Sie die benötigte Zeit ein.</mat-error>
     </mat-form-field>
     <mat-form-field>
       <textarea matInput rows=6 formControlName="zubereitung" placeholder="Zubereitung"></textarea>

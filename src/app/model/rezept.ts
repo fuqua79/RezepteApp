@@ -8,8 +8,8 @@ export interface Rezept {
   titel: string;
   anzahlPersonen: number;
   zutaten: Array<Zutat>;
-  schwierigkeitsgrad: string;
   zeit: number;
+  aktiveZeit: number;
   zubereitung: string;
   art: string;
   selected: boolean;
@@ -24,8 +24,8 @@ export function createInitialRezept(): Rezept {
     titel: '',
     anzahlPersonen: 1,
     zutaten: [createInitialZutat()],
-    schwierigkeitsgrad: '',
     zeit: 0,
+    aktiveZeit: 0,
     zubereitung: '',
     art: '',
     selected: false,

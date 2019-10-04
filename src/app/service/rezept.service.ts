@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {createInitialRezept, Rezept} from '../model/rezept';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs/internal/Observable';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {Subject} from 'rxjs/internal/Subject';
 import {environment} from '../../environments/environment';
+import {SuchParameter} from '../model/suchParameter';
 
 
 @Injectable()
@@ -62,6 +63,33 @@ export class RezeptService {
         })
       );
   }
+
+  searchRezept(suchParameter: SuchParameter) {
+    this.startLoading();
+    console.log('--Rezept im Backend suchen--');
+    let params = new HttpParams();
+    if (suchParameter.text) {
+      params = params.set('text', suchParameter.text);
+    }
+    if (suchParameter.zeit) {
+      params = params.set('zeit', suchParameter.zeit.toString());
+    }
+    if (suchParameter.art) {
+      params = params.set('art', suchParameter.art);
+    }
+    const url = this.REZEPTURL + '/search';
+    return this.httpClient.get(url, {params})
+      .pipe(
+        map((rezepteliste: any) => {
+          for (const rezept of rezepteliste) {
+            rezept.id = rezept._id;
+          }
+          this.stopLoading();
+          return rezepteliste;
+        })
+      );
+  }
+
 
   saveRezept(form: any): Observable<any> {
     if (form.id && form.id !== '') {
@@ -121,8 +149,12 @@ export class RezeptService {
     this.startLoading();
     console.log('--Rezept mit id: ' + id + ' im Backend loeschen--');
     const url = this.REZEPTURL + '/delete/' + id;
-    this.stopLoading();
-    return this.httpClient.delete(url);
+    return this.httpClient.delete(url)
+      .pipe(map((result) => {
+          this.stopLoading();
+          return result;
+        })
+      );
   }
 
 
@@ -146,8 +178,8 @@ export class RezeptService {
     rezeptToSave.titel = form.titel;
     rezeptToSave.anzahlPersonen = form.anzahlPersonen;
     rezeptToSave.zutaten = form.zutaten;
-    rezeptToSave.schwierigkeitsgrad = form.schwierigkeitsgrad;
     rezeptToSave.zeit = form.zeit;
+    rezeptToSave.aktiveZeit = form.aktiveZeit;
     rezeptToSave.zubereitung = form.zubereitung;
     rezeptToSave.art = form.art;
     rezeptToSave.naehrwerte.kalorien = form.kalorien;

@@ -4,6 +4,7 @@ import {RezeptService} from '../../service/rezept.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {Rezept} from '../../model/rezept';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {SuchParameter} from '../../model/suchParameter';
 
 @Component({
   selector: 'app-rezept-list-container',
@@ -27,5 +28,9 @@ export class RezeptListContainerComponent implements OnInit {
 
   openRezept(id: string): void {
     this.router.navigate(['/rezept/' + id]);
+  }
+
+  searchRezept(suchParameter: SuchParameter) {
+    this.rezeptListe$ = this.rezeptService.searchRezept(suchParameter);
   }
 }

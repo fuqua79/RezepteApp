@@ -4,9 +4,13 @@
   </h2>
   <div class="border m-3 border-dark">
     <br>
-    FILTER / SUCHEKRITERIEN
+    SUCHE
     <br>
+    <input matInput [(ngModel)]="searchInputText" type="text" placeholder="Titel/Beschreibung/Zutat">
+    <input matInput [(ngModel)]="searchInputZeit" type="tel" placeholder="Zeit">
+    <input matInput [(ngModel)]="searchInputArt" type="text" placeholder="Art">
     <br>
+    <button (click)="searchRezept()"> SUCHEN</button>
   </div>
 </div>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
@@ -19,6 +23,7 @@
       <div class="">{{rezept.beschreibung}}</div>
       <div class="row mt-3">
         <div class="mr-4">{{rezept.zeit}} min</div>
+        <div class="mr-4">{{rezept.aktiveZeit}} min</div>
         <div class="mr-4">{{rezept.naehrwerte.kalorien}} kcal</div>
         <div class="">{{rezept.art}}</div>
       </div>

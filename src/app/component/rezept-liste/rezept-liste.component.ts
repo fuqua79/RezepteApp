@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {RezeptService} from '../../service/rezept.service';
 import {Rezept} from '../../model/rezept';
+import {SuchParameter} from '../../model/suchParameter';
 
 
 @Component({
@@ -20,6 +21,13 @@ export class RezeptListeComponent implements OnInit {
   @Output()
   open = new EventEmitter<string>();
 
+  @Output()
+  search = new EventEmitter<SuchParameter>();
+
+  public searchInputText: string;
+  public searchInputZeit: number;
+  public searchInputArt: string;
+
   constructor() {
   }
 
@@ -35,4 +43,13 @@ export class RezeptListeComponent implements OnInit {
       this.rezeptListe[i].selected = this.rezeptListe[i].id === id;
     }
   }
+
+  searchRezept() {
+    this.search.emit({
+      text: this.searchInputText,
+      zeit: this.searchInputZeit,
+      art: this.searchInputArt
+    });
+  }
+
 }
