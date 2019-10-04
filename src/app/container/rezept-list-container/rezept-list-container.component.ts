@@ -15,7 +15,7 @@ export class RezeptListContainerComponent implements OnInit {
 
   public isLoading$: BehaviorSubject<boolean>;
   public rezeptListe$: Observable<Rezept[]>;
-  private optionsArt$: Observable<string[]>;
+  public optionsArt$: Observable<string[]>;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
