@@ -9,7 +9,7 @@ import {
   MatExpansionModule,
   MatProgressSpinnerModule,
   MatRadioModule,
-  MatDialogModule
+  MatDialogModule, MatAutocompleteModule, MatSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -23,7 +23,9 @@ import {
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatRadioModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatSelectModule
   ]
 })
 export class AngularMaterialModule {

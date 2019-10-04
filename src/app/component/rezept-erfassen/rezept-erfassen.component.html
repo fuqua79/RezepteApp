@@ -9,13 +9,18 @@
       <mat-error *ngIf="formGroup.get('beschreibung').invalid">Bitte tragen Sie eine Beschreibung ein.</mat-error>
     </mat-form-field>
     <label>Art</label>
-    <mat-radio-group
-      class="radio-group"
-      formControlName="art">
-      <mat-radio-button class="radio-button" *ngFor="let art of model.art" [value]="art.name">
-        {{art.value}}
-      </mat-radio-button>
-    </mat-radio-group>
+    <mat-form-field>
+      <input matInput formControlName="art" type="text" placeholder="Art" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+      <button appClickStopPropagation mat-button *ngIf="formGroup.get('art')" matSuffix mat-icon-button aria-label="Clear"
+              (click)="clearArt()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
     <mat-form-field>
       <input matInput type="number" formControlName="zeit" placeholder="Total Zeit in min">
       <mat-error *ngIf="formGroup.get('zeit').invalid">Bitte tragen Sie die benötigte Zeit ein.</mat-error>

@@ -1,4 +1,5 @@
 <app-rezept-erfassen
   [rezeptInput]="rezept$ | async"
+  [optionsArt]="optionsArt$ | async"
   (save)="saveRezept($event)">
 </app-rezept-erfassen>

@@ -1,15 +1,13 @@
 const express = require("express");
 
 const RezeptController = require('../controllers/rezepte');
+const OptionController = require('../controllers/options');
 const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
 //Rezept INSERTEN
 router.post('/save', checkAuth, RezeptController.insertRezept);
-
-//Rezept UPDATEN
-router.put('/:id', checkAuth, RezeptController.updateRezept);
 
 //ALLE Rezepte LADEN
 router.get('/list', RezeptController.getAllRezepte);
@@ -19,6 +17,12 @@ router.get('/random', RezeptController.getRandomRezept);
 
 //Rezept SUCHEN
 router.get('/search', RezeptController.findRezept);
+
+//Options für Art holen
+router.get('/options/art', OptionController.getOptionsArt)
+
+//Rezept UPDATEN
+router.put('/:id', checkAuth, RezeptController.updateRezept);
 
 //Einzelnes Rezept LADEN
 router.get('/:id', RezeptController.getRezept);

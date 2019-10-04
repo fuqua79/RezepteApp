@@ -15,6 +15,7 @@ export class RezeptListContainerComponent implements OnInit {
 
   public isLoading$: BehaviorSubject<boolean>;
   public rezeptListe$: Observable<Rezept[]>;
+  private optionsArt$: Observable<string[]>;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -24,6 +25,7 @@ export class RezeptListContainerComponent implements OnInit {
   ngOnInit() {
     this.isLoading$ = this.rezeptService.isLoading$;
     this.rezeptListe$ = this.rezeptService.loadAllRezepte();
+    this.optionsArt$ = this.rezeptService.loadOptionsArt();
   }
 
   openRezept(id: string): void {

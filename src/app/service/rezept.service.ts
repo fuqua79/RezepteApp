@@ -157,6 +157,21 @@ export class RezeptService {
       );
   }
 
+  loadOptionsArt(): Observable<string[]> {
+    console.log('--Options für Art im Backend holen--');
+    const url = this.REZEPTURL + '/options/art';
+    return this.httpClient.get(url)
+      .pipe(
+        map((optionListe: any[]) => {
+          const output = [];
+          optionListe.forEach((item) => {
+            output.push(item.art);
+          });
+          return output;
+        })
+      );
+  }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
   private startLoading(): void {

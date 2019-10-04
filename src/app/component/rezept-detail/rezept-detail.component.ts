@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Rezept} from '../../model/rezept';
-import * as model from '../../model/model-interfaces';
 import {AuthService} from '../../service/auth.service';
 import {Subscription} from 'rxjs/internal/Subscription';
 
@@ -66,15 +65,6 @@ export class RezeptComponent implements OnInit, OnDestroy {
       return this.rezept.creator === this.userId;
     }
     return false;
-  }
-
-  getTranslationArt(name: string): string {
-    for (const elem in model.art) {
-      if (model.art[elem].name === name) {
-        return model.art[elem].value;
-      }
-    }
-    return null;
   }
 }
 

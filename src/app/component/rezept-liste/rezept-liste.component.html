@@ -8,7 +8,18 @@
     <br>
     <input matInput [(ngModel)]="searchInputText" type="text" placeholder="Titel/Beschreibung/Zutat">
     <input matInput [(ngModel)]="searchInputZeit" type="tel" placeholder="Zeit">
-    <input matInput [(ngModel)]="searchInputArt" type="text" placeholder="Art">
+    <mat-form-field>
+      <mat-label>Art</mat-label>
+      <mat-select [(ngModel)]="searchInputArt">
+        <mat-option *ngFor="let option of optionsArt" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-select>
+      <button appClickStopPropagation mat-button *ngIf="searchInputArt" matSuffix mat-icon-button aria-label="Clear"
+              (click)="clearArt()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
     <br>
     <button (click)="searchRezept()"> SUCHEN</button>
   </div>

@@ -14,6 +14,8 @@ import {of} from 'rxjs/internal/observable/of';
 export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
 
   public rezept$: Observable<Rezept>;
+  public optionsArt$: Observable<string[]>;
+
   private routeSubscription: Subscription;
   private rezeptId: string;
 
@@ -31,6 +33,7 @@ export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
         this.rezept$ = of(createInitialRezept());
       }
     });
+    this.optionsArt$ = this.rezeptService.loadOptionsArt();
   }
 
   ngOnDestroy() {

@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Rezept} from '../../model/rezept';
-import * as model from '../../model/model-interfaces';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Zutat} from '../../model/zutat';
+import {Observable} from 'rxjs/internal/Observable';
+import {map, startWith} from 'rxjs/operators';
 
 
 @Component({
@@ -15,25 +16,21 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
   @Input()
   rezeptInput: Rezept;
 
+  @Input()
+  optionsArt: string[];
+
   @Output()
   save = new EventEmitter<any>();
 
-  public model = model;
   public formGroup: FormGroup;
   public zutatenListe: FormArray;
   public imagePreview: string;
+  public filteredOptions: Observable<string[]>;
 
   constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    console.log('ngInit: formGroup erstellen');
-    if (this.rezeptInput) {
-      console.log('Rezept schon da !');
-    } else {
-      console.log('Rezept Nicht da..');
-    }
-
     this.formGroup = this.formBuilder.group(
       {
         'id': [null],
@@ -53,16 +50,15 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
       }
     );
     this.zutatenListe = this.formGroup.get('zutaten') as FormArray;
-    console.log('ngInit fertig...');
+    this.filteredOptions = this.formGroup.get('art').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
   }
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('input changed');
-    console.log('rezeptInput: ' + this.rezeptInput);
-    if (this.rezeptInput) {
-      console.log('rezeptInput: ' + this.rezeptInput.titel);
-    }
     if (this.formGroup && this.rezeptInput) {
       this.formGroup.patchValue({
         'id': this.rezeptInput.id,
@@ -115,6 +111,12 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
     });
   }
 
+  private _filter(value: string): string[] {
+    if (this.optionsArt) {
+      const filterValue = value.toLowerCase();
+      return this.optionsArt.filter(option => option.toLowerCase().includes(filterValue));
+    }
+  }
 
   saveRezept(): void {
     if (this.formGroup.invalid) {
@@ -135,6 +137,8 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
 
   }
 
-
+  clearArt() {
+    this.formGroup.patchValue({'art': ''});
+  }
 }
 

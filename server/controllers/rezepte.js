@@ -1,31 +1,5 @@
 const Rezept = require('../models/rezept');
-
-exports.findRezept = (req, res, next) => {
-
-  console.log('text: ' +req.query.text);
-  console.log('zeit: ' +req.query.zeit);
-  console.log('art: ' +req.query.art);
-
-  let query = {};
-  if (req.query.text){
-    query = {...query, $text: { $search: req.query.text }};
-  }
-  if(req.query.zeit){
-    query = {...query, "zeit": { $gte: req.query.zeit }};
-  }
-  if(req.query.art){
-    query = {...query, "art": req.query.art};
-  }
-  Rezept.find(query)
-    .then(rezeptListe => {
-      res.status(200).json(rezeptListe);
-    })
-    .catch(error => {
-      res.status(500).json({
-        message: "Search Rezept failed!"
-      });
-    });
-};
+const Art = require('../models/art');
 
 exports.insertRezept = (req, res, next) => {
   console.log('Rezept inserten.');
@@ -44,7 +18,22 @@ exports.insertRezept = (req, res, next) => {
   });
   rezept.save()
     .then((result) => {
-      res.status(201).json(result);
+      //zuerst suchen, ob Art bereits in DB vorhanden => unique !
+      Art.findOne({art: req.body.art}, (err, art) => {
+        if (err) {
+          res.status(500).json();
+        }
+        if (art) {
+          res.status(200).json(result);
+        } else {
+          // art separat in DB speichern !
+          const art = new Art({art: req.body.art});
+          art.save()
+            .then(() => {
+              res.status(201).json(result);
+            })
+        }
+      });
     })
     .catch(error => {
       res.status(500).json({
@@ -82,7 +71,22 @@ exports.updateRezept = (req, res, next) => {
   )
     .then((result) => {
       if (result.n > 0) {
-        res.status(200).json(result);
+        //zuerst suchen, ob Art bereits in DB vorhanden => unique !
+        Art.findOne({art: req.body.art}, (err, art) => {
+          if (err) {
+            res.status(500).json();
+          }
+          if (art) {
+            res.status(200).json(result);
+          } else {
+            // art separat in DB speichern !
+            const art = new Art({art: req.body.art});
+            art.save()
+              .then(() => {
+                res.status(201).json(result);
+              })
+          }
+        });
       } else {
         res.status(401).json("User not authorized to update this rezept, id: " + req.params.id);
       }
@@ -120,7 +124,7 @@ exports.getRandomRezept = (req, res, next) => {
     });
 };
 
-exports.getRezept =  (req, res, next) => {
+exports.getRezept = (req, res, next) => {
   console.log('Einzelnes Rezept laden.');
   Rezept.findById(req.params.id)
     .then(rez => {
@@ -129,6 +133,28 @@ exports.getRezept =  (req, res, next) => {
     .catch(error => {
       res.status(500).json({
         message: "Get specified rezept failed!"
+      });
+    });
+};
+
+exports.findRezept = (req, res, next) => {
+  let query = {};
+  if (req.query.text) {
+    query = {...query, $text: {$search: req.query.text}};
+  }
+  if (req.query.zeit) {
+    query = {...query, "zeit": {$gte: req.query.zeit}};
+  }
+  if (req.query.art) {
+    query = {...query, "art": req.query.art};
+  }
+  Rezept.find(query)
+    .then(rezeptListe => {
+      res.status(200).json(rezeptListe);
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Search Rezept failed!"
       });
     });
 };

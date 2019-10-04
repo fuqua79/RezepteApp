@@ -16,6 +16,9 @@ export class RezeptListeComponent implements OnInit {
   rezeptListe: Rezept[];
 
   @Input()
+  optionsArt: string[];
+
+  @Input()
   isLoading: boolean;
 
   @Output()
@@ -52,4 +55,7 @@ export class RezeptListeComponent implements OnInit {
     });
   }
 
+  clearArt() {
+    this.searchInputArt = '';
+  }
 }

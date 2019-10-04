@@ -11,6 +11,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularMaterialModule} from './angular-material.module';
+import {ClickStopPropagationDirective} from './helper/click-stop-propagation.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {AngularMaterialModule} from './angular-material.module';
     RezeptDetailContainerComponent,
     RezeptHomeContainerComponent,
     RezeptListContainerComponent,
-    RezeptErfassenContainerComponent
+    RezeptErfassenContainerComponent,
+    ClickStopPropagationDirective
   ],
   imports: [
     BrowserModule,
