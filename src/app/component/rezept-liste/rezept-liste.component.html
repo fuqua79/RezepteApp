@@ -13,8 +13,7 @@
 <div *ngIf="!isLoading">
   <ul class="list-group no-list-type">
     <li class="m-1 rounded app-liste-item border border-muted" *ngFor="let rezept of rezeptListe"
-        (click)="selectRezept(rezept.id)"
-        (dblclick)="openRezept(rezept.id)"
+        (click)="openRezept(rezept.id)"
         [ngClass]="{'bg-primary border-primary ' : rezept.selected}">
       <h5 class="">{{rezept.titel}}</h5>
       <div class="">{{rezept.beschreibung}}</div>
