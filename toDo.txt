@@ -5,15 +5,12 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 swissmilk.ch
 chefkoch.de
 fooby
-migusto
-
-
-		-Confirm-melung beim löschen
-		-POST/PUT nochmals genau anschauen
+migust	
+	
+		-ngrx 8
 		-GUI Anpassungen:
 			-icons verwenden
 		-Pagination einbauen
-		-ngrx 8
 
 
 
@@ -36,7 +33,9 @@ migusto
 		-RezpteApp als DEsktop-App laufen lassen mit Electron (https://angular.de/artikel/angular-electron/ , https://github.com/maximegris/angular-electron)
 
 
-	DONE
+	DONE:
+		-POST/PUT nochmals genau anschauen
+		-Confirm-melung beim löschen
 		-rxjs natürlich
 		-Neuste Angular Version ! (https://update.angular.io/)
 		-Passwort von DB als env benutzen !
