@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {Rezept} from '../../model/rezept';
 import {AuthService} from '../../service/auth.service';
 import {Subscription} from 'rxjs/internal/Subscription';
+import {MatDialog} from '@angular/material';
+import {ConfirmationDialogComponent} from '../../container/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -31,9 +33,12 @@ export class RezeptComponent implements OnInit, OnDestroy {
 
   public gewunschteAnzahlPersonen = 1;
   public userIsAuthenticated = false;
+  public title = 'angular-confirmation-dialog';
+
   private authListenerSubs: Subscription;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -53,7 +58,15 @@ export class RezeptComponent implements OnInit, OnDestroy {
   }
 
   deleteRezept(rezeptId: string) {
-    this.delete.emit(rezeptId);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '200px',
+      data: 'Möchtest du das Rezept wirklich löschen ?'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete.emit(rezeptId);
+      }
+    });
   }
 
   printRezept(rezeptId: string) {
@@ -66,5 +79,6 @@ export class RezeptComponent implements OnInit, OnDestroy {
     }
     return false;
   }
+
 }
 

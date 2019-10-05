@@ -1,0 +1,47 @@
+Rezepte-App:
+http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
+
+-Bestehende Apps anschauen und besten klauen:
+swissmilk.ch
+chefkoch.de
+fooby
+migusto
+
+
+		-Confirm-melung beim löschen
+		-POST/PUT nochmals genau anschauen
+		-GUI Anpassungen:
+			-icons verwenden
+		-Pagination einbauen
+		-ngrx 8
+
+
+
+		-Liste: Sortierung einbauen: Zeit
+		-Container Comp
+		-GUI Comp
+		-isLoading-Logik mit reactive geht noch nicht auf!!! error-Handling mit async, d.h. kein error-handling möglich.... ????$$$
+		-any, etc. ersetzen !!
+		-ngx-api-utils (https://github.com/ngx-api-utils/ngx-api-utils)
+		-optimistic update
+		-CSS Grid (https://stackblitz.com/edit/angular-css-grid-holy-grail)
+		-Web Worker
+		-Cypress
+		-Animations
+		-Ionic ausprobieren: RezepteApp als App laufen lassen (https://angular.de/artikel/ionic2-tutorial-deutsch/)
+		-Angular Ivy opt-in ausprobieren
+		-Bazel inkremental Buiold ausprobieren
+		-Angular Testing: https://angular.de/artikel/angular-testing/
+		-codelyzer (https://github.com/mgechev/codelyzer)
+		-RezpteApp als DEsktop-App laufen lassen mit Electron (https://angular.de/artikel/angular-electron/ , https://github.com/maximegris/angular-electron)
+
+
+	DONE
+		-rxjs natürlich
+		-Neuste Angular Version ! (https://update.angular.io/)
+		-Passwort von DB als env benutzen !
+		-File Upload
+		-User Auth
+		-Routing (Lazy Loading)
+		-Materials
+        -DeleteRezept: Prüfen, ob Art die letzte war und dann auch aus arts löschen !

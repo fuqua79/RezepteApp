@@ -13,6 +13,7 @@ import {ErrorComponent} from './error/error.component';
 import {ErrorInterceptor} from './error-interceptor';
 import {AngularMaterialModule} from './angular-material.module';
 import {RezeptModule} from './rezept.module';
+import { ConfirmationDialogComponent } from './container/confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {RezeptModule} from './rezept.module';
     AppComponent,
     ErrorComponent,
     PageNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,7 @@ import {RezeptModule} from './rezept.module';
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent]
+  entryComponents: [ErrorComponent, ConfirmationDialogComponent]
 })
 export class AppModule {
 }
