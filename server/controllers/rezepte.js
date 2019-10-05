@@ -19,21 +19,26 @@ exports.insertRezept = (req, res, next) => {
   rezept.save()
     .then((result) => {
       //zuerst suchen, ob Art bereits in DB vorhanden => unique !
-      Art.findOne({art: req.body.art}, (err, art) => {
-        if (err) {
-          res.status(500).json();
-        }
-        if (art) {
-          res.status(200).json(result);
-        } else {
-          // art separat in DB speichern !
-          const art = new Art({art: req.body.art});
-          art.save()
-            .then(() => {
-              res.status(201).json(result);
-            })
-        }
-      });
+      if (req.body.art) {
+        Art.findOne({art: req.body.art}, (err, art) => {
+          if (err) {
+            res.status(500).json();
+          }
+          console.log('art: ', art);
+          if (art) {
+            res.status(200).json(result);
+          } else {
+            // art separat in DB speichern !
+            const art = new Art({art: req.body.art});
+            art.save()
+              .then(() => {
+                res.status(201).json(result);
+              })
+          }
+        });
+      } else {
+        res.status(201).json(result);
+      }
     })
     .catch(error => {
       res.status(500).json({
@@ -72,21 +77,25 @@ exports.updateRezept = (req, res, next) => {
     .then((result) => {
       if (result.n > 0) {
         //zuerst suchen, ob Art bereits in DB vorhanden => unique !
-        Art.findOne({art: req.body.art}, (err, art) => {
-          if (err) {
-            res.status(500).json();
-          }
-          if (art) {
-            res.status(200).json(result);
-          } else {
-            // art separat in DB speichern !
-            const art = new Art({art: req.body.art});
-            art.save()
-              .then(() => {
-                res.status(201).json(result);
-              })
-          }
-        });
+        if (req.body.art) {
+          Art.findOne({art: req.body.art}, (err, art) => {
+            if (err) {
+              res.status(500).json();
+            }
+            if (art) {
+              res.status(200).json(result);
+            } else {
+              // art separat in DB speichern !
+              const art = new Art({art: req.body.art});
+              art.save()
+                .then(() => {
+                  res.status(201).json(result);
+                })
+            }
+          });
+        } else {
+          res.status(201).json(result);
+        }
       } else {
         res.status(401).json("User not authorized to update this rezept, id: " + req.params.id);
       }
@@ -159,15 +168,50 @@ exports.findRezept = (req, res, next) => {
     });
 };
 
+
 exports.deleteRezept = (req, res, next) => {
   console.log('Einzelnes Rezept löschen.');
-  Rezept.deleteOne({_id: req.params.id, creator: req.userData.userId})
-    .then(result => {
-      if (result.n > 0) {
-        res.status(200).json(result);
-      } else {
-        res.status(401).json("User not authorized to delete this rezept, id: " + req.params.id);
+  let rezeptArt;
+  Rezept.findById(req.params.id)
+    .then(rezept => {
+      if (rezept && rezept.art) {
+        rezeptArt = rezept.art;
       }
+      Rezept.deleteOne({_id: req.params.id, creator: req.userData.userId})
+        .then(result => {
+          if (result.n > 0) {
+            res.status(200).json();
+            if (rezeptArt) {
+              // Jetzt noch prüfen, ob art letzter seiner Art war. Wenn ja, dann auch aus options löschen
+              const query = {"art": rezeptArt};
+              Rezept.find(query)
+                .then(rezeptliste => {
+                  //Wenn letzte Art dann löschen
+                  if (rezeptliste.length === 0) {
+                    //es hat kein Rezept mehr mit dieser Art => Art aus Art löschen
+                    Art.deleteOne({art: rezeptArt})
+                      .then(result => {
+                      })
+                  }
+                })
+                .catch(error => {
+                  res.status(500).json({
+                    message: "Finding OptionArt failed!"
+                  });
+                })
+            } else {
+              // rezeptArt leer
+              res.status(200).json();
+            }
+          } else {
+            res.status(401).json("User not authorized to delete this rezept, id: " + req.params.id);
+          }
+        })
+        .catch(error => {
+          res.status(500).json({
+            message: "Deleting a rezept failed!"
+          });
+        })
     })
     .catch(error => {
       res.status(500).json({
