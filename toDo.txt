@@ -8,6 +8,14 @@ fooby
 migust	
 	
 		-ngrx 8
+			=> Effects einbauen, dass bei gewissen Action in localstorage gespeichert/gecleart wird
+				https://www.youtube.com/watch?v=zkejq88f7CY
+			=> selector schreiben, welceh nur SubState rausholen
+			
+		
+		-Testing aufbauen (Container, GUI, ngrx,...)
+			
+			
 		-GUI Anpassungen:
 			-icons verwenden
 		-Pagination einbauen

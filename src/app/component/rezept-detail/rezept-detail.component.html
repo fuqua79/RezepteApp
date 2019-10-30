@@ -101,6 +101,6 @@
     </div>
   </div>
   <button (click)="printRezept(rezept?.id)">DRUCKEN</button>
-  <button *ngIf="userIsAuthenticated && isCreatorLoggedInUser()" (click)="openRezept(rezept?.id)">BEARBEITEN</button>
-  <button *ngIf="userIsAuthenticated && isCreatorLoggedInUser()" (click)="deleteRezept(rezept?.id)">LÖSCHEN</button>
+  <button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()" (click)="openRezept(rezept?.id)">BEARBEITEN</button>
+  <button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()" (click)="deleteRezept(rezept?.id)">LÖSCHEN</button>
 </div>

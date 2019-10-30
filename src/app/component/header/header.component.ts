@@ -1,6 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../service/auth.service';
 import {Subscription} from 'rxjs/internal/Subscription';
+import {GlobalState} from '../../state/state';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/internal/Observable';
+import {AuthState} from '../../state/auth/auth.state';
 
 @Component({
   selector: 'app-header',
@@ -8,22 +12,14 @@ import {Subscription} from 'rxjs/internal/Subscription';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  public userIsAuthenticated = false;
+  private authState$: Observable<AuthState>;
 
-  private authListenerSubs: Subscription;
-  private userId: string;
-
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private store: Store<GlobalState>) {
   }
 
   ngOnInit() {
-    this.userId = this.authService.getUserId();
-    this.authListenerSubs = this.authService
-      .getAuthStatusListener()
-      .subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
-        this.userId = this.authService.getUserId();
-      });
+      this.authState$ = this.store.select(state => state.auth);
   }
 
   logout() {
@@ -31,6 +27,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authListenerSubs.unsubscribe();
   }
 }

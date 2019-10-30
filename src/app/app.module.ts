@@ -14,6 +14,8 @@ import {ErrorInterceptor} from './error-interceptor';
 import {AngularMaterialModule} from './angular-material.module';
 import {RezeptModule} from './rezept.module';
 import { ConfirmationDialogComponent } from './container/confirmation-dialog/confirmation-dialog.component';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from './state/state';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { ConfirmationDialogComponent } from './container/confirmation-dialog/con
     HttpClientModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
-    RezeptModule
+    RezeptModule,
+    StoreModule.forRoot(reducers)
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

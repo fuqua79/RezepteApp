@@ -4,6 +4,9 @@ import {AuthService} from '../../service/auth.service';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {MatDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '../../container/confirmation-dialog/confirmation-dialog.component';
+import {Observable} from 'rxjs/internal/Observable';
+import {GlobalState} from '../../state/state';
+import {Store} from '@ngrx/store';
 
 
 @Component({
@@ -32,25 +35,20 @@ export class RezeptComponent implements OnInit, OnDestroy {
   print = new EventEmitter<string>();
 
   public gewunschteAnzahlPersonen = 1;
-  public userIsAuthenticated = false;
+  public userIsAuthenticated$: Observable<boolean>;
   public title = 'angular-confirmation-dialog';
 
-  private authListenerSubs: Subscription;
 
   constructor(private authService: AuthService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private store: Store<GlobalState>) {
   }
 
   ngOnInit() {
-    this.authListenerSubs = this.authService
-      .getAuthStatusListener()
-      .subscribe(isAuthenticated => {
-        this.userIsAuthenticated = isAuthenticated;
-      });
+    this.userIsAuthenticated$ = this.store.select(state => state.auth.isAuthenticated);
   }
 
   ngOnDestroy() {
-    this.authListenerSubs.unsubscribe();
   }
 
   openRezept(rezeptId: string): void {

@@ -7,6 +7,8 @@ import {switchMap, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {AuthService} from '../../service/auth.service';
+import {GlobalState} from '../../state/state';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-rezept-detail-container',
@@ -17,27 +19,24 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
 
   public isLoading$: BehaviorSubject<boolean>;
   public rezept$: Observable<Rezept>;
-  public userId: string;
 
   private unsubscribe$: Subject<void> = new Subject<void>();
+  private authUserId$: any;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private rezeptService: RezeptService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private store: Store<GlobalState>) {
   }
 
   ngOnInit() {
+    this.authUserId$ = this.store.select(state => state.auth.userId);
     this.isLoading$ = this.rezeptService.isLoading$;
     this.rezept$ = this.route.params
       .pipe(
         switchMap(params => this.rezeptService.loadRezept(params.id))
       );
-    this.authService.getAuthUserIdListener()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((userId) => {
-        this.userId = userId;
-      });
   }
 
   ngOnDestroy() {

@@ -1,9 +1,9 @@
 import {AuthState, initialAuthState} from './auth.state';
-import {AuthActions} from './auth.actions';
+import {AuthActions, CLEAR_LOGIN_ACTION, LOGIN_SUCCESSS_ACTION} from './auth.actions';
 
 export function AuthReducer(state: AuthState = initialAuthState, action: AuthActions): AuthState {
   switch (action.type) {
-    case 'LoginSuccessAction':
+    case LOGIN_SUCCESSS_ACTION:
       return {
         ...state,
         userId: action.userId,
@@ -13,7 +13,7 @@ export function AuthReducer(state: AuthState = initialAuthState, action: AuthAct
         expirationDate: action.expirationDate
       };
 
-    case 'ClearAuthStateAction':
+    case CLEAR_LOGIN_ACTION:
       return initialAuthState;
 
     default:

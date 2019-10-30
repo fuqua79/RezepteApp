@@ -10,7 +10,6 @@ import {Subscription} from 'rxjs/internal/Subscription';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
-  private authStatusSubs: Subscription;
 
   constructor(public authService: AuthService) {
   }
@@ -24,12 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.authStatusSubs = this.authService.getAuthStatusListener().subscribe(authStatus => {
-      this.isLoading = false;
-    });
   }
 
   ngOnDestroy() {
-    this.authStatusSubs.unsubscribe();
   }
 }
