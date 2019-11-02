@@ -5,21 +5,21 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 swissmilk.ch
 chefkoch.de
 fooby
-migust	
-	
+migusto
+
+
 		-ngrx 8
 			=> Effects einbauen, dass bei gewissen Action in localstorage gespeichert/gecleart wird
 				https://www.youtube.com/watch?v=zkejq88f7CY
 			=> selector schreiben, welceh nur SubState rausholen
-			
-		
+
+
 		-Testing aufbauen (Container, GUI, ngrx,...)
-			
-			
+
+
 		-GUI Anpassungen:
 			-icons verwenden
 		-Pagination einbauen
-
 
 
 		-Liste: Sortierung einbauen: Zeit
@@ -35,7 +35,7 @@ migust
 		-Animations
 		-Ionic ausprobieren: RezepteApp als App laufen lassen (https://angular.de/artikel/ionic2-tutorial-deutsch/)
 		-Angular Ivy opt-in ausprobieren
-		-Bazel inkremental Buiold ausprobieren
+		-Bazel inkremental Build ausprobieren
 		-Angular Testing: https://angular.de/artikel/angular-testing/
 		-codelyzer (https://github.com/mgechev/codelyzer)
 		-RezpteApp als DEsktop-App laufen lassen mit Electron (https://angular.de/artikel/angular-electron/ , https://github.com/maximegris/angular-electron)
