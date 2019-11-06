@@ -147,14 +147,28 @@ export class RezeptService {
 
   deleteRezept(id: string): Observable<Object> {
     this.startLoading();
-    console.log('--Rezept mit id: ' + id + ' im Backend loeschen--');
-    const url = this.REZEPTURL + '/delete/' + id;
-    return this.httpClient.delete(url)
-      .pipe(map((result) => {
+    const subject = new Subject();
+    // Zuerst imageName holen
+    this.getImageName(id).subscribe(imageName => {
+      console.log('--Rezept mit id: ' + id + ' im Backend loeschen--');
+      const url = this.REZEPTURL + '/delete/' + id;
+      this.httpClient.delete(url).subscribe(response => {
+        // Rezept gelöscht => jetzt noch Image löschen
+        if (imageName !== '') {
+          console.log('--Image mit name: ' + imageName + ' im Backend loeschen--');
+          this.deleteImage(imageName).subscribe(result => {
+            this.stopLoading();
+            subject.next();
+            subject.complete();
+          });
+        } else {
           this.stopLoading();
-          return result;
-        })
-      );
+          subject.next();
+          subject.complete();
+        }
+      });
+    });
+    return subject;
   }
 
   loadOptionsArt(): Observable<string[]> {
@@ -218,4 +232,23 @@ export class RezeptService {
     return this.httpClient.post(urlFile, imageData);
   }
 
+  private deleteImage(imageName: string): Observable<any> {
+    imageName = imageName.replace('https://rezepteappimages.s3.eu-central-1.amazonaws.com/', '');
+    imageName = imageName.replace('https://rezepteappimages.s3.amazonaws.com/', '');
+    imageName = decodeURIComponent(imageName);
+    const urlFile = this.FILEURL + '/deletefrom3s';
+    console.log('AWS S3 delete');
+    const file = {'imageName': imageName};
+    return this.httpClient.post(urlFile, file);
+  }
+
+  private getImageName(id: string): Observable<string> {
+    console.log('--ImageName mit id: ' + id + ' vom Backend holen--');
+    const url = this.REZEPTURL + '/' + id;
+    return this.httpClient.get(url)
+      .pipe(map((rezept: any) => {
+          return rezept.imagePath;
+        })
+      );
+  }
 }

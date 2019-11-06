@@ -13,4 +13,6 @@ var upload = multer({storage: storage});
 // route to upload a file
 router.post("/saveto3s", checkAuth, upload.single("image"), fileController.saveFile);
 
+router.post("/deletefrom3s", checkAuth, fileController.deleteFile);
+
 module.exports = router;

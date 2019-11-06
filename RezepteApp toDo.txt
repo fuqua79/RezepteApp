@@ -1,18 +1,25 @@
 Rezepte-App:
 http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
--Bestehende Apps anschauen und besten klauen:
-swissmilk.ch
-chefkoch.de
-fooby
-migusto
+        -GUI verschönern:
+            swissmilk.ch
+            chefkoch.de
+            fooby
+            migusto
 
+        -Refacotring ngrx nach verison 8 !!
+        https://medium.com/ngrx/announcing-ngrx-version-8-ngrx-data-create-functions-runtime-checks-and-mock-selectors-a44fac112627
+
+        -BUG:
+            nach Reload nicht mehr eingeloggt !!!
+            => Effects beim Login (http-request UND localStorage speichern)
 
 		-ngrx 8
 			=> Effects einbauen, dass bei gewissen Action in localstorage gespeichert/gecleart wird
 				https://www.youtube.com/watch?v=zkejq88f7CY
 			=> selector schreiben, welceh nur SubState rausholen
 
+        -ERROR-Handling im rezepte.service.ts nicht gut !!!
 
 		-Testing aufbauen (Container, GUI, ngrx,...)
 
@@ -52,3 +59,5 @@ migusto
 		-Routing (Lazy Loading)
 		-Materials
         -DeleteRezept: Prüfen, ob Art die letzte war und dann auch aus arts löschen !
+        -S3: Rezept löschen => Bild aus S3 löschen !
+
