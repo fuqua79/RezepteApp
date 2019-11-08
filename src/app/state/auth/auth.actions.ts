@@ -16,9 +16,6 @@ export class LoginSuccessAction implements Action {
 
 export class ClearAuthStateAction implements Action {
   readonly type = CLEAR_LOGIN_ACTION;
-
-  constructor() {
-  }
 }
 
 export type AuthActions = LoginSuccessAction | ClearAuthStateAction;

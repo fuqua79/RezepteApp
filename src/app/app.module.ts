@@ -13,9 +13,12 @@ import {ErrorComponent} from './error/error.component';
 import {ErrorInterceptor} from './error-interceptor';
 import {AngularMaterialModule} from './angular-material.module';
 import {RezeptModule} from './rezept.module';
-import { ConfirmationDialogComponent } from './container/confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogComponent} from './container/confirmation-dialog/confirmation-dialog.component';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from './state/state';
+import {EffectsModule} from '@ngrx/effects';
+import {AuthEffects} from './state/auth/auth.effects';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 
 @NgModule({
@@ -35,7 +38,9 @@ import {reducers} from './state/state';
     BrowserAnimationsModule,
     AngularMaterialModule,
     RezeptModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([AuthEffects]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

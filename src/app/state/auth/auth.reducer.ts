@@ -2,6 +2,7 @@ import {AuthState, initialAuthState} from './auth.state';
 import {AuthActions, CLEAR_LOGIN_ACTION, LOGIN_SUCCESSS_ACTION} from './auth.actions';
 
 export function AuthReducer(state: AuthState = initialAuthState, action: AuthActions): AuthState {
+  console.log('action.type: ', action.type);
   switch (action.type) {
     case LOGIN_SUCCESSS_ACTION:
       return {
