@@ -3,10 +3,17 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
         -BUG:
             nach Reload nicht mehr eingeloggt !!!
+			-SetTimer geht noch nicht !
             => Effects beim Login (http-request UND localStorage speichern)
 
         -Refacotring ngrx nach verison 8 !!
+		https://angular-buch.com/blog/2019-06-ngrx8
+		https://ultimatecourses.com/blog/how-to-upgrade-your-angular-and-ngrx-apps-to-v8#Learn_by_Example_a_Fruit_Store_NgRx_v7
         https://medium.com/ngrx/announcing-ngrx-version-8-ngrx-data-create-functions-runtime-checks-and-mock-selectors-a44fac112627
+		https://github.com/ngrx/example-app/blob/master/src/app/app.module.ts
+
+
+
 
         -GUI verschönern:
             swissmilk.ch
