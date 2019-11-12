@@ -6,7 +6,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {AuthService} from '../../service/auth.service';
-import {LOGIN_SUCCESSS_ACTION} from './auth.actions';
 import {map} from 'rxjs/operators';
 import {AuthState} from './auth.state';
 
@@ -14,7 +13,7 @@ import {AuthState} from './auth.state';
 export class AuthEffects {
   loginSucess$ = createEffect(() =>
       this.actions$.pipe(
-        ofType(LOGIN_SUCCESSS_ACTION),
+        ofType('[Auth] LoginSuccessAction'),
         map((action: any) => {
           const authState: AuthState = {
             userId: action.userId,
@@ -23,7 +22,7 @@ export class AuthEffects {
             isAuthenticated: action.isAuthenticated,
             expirationDate: action.expirationDate
           };
-          this.authServices.saveAuthData(authState);
+          // this.authServices.saveAuthData(authState);
         })
       ),
     {dispatch: false}

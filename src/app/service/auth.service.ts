@@ -6,7 +6,7 @@ import {AuthData} from '../auth/auth-data.model';
 import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import {GlobalState} from '../state/state';
-import {ClearAuthStateAction, LoginSuccessAction} from '../state/auth/auth.actions';
+import {clearAuthState, loginSuccess} from '../state/auth/auth.actions';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {AuthState, initialAuthState} from '../state/auth/auth.state';
 
@@ -35,7 +35,7 @@ export class AuthService implements OnInit, OnDestroy {
       this.router.navigate(['/']);
     }, error => {
       console.log(error);
-      this.store.dispatch(new ClearAuthStateAction());
+      this.store.dispatch(clearAuthState());
     });
   }
 
@@ -53,25 +53,32 @@ export class AuthService implements OnInit, OnDestroy {
           const expiresInDuration = response.expiresIn;
           const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
           this.setAuthTimer(expiresInDuration);
-          this.store.dispatch(new LoginSuccessAction(response.userId, email, token, true, expirationDate));
-          this.saveAuthData({
-            userId: 'user1',
-            userName: 'usrName1',
-            token: 'toooken',
+          console.log('loginsuccess Action ausführen.', response.userId, email);
+          this.store.dispatch(loginSuccess({
+            userId: response.userId,
+            userName: email,
+            token: token,
             isAuthenticated: true,
-            expirationDate: new Date()
+            expirationDate: expirationDate
+          }));
+          this.saveAuthData({
+            userId: response.userId,
+            userName: email,
+            token: token,
+            isAuthenticated: true,
+            expirationDate: expirationDate
           });
           console.log(expirationDate);
           this.router.navigate(['/']);
         }
       }, error => {
         console.log(error);
-        this.store.dispatch(new ClearAuthStateAction());
+        this.store.dispatch(clearAuthState());
       });
   }
 
   logout() {
-    this.store.dispatch(new ClearAuthStateAction());
+    this.store.dispatch(clearAuthState());
     clearTimeout(this.tokenTimer);
     this.router.navigate(['/']);
   }

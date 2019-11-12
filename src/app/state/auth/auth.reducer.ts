@@ -1,23 +1,22 @@
 import {AuthState, initialAuthState} from './auth.state';
-import {AuthActions, CLEAR_LOGIN_ACTION, LOGIN_SUCCESSS_ACTION} from './auth.actions';
+import {clearAuthState, loginSuccess} from './auth.actions';
+import {Action, createReducer, on} from '@ngrx/store';
 
-export function AuthReducer(state: AuthState = initialAuthState, action: AuthActions): AuthState {
-  console.log('action.type: ', action.type);
-  switch (action.type) {
-    case LOGIN_SUCCESSS_ACTION:
-      return {
-        ...state,
-        userId: action.userId,
-        userName: action.userName,
-        token: action.token,
-        isAuthenticated: action.isAuthenticated,
-        expirationDate: action.expirationDate
-      };
+const reducer = createReducer(
+  initialAuthState,
+  on(loginSuccess, (authState, {userId, userName, token, isAuthenticated, expirationDate}) => ({
+    ...authState,
+    userId: userId,
+    userName: userName,
+    token: token,
+    isAuthenticated: isAuthenticated,
+    expirationDate: expirationDate
+  })),
+  on(clearAuthState, () => (
+    initialAuthState
+  ))
+);
 
-    case CLEAR_LOGIN_ACTION:
-      return initialAuthState;
-
-    default:
-      return state;
-  }
+export function authReducer(authState: AuthState | undefined, action: Action) {
+  return reducer(authState, action);
 }
