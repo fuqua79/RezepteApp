@@ -12,9 +12,9 @@ const reducer = createReducer(
     isAuthenticated: isAuthenticated,
     expirationDate: expirationDate
   })),
-  on(clearAuthState, () => (
+  on(clearAuthState, () =>
     initialAuthState
-  ))
+  )
 );
 
 export function authReducer(authState: AuthState | undefined, action: Action) {

@@ -47,13 +47,12 @@ export class AuthService implements OnInit, OnDestroy {
         authData
       )
       .subscribe(response => {
-        // TODO Hier noch alles auf store umstellen
         const token = response.token;
         if (token) {
           const expiresInDuration = response.expiresIn;
           const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
           this.setAuthTimer(expiresInDuration);
-          console.log('loginsuccess Action ausführen.', response.userId, email);
+          console.log('loginsuccess Action ausführen.', expirationDate);
           this.store.dispatch(loginSuccess({
             userId: response.userId,
             userName: email,
