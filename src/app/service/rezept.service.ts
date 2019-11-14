@@ -3,7 +3,6 @@ import {createInitialRezept, Rezept} from '../model/rezept';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {concatMap, map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs/internal/Observable';
-import {Subject} from 'rxjs/internal/Subject';
 import {environment} from '../../environments/environment';
 import {SuchParameter} from '../model/suchParameter';
 import {GlobalState} from '../state/state';
@@ -104,26 +103,24 @@ export class RezeptService {
 
 
   deleteRezept(id: string): Observable<Object> {
-    const subject = new Subject();
-    // Zuerst imageName holen
-    this.getImageName(id).subscribe(imageName => {
-      console.log('--Rezept mit id: ' + id + ' im Backend loeschen--');
-      const url = this.REZEPTURL + '/delete/' + id;
-      this.httpClient.delete(url).subscribe(response => {
-        // Rezept gelöscht => jetzt noch Image löschen
+    return this.getImageName(id).pipe(
+      concatMap((imageName) => {
+        console.log('--Rezept mit id: ' + id + ' im Backend loeschen--');
+        const url = this.REZEPTURL + '/delete/' + id;
         if (imageName !== '') {
-          console.log('--Image mit name: ' + imageName + ' im Backend loeschen--');
-          this.deleteImage(imageName).subscribe(result => {
-            subject.next();
-            subject.complete();
-          });
+          return this.httpClient.delete(url).pipe(
+            concatMap(() => {
+              if (imageName !== '') {
+                console.log('--Image mit name: ' + imageName + ' im Backend loeschen--');
+                return this.deleteImage(imageName);
+              }
+            })
+          );
         } else {
-          subject.next();
-          subject.complete();
+          return this.httpClient.delete(url);
         }
-      });
-    });
-    return subject;
+      })
+    );
   }
 
   loadOptionsArt(): Observable<string[]> {

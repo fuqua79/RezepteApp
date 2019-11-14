@@ -101,7 +101,6 @@
       <img [src]="imagePreview" [alt]="formGroup.value.title">
     </div>
     <br>
-    <div>MIKE: is Loading: {{isLoading?.isLoading}}</div>
     <button *ngIf="!isLoading?.isLoading"
             mat-raised-button color="primary" id="speichern"
             (click)="saveRezept()">Speichern</button>
