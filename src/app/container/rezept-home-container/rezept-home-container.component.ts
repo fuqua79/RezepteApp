@@ -3,7 +3,9 @@ import {Rezept} from '../../model/rezept';
 import {RezeptService} from '../../service/rezept.service';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/internal/Observable';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import {GlobalState} from '../../state/state';
+import {Store} from '@ngrx/store';
+import {selectLoading} from '../../state/loading/loading.selectors';
 
 @Component({
   selector: 'app-rezept-home-container',
@@ -12,15 +14,15 @@ import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 })
 export class RezeptHomeContainerComponent implements OnInit {
 
-  public isLoading$: BehaviorSubject<boolean>;
+  public isLoading$ = this.store.select(selectLoading);
   public randomRezept$: Observable<Rezept>;
 
   constructor(private rezeptService: RezeptService,
-              private router: Router) {
+              private router: Router,
+              private store: Store<GlobalState>) {
   }
 
   ngOnInit() {
-    this.isLoading$ = this.rezeptService.isLoading$;
     this.getRandomRezept();
   }
 

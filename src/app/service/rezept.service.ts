@@ -1,28 +1,29 @@
 import {Injectable} from '@angular/core';
 import {createInitialRezept, Rezept} from '../model/rezept';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {concatMap, map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs/internal/Observable';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {Subject} from 'rxjs/internal/Subject';
 import {environment} from '../../environments/environment';
 import {SuchParameter} from '../model/suchParameter';
+import {GlobalState} from '../state/state';
+import {Store} from '@ngrx/store';
+import {startLoading, stopLoading} from '../state/loading/loading.actions';
 
 
 @Injectable()
 export class RezeptService {
 
-  public isLoading$ = new BehaviorSubject<boolean>(false);
-
   private REZEPTURL = environment.apiUrl + '/rezept';
   private FILEURL = environment.apiUrl + '/files';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private store: Store<GlobalState>) {
   }
 
   loadAllRezepte(): Observable<Rezept[]> {
-    this.startLoading();
     console.log('--Alle Rezepte vom Backend holen--');
+    this.store.dispatch(startLoading());
     const url = this.REZEPTURL + '/list';
     return this.httpClient.get(url)
       .pipe(
@@ -30,43 +31,43 @@ export class RezeptService {
           for (const rezept of rezepteliste) {
             rezept.id = rezept._id;
           }
-          this.stopLoading();
+          this.store.dispatch(stopLoading());
           return rezepteliste;
         })
       );
   }
 
   loadRezept(id: string): Observable<Rezept> {
-    this.startLoading();
     console.log('--Rezept mit id: ' + id + ' vom Backend holen--');
+    this.store.dispatch(startLoading());
     const url = this.REZEPTURL + '/' + id;
     return this.httpClient.get(url)
       .pipe(map((rezept: any) => {
           rezept.id = rezept._id;
-          this.stopLoading();
+          this.store.dispatch(stopLoading());
           return rezept;
         })
       );
   }
 
   loadRandomRezept(): Observable<Rezept> {
-    this.startLoading();
     console.log('--RandomRezept vom Backend holen--');
+    this.store.dispatch(startLoading());
     const url = this.REZEPTURL + '/random';
     return this.httpClient.get(url)
       .pipe(map((rezept: any) => {
           if (rezept) {
             rezept.id = rezept._id;
           }
-          this.stopLoading();
+          this.store.dispatch(stopLoading());
           return rezept;
         })
       );
   }
 
   searchRezept(suchParameter: SuchParameter) {
-    this.startLoading();
     console.log('--Rezept im Backend suchen--');
+    this.store.dispatch(startLoading());
     let params = new HttpParams();
     if (suchParameter.text) {
       params = params.set('text', suchParameter.text);
@@ -84,7 +85,7 @@ export class RezeptService {
           for (const rezept of rezepteliste) {
             rezept.id = rezept._id;
           }
-          this.stopLoading();
+          this.store.dispatch(stopLoading());
           return rezepteliste;
         })
       );
@@ -101,52 +102,8 @@ export class RezeptService {
     }
   }
 
-  updateRezept(form: any): Observable<any> {
-    console.log('--Bestehendes Rezet im Backend updaten-- id:', form.id);
-    if (this.checkNewImage(form)) {
-      const subject = new Subject();
-      this.saveImage(form.image).subscribe((response) => {
-        const urlRezept = this.REZEPTURL + '/' + form.id;
-        const rezept = this.mapFormToRezept(form, response);
-        console.log('--Neues Rezept im Backend updaten-- Rezept: ');
-        this.httpClient.put(urlRezept, rezept).subscribe(() => {
-          subject.next();
-          subject.complete();
-        });
-      });
-      return subject;
-    } else {
-      const urlRezept = this.REZEPTURL + '/' + form.id;
-      const rezept = this.mapFormToRezept(form, null);
-      console.log('--Neues Rezept im Backend updaten-- Rezept: ');
-      return this.httpClient.put(urlRezept, rezept);
-    }
-  }
-
-  insertRezept(form: any): Observable<any> {
-    console.log('--Neues Form im Backend inserten-- FORM: ', form);
-    if (this.checkNewImage(form)) {
-      const subject = new Subject();
-      this.saveImage(form.image).subscribe((response) => {
-        const urlRezept = this.REZEPTURL + '/save';
-        const rezept = this.mapFormToRezept(form, response);
-        console.log('--Neues Rezept im Backend inserten-- Rezept: ');
-        this.httpClient.post(urlRezept, rezept).subscribe(() => {
-          subject.next();
-          subject.complete();
-        });
-      });
-      return subject;
-    } else {
-      const urlRezept = this.REZEPTURL + '/save';
-      const rezept = this.mapFormToRezept(form, null);
-      console.log('--Neues Rezept im Backend inserten-- Rezept: ');
-      return this.httpClient.post(urlRezept, rezept);
-    }
-  }
 
   deleteRezept(id: string): Observable<Object> {
-    this.startLoading();
     const subject = new Subject();
     // Zuerst imageName holen
     this.getImageName(id).subscribe(imageName => {
@@ -157,12 +114,10 @@ export class RezeptService {
         if (imageName !== '') {
           console.log('--Image mit name: ' + imageName + ' im Backend loeschen--');
           this.deleteImage(imageName).subscribe(result => {
-            this.stopLoading();
             subject.next();
             subject.complete();
           });
         } else {
-          this.stopLoading();
           subject.next();
           subject.complete();
         }
@@ -186,14 +141,61 @@ export class RezeptService {
       );
   }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
-  private startLoading(): void {
-    this.isLoading$.next(true);
+  private updateRezept(form: any): Observable<any> {
+    console.log('--Bestehendes Rezet im Backend updaten-- id:', form.id);
+    this.store.dispatch(startLoading());
+    const urlRezept = this.REZEPTURL + '/' + form.id;
+    if (this.checkNewImage(form)) {
+      // Zuerst Image speichern und dann Rezept speichern => 2 Observables zusammenmappen
+      return this.saveImage(form.image).pipe(
+        concatMap((response) => {
+          const rezept = this.mapFormToRezept(form, response);
+          console.log('--CONCATMAP Neues Rezept im Backend updaten-- Rezept: ');
+          return this.httpClient.put(urlRezept, rezept).pipe(
+            tap(() => {
+              this.store.dispatch(stopLoading());
+            })
+          );
+        })
+      );
+    } else {
+      const rezept = this.mapFormToRezept(form, null);
+      console.log('--Neues Rezept im Backend updaten-- Rezept: ');
+      return this.httpClient.put(urlRezept, rezept).pipe(
+        tap(() => {
+          this.store.dispatch(stopLoading());
+        })
+      );
+    }
   }
 
-  private stopLoading(): void {
-    this.isLoading$.next(false);
+  private insertRezept(form: any): Observable<any> {
+    console.log('--Neues Form im Backend inserten-- FORM: ', form);
+    this.store.dispatch(startLoading());
+    const urlRezept = this.REZEPTURL + '/save';
+    if (this.checkNewImage(form)) {
+      // Zuerst Image speichern und dann Rezept speichern => 2 Observables zusammenmappen
+      return this.saveImage(form.image).pipe(
+        concatMap((response) => {
+          const rezept = this.mapFormToRezept(form, response);
+          console.log('--CONCATMAP Neues Rezept im Backend inserten-- Rezept: ');
+          return this.httpClient.post(urlRezept, rezept).pipe(
+            tap(() => {
+              this.store.dispatch(stopLoading());
+            })
+          );
+        })
+      );
+    } else {
+      const rezept = this.mapFormToRezept(form, null);
+      console.log('--Neues Rezept im Backend inserten-- Rezept: ');
+      return this.httpClient.post(urlRezept, rezept).pipe(
+        tap(() => {
+          this.store.dispatch(stopLoading());
+        })
+      );
+    }
   }
 
   private checkNewImage(form: any): boolean {

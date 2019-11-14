@@ -5,6 +5,9 @@ import {RezeptService} from '../../service/rezept.service';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {Observable} from 'rxjs/internal/Observable';
 import {of} from 'rxjs/internal/observable/of';
+import {selectLoading} from '../../state/loading/loading.selectors';
+import {GlobalState} from '../../state/state';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-rezept-erfassen-container',
@@ -13,6 +16,7 @@ import {of} from 'rxjs/internal/observable/of';
 })
 export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
 
+  public isLoading$ = this.store.select(selectLoading);
   public rezept$: Observable<Rezept>;
   public optionsArt$: Observable<string[]>;
 
@@ -21,7 +25,8 @@ export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private rezeptService: RezeptService) {
+              private rezeptService: RezeptService,
+              private store: Store<GlobalState>) {
   }
 
   ngOnInit() {

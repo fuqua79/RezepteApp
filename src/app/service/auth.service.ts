@@ -9,6 +9,8 @@ import {GlobalState} from '../state/state';
 import {clearAuthState, loginSuccess} from '../state/auth/auth.actions';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {AuthState, initialAuthState} from '../state/auth/auth.state';
+import {startLoading, stopLoading} from '../state/loading/loading.actions';
+import {tap} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class AuthService implements OnInit, OnDestroy {
@@ -30,8 +32,10 @@ export class AuthService implements OnInit, OnDestroy {
   }
 
   createUser(email: string, password: string) {
+    this.store.dispatch(startLoading());
     const authData: AuthData = {email: email, password: password};
     this.http.post(this.URL + '/signup', authData).subscribe(() => {
+      this.store.dispatch(stopLoading());
       this.router.navigate(['/']);
     }, error => {
       console.log(error);
@@ -39,7 +43,21 @@ export class AuthService implements OnInit, OnDestroy {
     });
   }
 
-  login(email: string, password: string) {
+  justLogin(email: string, password: string) {
+    this.store.dispatch(startLoading());
+    const authData: AuthData = {email: email, password: password};
+    return this.http.post<{ token: string; expiresIn: number; userId: string }>(
+      this.URL + '/login',
+      authData
+    ).pipe(
+      tap(() => {
+        this.store.dispatch(stopLoading());
+      })
+    )
+  }
+
+  login(email: string, password: string): void {
+    this.store.dispatch(startLoading());
     const authData: AuthData = {email: email, password: password};
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
@@ -70,9 +88,11 @@ export class AuthService implements OnInit, OnDestroy {
           console.log(expirationDate);
           this.router.navigate(['/']);
         }
+        this.store.dispatch(stopLoading());
       }, error => {
         console.log(error);
         this.store.dispatch(clearAuthState());
+        this.store.dispatch(stopLoading());
       });
   }
 
@@ -114,6 +134,7 @@ export class AuthService implements OnInit, OnDestroy {
 
   // TODO eliminieren
   private saveAuthData(authState: AuthState) {
+    console.log('saveAuthState: ', authState);
     localStorage.setItem('token', authState.token);
     localStorage.setItem('expiration', authState.expirationDate.toISOString());
     localStorage.setItem('userId', authState.userId);

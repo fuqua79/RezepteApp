@@ -1,6 +1,6 @@
 <div>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <div *ngIf="!isLoading">
+  <mat-spinner *ngIf="isLoading?.isLoading"></mat-spinner>
+  <div *ngIf="!isLoading?.isLoading">
     <div id="detail_content">
       <div class="mb-4">
         <h1 class="h1 text-center mt-4">
@@ -9,7 +9,7 @@
         <h2 class="h2 text-center mt-3">
           {{rezept?.beschreibung}}
         </h2>
-        <div *ngIf="rezept?.imagePath != ''">
+        <div *ngIf="rezept && rezept.imagePath && rezept.imagePath !== ''">
           <img [src]="rezept?.imagePath" [alt]="rezept?.titel" class="home-image">
         </div>
       </div>
@@ -101,6 +101,9 @@
     </div>
   </div>
   <button (click)="printRezept(rezept?.id)">DRUCKEN</button>
-  <button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()" (click)="openRezept(rezept?.id)">BEARBEITEN</button>
-  <button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()" (click)="deleteRezept(rezept?.id)">LÖSCHEN</button>
+  <button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()" (click)="openRezept(rezept?.id)">
+    BEARBEITEN
+  </button>
+  <button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()" (click)="deleteRezept(rezept?.id)">LÖSCHEN
+  </button>
 </div>

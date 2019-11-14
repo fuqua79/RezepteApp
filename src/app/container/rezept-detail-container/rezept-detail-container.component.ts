@@ -21,7 +21,7 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
   public rezept$: Observable<Rezept>;
 
   private unsubscribe$: Subject<void> = new Subject<void>();
-  private authUserId$: any;
+  private authUserId$ = this.store.select(state => state.auth.userId);
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -31,8 +31,6 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authUserId$ = this.store.select(state => state.auth.userId);
-    this.isLoading$ = this.rezeptService.isLoading$;
     this.rezept$ = this.route.params
       .pipe(
         switchMap(params => this.rezeptService.loadRezept(params.id))

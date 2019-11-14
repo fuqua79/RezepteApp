@@ -24,8 +24,8 @@
     <button (click)="searchRezept()"> SUCHEN</button>
   </div>
 </div>
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-<div *ngIf="!isLoading">
+<mat-spinner *ngIf="isLoading?.isLoading"></mat-spinner>
+<div *ngIf="!isLoading?.isLoading">
   <ul class="list-group no-list-type">
     <li class="m-1 rounded app-liste-item border border-muted" *ngFor="let rezept of rezeptListe"
         (click)="openRezept(rezept.id)"

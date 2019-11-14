@@ -1,11 +1,11 @@
 <div (click)="openRezept(randomRezept.id)">
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <div *ngIf="!isLoading">
-    <div>
-      <h1 class="h1 text-center">
-        Zufälliges Rezept
-      </h1>
-    </div>
+  <div>
+    <h1 class="h1 text-center">
+      Zufälliges Rezept
+    </h1>
+  </div>
+  <mat-spinner *ngIf="isLoading?.isLoading"></mat-spinner>
+  <div *ngIf="!isLoading?.isLoading">
     <div class="text-center mt-4 mb-4">
       <h2>
         {{randomRezept?.titel}}
@@ -13,13 +13,13 @@
       <h3>
         {{randomRezept?.beschreibung}}
       </h3>
-      <div *ngIf="randomRezept?.imagePath != ''">
+      <div *ngIf="randomRezept && randomRezept.imagePath && randomRezept.imagePath !== ''">
         <img [src]="randomRezept?.imagePath" [alt]="randomRezept?.titel" class="home-image">
       </div>
     </div>
   </div>
 </div>
-<div class="text-center">
+<div class="text-center spinner-m-top-md">
   <button mat-raised-button (click)="getNextRezept()">
     Nächstes Rezept
   </button>

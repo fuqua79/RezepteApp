@@ -1,6 +1,8 @@
 Rezepte-App:
 http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
+        -isLaoding-Logik umbauen auf store
+
         -BUG:
             nach Reload nicht mehr eingeloggt !!!
 			-SetTimer geht noch nicht !

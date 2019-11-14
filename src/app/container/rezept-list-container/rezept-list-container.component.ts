@@ -3,8 +3,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RezeptService} from '../../service/rezept.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {Rezept} from '../../model/rezept';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {SuchParameter} from '../../model/suchParameter';
+import {selectLoading} from '../../state/loading/loading.selectors';
+import {GlobalState} from '../../state/state';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-rezept-list-container',
@@ -13,17 +15,17 @@ import {SuchParameter} from '../../model/suchParameter';
 })
 export class RezeptListContainerComponent implements OnInit {
 
-  public isLoading$: BehaviorSubject<boolean>;
+  public isLoading$ = this.store.select(selectLoading);
   public rezeptListe$: Observable<Rezept[]>;
   public optionsArt$: Observable<string[]>;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private rezeptService: RezeptService) {
+              private rezeptService: RezeptService,
+              private store: Store<GlobalState>) {
   }
 
   ngOnInit() {
-    this.isLoading$ = this.rezeptService.isLoading$;
     this.rezeptListe$ = this.rezeptService.loadAllRezepte();
     this.optionsArt$ = this.rezeptService.loadOptionsArt();
   }

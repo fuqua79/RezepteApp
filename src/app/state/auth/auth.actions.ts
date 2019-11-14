@@ -1,4 +1,5 @@
 import {createAction, props} from '@ngrx/store';
+import {Credentials} from '../../model/credentials';
 
 export const loginSuccess = createAction(
   '[Auth] LoginSuccessAction',
@@ -8,6 +9,13 @@ export const loginSuccess = createAction(
     token: string,
     isAuthenticated: boolean,
     expirationDate: Date
+  }>()
+);
+
+export const login = createAction(
+  '[Login Page] Login User',
+  props<{
+    credentials: Credentials
   }>()
 );
 

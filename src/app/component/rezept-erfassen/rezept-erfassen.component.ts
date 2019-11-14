@@ -19,6 +19,9 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
   @Input()
   optionsArt: string[];
 
+  @Input()
+  isLoading: { isLoading: boolean };
+
   @Output()
   save = new EventEmitter<any>();
 

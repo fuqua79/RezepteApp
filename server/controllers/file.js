@@ -10,8 +10,8 @@ exports.deleteFile = function (req, res) {
   const fileName = req.body.imageName;
 
   let s3bucket = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY
   });
   var params = {
     Bucket: process.env.AWS_BUCKET_NAME,
@@ -44,8 +44,8 @@ exports.saveFile = function (req, res) {
   }
 
   let s3bucket = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY
   });
 
   //Where you want to store your file

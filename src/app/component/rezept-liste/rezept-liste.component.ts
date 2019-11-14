@@ -19,7 +19,7 @@ export class RezeptListeComponent implements OnInit {
   optionsArt: string[];
 
   @Input()
-  isLoading: boolean;
+  isLoading: { isLoading: boolean };
 
   @Output()
   open = new EventEmitter<string>();

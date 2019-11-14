@@ -20,7 +20,7 @@ export class RezeptComponent implements OnInit, OnDestroy {
   public rezept: Rezept;
 
   @Input()
-  isLoading: boolean;
+  isLoading: { isLoading: boolean };
 
   @Input()
   userId: string;
@@ -35,7 +35,7 @@ export class RezeptComponent implements OnInit, OnDestroy {
   print = new EventEmitter<string>();
 
   public gewunschteAnzahlPersonen = 1;
-  public userIsAuthenticated$: Observable<boolean>;
+  public userIsAuthenticated$=  this.store.select(state => state.auth.isAuthenticated);
   public title = 'angular-confirmation-dialog';
 
 
@@ -45,7 +45,6 @@ export class RezeptComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userIsAuthenticated$ = this.store.select(state => state.auth.isAuthenticated);
   }
 
   ngOnDestroy() {
