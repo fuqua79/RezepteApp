@@ -19,7 +19,7 @@ router.get('/random', RezeptController.getRandomRezept);
 router.get('/search', RezeptController.findRezept);
 
 //Options für Art holen
-router.get('/options/art', OptionController.getOptionsArt)
+router.get('/options/art', OptionController.getOptionsArt);
 
 //Rezept UPDATEN
 router.put('/:id', checkAuth, RezeptController.updateRezept);

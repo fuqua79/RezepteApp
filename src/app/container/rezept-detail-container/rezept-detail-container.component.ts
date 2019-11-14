@@ -3,12 +3,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RezeptService} from '../../service/rezept.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {Rezept} from '../../model/rezept';
-import {switchMap, takeUntil} from 'rxjs/operators';
+import {switchMap} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
-import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {AuthService} from '../../service/auth.service';
 import {GlobalState} from '../../state/state';
 import {Store} from '@ngrx/store';
+import {selectLoading} from '../../state/loading/loading.selectors';
 
 @Component({
   selector: 'app-rezept-detail-container',
@@ -17,7 +17,7 @@ import {Store} from '@ngrx/store';
 })
 export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
 
-  public isLoading$: BehaviorSubject<boolean>;
+  public isLoading$ = this.store.select(selectLoading);
   public rezept$: Observable<Rezept>;
 
   private unsubscribe$: Subject<void> = new Subject<void>();

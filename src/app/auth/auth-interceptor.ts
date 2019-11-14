@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    let authToken;
+    let authToken = '';
     this.store.subscribe(state => authToken = state.auth.token);
     const authRequest = req.clone({
       headers: req.headers.set('Authorization', 'Bearer ' + authToken)

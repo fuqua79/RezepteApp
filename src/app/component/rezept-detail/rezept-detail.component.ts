@@ -1,10 +1,8 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Rezept} from '../../model/rezept';
 import {AuthService} from '../../service/auth.service';
-import {Subscription} from 'rxjs/internal/Subscription';
 import {MatDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '../../container/confirmation-dialog/confirmation-dialog.component';
-import {Observable} from 'rxjs/internal/Observable';
 import {GlobalState} from '../../state/state';
 import {Store} from '@ngrx/store';
 
@@ -35,7 +33,7 @@ export class RezeptComponent implements OnInit, OnDestroy {
   print = new EventEmitter<string>();
 
   public gewunschteAnzahlPersonen = 1;
-  public userIsAuthenticated$=  this.store.select(state => state.auth.isAuthenticated);
+  public userIsAuthenticated$ = this.store.select(state => state.auth.isAuthenticated);
   public title = 'angular-confirmation-dialog';
 
 

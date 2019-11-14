@@ -11,13 +11,16 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(login),
       concatMap(action => this.authServices.login(action.credentials.email, action.credentials.password).pipe(
-        map(result => loginSuccess({
-          userId: result.userId,
-          userName: action.credentials.email,
-          token: result.token,
-          isAuthenticated: true,
-          expirationDate: new Date(new Date().getTime() + result.expiresIn * 1000)
-        })),
+        map(result => {
+          console.log('Save Login Data to local Storage....');
+          return loginSuccess({
+            userId: result.userId,
+            userName: action.credentials.email,
+            token: result.token,
+            isAuthenticated: true,
+            expirationDate: new Date(new Date().getTime() + result.expiresIn * 1000)
+          })
+        }),
         catchError(error => EMPTY))
       )
     )

@@ -2,9 +2,6 @@ Rezepte-App:
 http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
         -BUG:
-            nach Reload nicht mehr eingeloggt !!!
-			-SetTimer geht noch nicht !
-            => Effects beim Login (http-request UND localStorage speichern)
 
         -GUI verschönern:
             swissmilk.ch
@@ -12,9 +9,6 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
             fooby
             migusto
 
-		-ngrx 8
-			=> Effects einbauen, dass bei gewissen Action in localstorage gespeichert/gecleart wird
-				https://www.youtube.com/watch?v=zkejq88f7CY
 
         -ERROR-Handling im rezepte.service.ts nicht gut !!!
 
@@ -63,4 +57,11 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 		https://ultimatecourses.com/blog/how-to-upgrade-your-angular-and-ngrx-apps-to-v8#Learn_by_Example_a_Fruit_Store_NgRx_v7
         https://medium.com/ngrx/announcing-ngrx-version-8-ngrx-data-create-functions-runtime-checks-and-mock-selectors-a44fac112627
 		https://github.com/ngrx/example-app/blob/master/src/app/app.module.ts
+        -Effects beim Login (http-request)
+        -authData in localStorage speichern
+        -nach Reload nicht mehr eingeloggt !!!
+        -SetTimer geht noch nicht !
+        -ngrx 8
+            => Effects einbauen, dass bei gewissen Action in localstorage gespeichert/gecleart wird
+                https://www.youtube.com/watch?v=zkejq88f7CY
 

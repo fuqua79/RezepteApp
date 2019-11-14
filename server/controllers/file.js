@@ -1,4 +1,4 @@
-var AWS = require("aws-sdk");
+const AWS = require("aws-sdk");
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -9,11 +9,11 @@ const MIME_TYPE_MAP = {
 exports.deleteFile = function (req, res) {
   const fileName = req.body.imageName;
 
-  let s3bucket = new AWS.S3({
+  const s3bucket = new AWS.S3({
     accessKeyId: process.env.ACCESS_KEY_ID,
     secretAccessKey: process.env.SECRET_ACCESS_KEY
   });
-  var params = {
+  const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: fileName
   };
@@ -43,14 +43,14 @@ exports.saveFile = function (req, res) {
     });
   }
 
-  let s3bucket = new AWS.S3({
+  const s3bucket = new AWS.S3({
     accessKeyId: process.env.ACCESS_KEY_ID,
     secretAccessKey: process.env.SECRET_ACCESS_KEY
   });
 
   //Where you want to store your file
   const fileName = file.originalname.replace(/\s/g, '') + "-" + Date.now() + "." + fileExtension;
-  var params = {
+  const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: fileName,
     Body: file.buffer,

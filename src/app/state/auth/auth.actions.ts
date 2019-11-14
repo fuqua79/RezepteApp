@@ -19,6 +19,21 @@ export const loginSuccess = createAction(
   }>()
 );
 
-export const clearAuthState = createAction(
-  '[Auth] ClearAuthStateAction'
+export const loginSuccessAutoLogin = createAction(
+  '[Auth Service AutoLogin] LoginSuccessAction',
+  props<{
+    userId: string,
+    userName: string,
+    token: string,
+    isAuthenticated: boolean,
+    expirationDate: Date
+  }>()
+);
+
+export const clearAuthStateLogout = createAction(
+  '[Auth Service logout] ClearAuthStateAction'
+);
+
+export const clearAuthStateCreateUserFailure = createAction(
+  '[Auth Service createUser Failure] ClearAuthStateAction'
 );

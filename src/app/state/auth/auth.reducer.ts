@@ -1,19 +1,21 @@
 import {AuthState, initialAuthState} from './auth.state';
-import {clearAuthState, loginSuccess} from './auth.actions';
+import {clearAuthStateCreateUserFailure, clearAuthStateLogout, loginSuccess, loginSuccessAutoLogin} from './auth.actions';
 import {Action, createReducer, on} from '@ngrx/store';
 
 const reducer = createReducer(
   initialAuthState,
-  on(loginSuccess, (authState, {userId, userName, token, isAuthenticated, expirationDate}) => ({
-    ...authState,
-    userId: userId,
-    userName: userName,
-    token: token,
-    isAuthenticated: isAuthenticated,
-    expirationDate: expirationDate
-  })),
-  on(clearAuthState, () =>
-    initialAuthState
+  on(loginSuccess, loginSuccessAutoLogin,
+    (authState, {userId, userName, token, isAuthenticated, expirationDate}) => ({
+      ...authState,
+      userId: userId,
+      userName: userName,
+      token: token,
+      isAuthenticated: isAuthenticated,
+      expirationDate: expirationDate
+    })),
+  on(clearAuthStateLogout,
+    clearAuthStateCreateUserFailure,
+    () => initialAuthState
   )
 );
 

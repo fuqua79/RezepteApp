@@ -4,20 +4,18 @@ import {Router} from '@angular/router';
 import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import {GlobalState} from '../state/state';
-import {clearAuthState, loginSuccess} from '../state/auth/auth.actions';
-import {Subscription} from 'rxjs/internal/Subscription';
-import {AuthState, initialAuthState} from '../state/auth/auth.state';
+import {clearAuthStateCreateUserFailure, clearAuthStateLogout, loginSuccessAutoLogin} from '../state/auth/auth.actions';
+import {AuthState} from '../state/auth/auth.state';
 import {startLoading, stopLoading} from '../state/loading/loading.actions';
 import {catchError, tap} from 'rxjs/operators';
 import {EMPTY} from 'rxjs/internal/observable/empty';
 import {Credentials} from '../model/credentials';
-import {selectAuth} from '../state/auth/auth.selectors';
 
 @Injectable({providedIn: 'root'})
 export class AuthService implements OnInit, OnDestroy {
+
   private tokenTimer: any;
   private URL = environment.apiUrl + '/user';
-  private storeSubs: Subscription;
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -25,18 +23,6 @@ export class AuthService implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const authSub = this.store.select(selectAuth).subscribe( (authState) => {
-      console.log('STATE HAT SICH GEäNDERT !!');
-      this.saveAuthData(authState);
-    });
-
-    let authInformation = initialAuthState;
-    this.storeSubs = this.store.subscribe(state => {
-      console.log('STATE HAT SICH GEäNDERT !!');
-      authInformation = state.auth;
-      this.saveAuthData(state.auth);
-    });
-
   }
 
   createUser(email: string, password: string) {
@@ -47,7 +33,7 @@ export class AuthService implements OnInit, OnDestroy {
       this.router.navigate(['/']);
     }, error => {
       console.log(error);
-      this.store.dispatch(clearAuthState());
+      this.store.dispatch(clearAuthStateCreateUserFailure());
     });
   }
 
@@ -66,110 +52,61 @@ export class AuthService implements OnInit, OnDestroy {
           const expiresInDuration = response.expiresIn;
           const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
           this.setAuthTimer(expiresInDuration);
-          this.store.dispatch(loginSuccess({
+          const authData = {
             userId: response.userId,
             userName: email,
             token: token,
             isAuthenticated: true,
             expirationDate: expirationDate
-          }));
-          this.saveAuthData({
-            userId: response.userId,
-            userName: email,
-            token: token,
-            isAuthenticated: true,
-            expirationDate: expirationDate
-          });
-          console.log(expirationDate);
+          };
+          this.saveAuthData(authData);
           this.router.navigate(['/']);
         }
         this.store.dispatch(stopLoading());
       }),
       catchError((error) => {
-        console.log('Login ERROR: ', error);
+        console.log('Login FAILURE: ', error);
         this.store.dispatch(stopLoading());
         return EMPTY;
       })
     )
   }
 
-  OLD_login(email: string, password: string): void {
-    this.store.dispatch(startLoading());
-    const credentials: Credentials = {email: email, password: password};
-    this.http
-      .post<{ token: string; expiresIn: number; userId: string }>(
-        this.URL + '/login',
-        credentials
-      )
-      .subscribe(response => {
-        const token = response.token;
-        if (token) {
-          const expiresInDuration = response.expiresIn;
-          const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
-          this.setAuthTimer(expiresInDuration);
-          console.log('loginsuccess Action ausführen.', expirationDate);
-          this.store.dispatch(loginSuccess({
-            userId: response.userId,
-            userName: email,
-            token: token,
-            isAuthenticated: true,
-            expirationDate: expirationDate
-          }));
-          this.saveAuthData({
-            userId: response.userId,
-            userName: email,
-            token: token,
-            isAuthenticated: true,
-            expirationDate: expirationDate
-          });
-          console.log(expirationDate);
-          this.router.navigate(['/']);
-        }
-        this.store.dispatch(stopLoading());
-      }, error => {
-        console.log(error);
-        this.store.dispatch(clearAuthState());
-        this.store.dispatch(stopLoading());
-      });
-  }
-
   logout() {
-    this.store.dispatch(clearAuthState());
+    this.store.dispatch(clearAuthStateLogout());
+    this.clearAuthData();
     clearTimeout(this.tokenTimer);
     this.router.navigate(['/']);
   }
 
-  private setAuthTimer(duration: number) {
-    console.log('Setting timer: ' + duration);
-    this.tokenTimer = setTimeout(() => {
-      this.logout();
-    }, duration * 1000);
-  }
 
-  autoAuthUser() {
-    // TODO nach F5 ist alles weg weil nicht im localstorage gespeichert
+  public autoAuthUser() {
     const authData = this.getAuthData();
-    console.log('authDatta', authData);
-
-    /*
-    let authInformation = initialAuthState;
-    this.storeSubs = this.store.subscribe(state => {
-      authInformation = state.auth;
-    });
-    if (!authInformation.isAuthenticated) {
+    if (!authData.isAuthenticated) {
       return;
     }
     const now = new Date();
-    const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+    const expiresIn = authData.expirationDate.getTime() - now.getTime();
+    console.log('Authentication expires in: ' + expiresIn / 1000 / 60 + ' minutes.');
     if (expiresIn > 0) {
       this.setAuthTimer(expiresIn / 1000);
     }
-
-     */
-
+    console.log('Auto Login successful!');
+    this.store.dispatch(loginSuccessAutoLogin(authData));
   }
 
-  // TODO eliminieren
+
+//////////////////////////////////////////////
+  private getAuthData(): AuthState {
+    return {
+      userId: localStorage.getItem('userId'),
+      userName: localStorage.getItem('userName'),
+      token: localStorage.getItem('token'),
+      isAuthenticated: (localStorage.getItem('isAuthenticated') === 'true'),
+      expirationDate: new Date(localStorage.getItem('expiration')),
+    };
+  }
+
   private saveAuthData(authState: AuthState) {
     console.log('saveAuthState: ', authState);
     localStorage.setItem('token', authState.token);
@@ -179,7 +116,6 @@ export class AuthService implements OnInit, OnDestroy {
     localStorage.setItem('isAuthenticated', authState.isAuthenticated.toString());
   }
 
-  /// TODO eliminieren
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
@@ -188,33 +124,13 @@ export class AuthService implements OnInit, OnDestroy {
     localStorage.removeItem('isAuthenticated');
   }
 
-  /// TODO eliminieren
-  private getAuthData(): AuthState {
-    const authState: AuthState = {
-      userId: localStorage.getItem('userId'),
-      userName: localStorage.getItem('userName'),
-      token: localStorage.getItem('token'),
-      isAuthenticated: (localStorage.getItem('isAuthenticated') === 'true'),
-      expirationDate: new Date(localStorage.getItem('expiration')),
-    };
-    return authState;
-    /*
-    const token = localStorage.getItem('token');
-    const expirationDate = localStorage.getItem('expiration');
-    const userId = localStorage.getItem('userId');
-    if (!token || !expirationDate) {
-      return;
-    }
-    return {
-      token: token,
-      expirationDate: new Date(expirationDate),
-      userId: userId
-    }
-     */
+  private setAuthTimer(duration: number) {
+    this.tokenTimer = setTimeout(() => {
+      this.logout();
+    }, duration * 1000);
   }
 
   ngOnDestroy(): void {
-    this.storeSubs.unsubscribe();
   }
 
 }
