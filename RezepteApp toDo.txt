@@ -15,7 +15,6 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 		-ngrx 8
 			=> Effects einbauen, dass bei gewissen Action in localstorage gespeichert/gecleart wird
 				https://www.youtube.com/watch?v=zkejq88f7CY
-			=> selector schreiben, welceh nur SubState rausholen
 
         -ERROR-Handling im rezepte.service.ts nicht gut !!!
 

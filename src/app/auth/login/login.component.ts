@@ -5,6 +5,8 @@ import {AuthService} from '../../service/auth.service';
 import {GlobalState} from '../../state/state';
 import {Store} from '@ngrx/store';
 import {selectLoading} from '../../state/loading/loading.selectors';
+import {login} from '../../state/auth/auth.actions';
+import {Credentials} from '../../model/credentials';
 
 @Component({
   templateUrl: './login.component.html',
@@ -22,7 +24,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (form.invalid) {
       return;
     }
-    this.authService.login(form.value.email, form.value.password);
+    const credentials: Credentials = {
+      email: form.value.email,
+      password: form.value.password
+    };
+    this.store.dispatch(login({credentials}));
   }
 
   ngOnInit(): void {

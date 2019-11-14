@@ -1,8 +1,3 @@
-// Hier Effect schreiben, welcher beim Auth-Store dispatchen alle Daten in den local Storage schreibt !!
-// Folgende types abfangen:
-// ClearAuthStateAction
-// LoginSuccessAction
-
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {AuthService} from '../../service/auth.service';
@@ -15,7 +10,7 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(login),
-      concatMap(action => this.authServices.justLogin(action.credentials.email, action.credentials.password).pipe(
+      concatMap(action => this.authServices.login(action.credentials.email, action.credentials.password).pipe(
         map(result => loginSuccess({
           userId: result.userId,
           userName: action.credentials.email,
@@ -28,6 +23,7 @@ export class AuthEffects {
     )
   );
 
-  constructor(private actions$: Actions, private authServices: AuthService) {
+  constructor(private actions$: Actions,
+              private authServices: AuthService) {
   }
 }

@@ -1,8 +1,6 @@
 import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-
-import {AuthData} from '../auth/auth-data.model';
 import {environment} from '../../environments/environment';
 import {Store} from '@ngrx/store';
 import {GlobalState} from '../state/state';
@@ -10,7 +8,10 @@ import {clearAuthState, loginSuccess} from '../state/auth/auth.actions';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {AuthState, initialAuthState} from '../state/auth/auth.state';
 import {startLoading, stopLoading} from '../state/loading/loading.actions';
-import {tap} from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
+import {EMPTY} from 'rxjs/internal/observable/empty';
+import {Credentials} from '../model/credentials';
+import {selectAuth} from '../state/auth/auth.selectors';
 
 @Injectable({providedIn: 'root'})
 export class AuthService implements OnInit, OnDestroy {
@@ -24,17 +25,24 @@ export class AuthService implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    const authSub = this.store.select(selectAuth).subscribe( (authState) => {
+      console.log('STATE HAT SICH GEäNDERT !!');
+      this.saveAuthData(authState);
+    });
+
     let authInformation = initialAuthState;
     this.storeSubs = this.store.subscribe(state => {
+      console.log('STATE HAT SICH GEäNDERT !!');
       authInformation = state.auth;
       this.saveAuthData(state.auth);
     });
+
   }
 
   createUser(email: string, password: string) {
     this.store.dispatch(startLoading());
-    const authData: AuthData = {email: email, password: password};
-    this.http.post(this.URL + '/signup', authData).subscribe(() => {
+    const credentials: Credentials = {email: email, password: password};
+    this.http.post(this.URL + '/signup', credentials).subscribe(() => {
       this.store.dispatch(stopLoading());
       this.router.navigate(['/']);
     }, error => {
@@ -43,26 +51,55 @@ export class AuthService implements OnInit, OnDestroy {
     });
   }
 
-  justLogin(email: string, password: string) {
+  login(email: string, password: string) {
+    console.log('login aufrufen');
     this.store.dispatch(startLoading());
-    const authData: AuthData = {email: email, password: password};
+    const credentials: Credentials = {email: email, password: password};
     return this.http.post<{ token: string; expiresIn: number; userId: string }>(
       this.URL + '/login',
-      authData
+      credentials
     ).pipe(
-      tap(() => {
+      tap((response) => {
+        console.log('LOGIN erfolgreich !');
+        const token = response.token;
+        if (token) {
+          const expiresInDuration = response.expiresIn;
+          const expirationDate = new Date(new Date().getTime() + expiresInDuration * 1000);
+          this.setAuthTimer(expiresInDuration);
+          this.store.dispatch(loginSuccess({
+            userId: response.userId,
+            userName: email,
+            token: token,
+            isAuthenticated: true,
+            expirationDate: expirationDate
+          }));
+          this.saveAuthData({
+            userId: response.userId,
+            userName: email,
+            token: token,
+            isAuthenticated: true,
+            expirationDate: expirationDate
+          });
+          console.log(expirationDate);
+          this.router.navigate(['/']);
+        }
         this.store.dispatch(stopLoading());
+      }),
+      catchError((error) => {
+        console.log('Login ERROR: ', error);
+        this.store.dispatch(stopLoading());
+        return EMPTY;
       })
     )
   }
 
-  login(email: string, password: string): void {
+  OLD_login(email: string, password: string): void {
     this.store.dispatch(startLoading());
-    const authData: AuthData = {email: email, password: password};
+    const credentials: Credentials = {email: email, password: password};
     this.http
       .post<{ token: string; expiresIn: number; userId: string }>(
         this.URL + '/login',
-        authData
+        credentials
       )
       .subscribe(response => {
         const token = response.token;
