@@ -29,7 +29,7 @@ export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
               private store: Store<GlobalState>) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe(params => {
       this.rezeptId = (params['id']);
       if (this.rezeptId) {
@@ -41,7 +41,7 @@ export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
     this.optionsArt$ = this.rezeptService.loadOptionsArt();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
   }
 

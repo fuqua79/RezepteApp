@@ -25,7 +25,7 @@ export class RezeptListContainerComponent implements OnInit {
               private store: Store<GlobalState>) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.rezeptListe$ = this.rezeptService.loadAllRezepte();
     this.optionsArt$ = this.rezeptService.loadOptionsArt();
   }

@@ -33,7 +33,7 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
   constructor(private formBuilder: FormBuilder) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formGroup = this.formBuilder.group(
       {
         'id': [null],

@@ -22,7 +22,7 @@ export class RezeptHomeContainerComponent implements OnInit {
               private store: Store<GlobalState>) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getRandomRezept();
   }
 

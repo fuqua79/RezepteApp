@@ -10,7 +10,7 @@ import {SuchParameter} from '../../model/suchParameter';
   styleUrls: ['./rezept-liste.component.css'],
   providers: [RezeptService]
 })
-export class RezeptListeComponent implements OnInit {
+export class RezeptListeComponent {
 
   @Input()
   rezeptListe: Rezept[];
@@ -32,9 +32,6 @@ export class RezeptListeComponent implements OnInit {
   public searchInputArt: string;
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
   openRezept(id: string): void {

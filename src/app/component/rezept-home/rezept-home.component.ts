@@ -7,7 +7,7 @@ import {Rezept} from '../../model/rezept';
   templateUrl: './rezept-home.component.html',
   styleUrls: ['./rezept-home.component.css']
 })
-export class RezeptHomeComponent implements OnInit {
+export class RezeptHomeComponent {
 
   @Input()
   randomRezept: Rezept;
@@ -22,9 +22,6 @@ export class RezeptHomeComponent implements OnInit {
   open = new EventEmitter<string>();
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
   getNextRezept(): void {

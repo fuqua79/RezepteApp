@@ -12,7 +12,7 @@ import {Store} from '@ngrx/store';
   templateUrl: './rezept-detail.component.html',
   styleUrls: ['./rezept-detail.component.css']
 })
-export class RezeptComponent implements OnInit, OnDestroy {
+export class RezeptComponent {
 
   @Input()
   public rezept: Rezept;
@@ -40,12 +40,6 @@ export class RezeptComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService,
               public dialog: MatDialog,
               private store: Store<GlobalState>) {
-  }
-
-  ngOnInit() {
-  }
-
-  ngOnDestroy() {
   }
 
   openRezept(rezeptId: string): void {

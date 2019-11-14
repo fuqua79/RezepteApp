@@ -12,7 +12,7 @@ import {Credentials} from '../../model/credentials';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent {
 
   public isLoading$ = this.store.select(selectLoading);
 
@@ -29,11 +29,5 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: form.value.password
     };
     this.store.dispatch(login({credentials}));
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy() {
   }
 }

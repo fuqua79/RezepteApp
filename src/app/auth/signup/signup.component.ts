@@ -10,7 +10,7 @@ import {Store} from '@ngrx/store';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent {
 
   public isLoading$ = this.store.select(selectLoading);
 
@@ -23,11 +23,5 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
     this.authService.createUser(form.value.email, form.value.password);
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy() {
   }
 }

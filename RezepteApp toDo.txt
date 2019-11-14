@@ -4,6 +4,7 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
         -BUG:
 
         -GUI verschönern:
+            -Bootstrap evtl. entfernen...
             swissmilk.ch
             chefkoch.de
             fooby

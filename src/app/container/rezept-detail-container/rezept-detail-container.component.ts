@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RezeptService} from '../../service/rezept.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {Rezept} from '../../model/rezept';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs/internal/Subject';
 import {AuthService} from '../../service/auth.service';
 import {GlobalState} from '../../state/state';
@@ -18,10 +18,10 @@ import {selectLoading} from '../../state/loading/loading.selectors';
 export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
 
   public isLoading$ = this.store.select(selectLoading);
+  public authUserId$ = this.store.select(state => state.auth.userId);
   public rezept$: Observable<Rezept>;
 
   private unsubscribe$: Subject<void> = new Subject<void>();
-  private authUserId$ = this.store.select(state => state.auth.userId);
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -30,20 +30,18 @@ export class RezeptDetailContainerComponent implements OnInit, OnDestroy {
               private store: Store<GlobalState>) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.rezept$ = this.route.params
-      .pipe(
-        switchMap(params => this.rezeptService.loadRezept(params.id))
-      );
+      .pipe(switchMap(params => this.rezeptService.loadRezept(params.id)));
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
   deleteRezept(rezeptId: string) {
-    this.rezeptService.deleteRezept(rezeptId).subscribe(() => {
+    this.rezeptService.deleteRezept(rezeptId).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.router.navigate(['/rezeptliste/']);
     });
   }

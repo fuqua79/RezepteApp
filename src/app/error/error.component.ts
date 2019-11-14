@@ -17,7 +17,7 @@ export class ErrorComponent {
 
   // constructor(private errorService: ErrorService) {}
 
-  // ngOnInit() {
+  // ngOnInit(): void {
   //   this.errorSub = this.errorService.getErrorListener().subscribe(message => {
   //     this.data = { message: message };
   //   });
@@ -27,7 +27,7 @@ export class ErrorComponent {
   //   this.errorService.handleError();
   // }
 
-  // ngOnDestroy() {
+  // ngOnDestroy(): void {
   //   this.errorSub.unsubscribe();
   // }
 }

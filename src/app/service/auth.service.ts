@@ -12,7 +12,7 @@ import {EMPTY} from 'rxjs/internal/observable/empty';
 import {Credentials} from '../model/credentials';
 
 @Injectable({providedIn: 'root'})
-export class AuthService implements OnInit, OnDestroy {
+export class AuthService implements OnDestroy {
 
   private tokenTimer: any;
   private URL = environment.apiUrl + '/user';
@@ -20,9 +20,6 @@ export class AuthService implements OnInit, OnDestroy {
   constructor(private http: HttpClient,
               private router: Router,
               private store: Store<GlobalState>) {
-  }
-
-  ngOnInit(): void {
   }
 
   createUser(email: string, password: string) {
