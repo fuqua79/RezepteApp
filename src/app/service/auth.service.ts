@@ -77,7 +77,7 @@ export class AuthService implements OnDestroy {
   }
 
 
-  public autoAuthUser() {
+  public autoAuthUser(): void {
     const authData = this.getAuthData();
     if (!authData.isAuthenticated) {
       return;
@@ -87,9 +87,12 @@ export class AuthService implements OnDestroy {
     console.log('Authentication expires in: ' + expiresIn / 1000 / 60 + ' minutes.');
     if (expiresIn > 0) {
       this.setAuthTimer(expiresIn / 1000);
+      console.log('Auto Login successful!');
+      this.store.dispatch(loginSuccessAutoLogin(authData));
+    } else {
+      console.log('Auto Login not possible.');
+      this.clearAuthData();
     }
-    console.log('Auto Login successful!');
-    this.store.dispatch(loginSuccessAutoLogin(authData));
   }
 
 
