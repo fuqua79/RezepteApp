@@ -2,6 +2,10 @@ Rezepte-App:
 http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
         -BUG:
+		
+		-font-awesome einrichten:
+			https://medium.com/better-programming/angular-font-awesome-in-5-easy-steps-with-angular-fontawesome-2b80129bcd7
+			
 
         -GUI verschönern:
             -Bootstrap evtl. entfernen...
@@ -12,6 +16,7 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
 
         -ERROR-Handling im rezepte.service.ts nicht gut !!!
+		überall nicht. Server fehler aus GUI geben !! nicht nur object !
 
 		-Testing aufbauen (Container, GUI, ngrx,...)
 
