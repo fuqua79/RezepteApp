@@ -62,7 +62,7 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.formGroup && this.rezeptInput) {
+    if (changes.rezeptInput && this.formGroup && this.rezeptInput) {
       this.formGroup.patchValue({
         'id': this.rezeptInput.id,
         'titel': this.rezeptInput.titel,
