@@ -2,6 +2,7 @@ Rezepte-App:
 http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
         -BUG:
+			-2 Arten eintragen...
 		
 		-font-awesome einrichten:
 			https://medium.com/better-programming/angular-font-awesome-in-5-easy-steps-with-angular-fontawesome-2b80129bcd7
@@ -13,17 +14,14 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
             chefkoch.de
             fooby
             migusto
+			-icons verwenden
+			-Pagination einbauen
 
 
         -ERROR-Handling im rezepte.service.ts nicht gut !!!
 		überall nicht. Server fehler aus GUI geben !! nicht nur object !
 
 		-Testing aufbauen (Container, GUI, ngrx,...)
-
-
-		-GUI Anpassungen:
-			-icons verwenden
-		-Pagination einbauen
 
 
 		-Liste: Sortierung einbauen: Zeit

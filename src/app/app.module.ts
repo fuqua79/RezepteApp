@@ -19,6 +19,7 @@ import {reducers} from './state/state';
 import {EffectsModule} from '@ngrx/effects';
 import {AuthEffects} from './state/auth/auth.effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import { FooterComponent } from './component/footer/footer.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
     ErrorComponent,
     PageNotFoundComponent,
     HeaderComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
