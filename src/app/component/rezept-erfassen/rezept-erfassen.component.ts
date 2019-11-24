@@ -90,9 +90,9 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
 
   private createZutat(zutat: Zutat): FormGroup {
     return this.formBuilder.group({
-      'menge': [zutat.menge],
+      'menge': [zutat.menge, Validators.required],
       'einheit': [zutat.einheit],
-      'zutat': [zutat.zutat]
+      'zutat': [zutat.zutat, Validators.required]
     });
   }
 

@@ -190,7 +190,7 @@ exports.deleteRezept = (req, res, next) => {
                   if (rezeptliste.length === 0) {
                     //es hat kein Rezept mehr mit dieser Art => Art aus Art löschen
                     Art.deleteOne({art: rezeptArt})
-                      .then(result => {
+                      .then(() => {
                       })
                   }
                 })

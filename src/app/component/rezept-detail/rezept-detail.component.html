@@ -50,7 +50,7 @@
               <ul class="list-group m-3">
                 <li *ngFor="let zutat of rezept?.zutaten; let i = index;" class="list-group-item">
                   <div>
-                    {{((gewunschteAnzahlPersonen) / (rezept?.zutaten.length)) * (zutat?.menge)}}
+                    {{ (gewunschteAnzahlPersonen / rezept?.anzahlPersonen) * zutat?.menge }}
                     {{zutat?.einheit}}
                     {{zutat?.zutat}}
                   </div>
