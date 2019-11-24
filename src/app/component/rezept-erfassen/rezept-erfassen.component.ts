@@ -37,8 +37,8 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
     this.formGroup = this.formBuilder.group(
       {
         'id': [null],
-        'beschreibung': ['', [Validators.required, Validators.minLength(3)]],
         'titel': ['', [Validators.required, Validators.minLength(3)]],
+        'beschreibung': [''],
         'art': [''],
         'zeit': [''],
         'aktiveZeit': [''],

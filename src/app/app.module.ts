@@ -20,6 +20,10 @@ import {EffectsModule} from '@ngrx/effects';
 import {AuthEffects} from './state/auth/auth.effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { FooterComponent } from './component/footer/footer.component';
+import {fas} from '@fortawesome/free-solid-svg-icons';
+import {far} from '@fortawesome/free-regular-svg-icons';
+import {faClock} from '@fortawesome/free-regular-svg-icons';
+import {FaIconLibrary} from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -52,4 +56,9 @@ import { FooterComponent } from './component/footer/footer.component';
   entryComponents: [ErrorComponent, ConfirmationDialogComponent]
 })
 export class AppModule {
+  constructor( faIconLibrary: FaIconLibrary) {
+    faIconLibrary.addIconPacks(far);
+    faIconLibrary.addIconPacks(fas);
+    // faIconLibrary.addIcons(faClock);
+  }
 }
