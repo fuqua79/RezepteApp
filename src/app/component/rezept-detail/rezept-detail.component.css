@@ -10,12 +10,12 @@
   min-height: 15em;
 }
 
-#naehrwerte{
-  color:inherit;
+#naehrwerte {
+  color: inherit;
 }
 
 li > span {
-  float:right;
+  float: right;
 }
 
 mat-spinner {
@@ -31,3 +31,8 @@ mat-spinner {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
+#RezeptDetailButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

@@ -36,7 +36,7 @@ export class RezeptComponent {
   faStopwatch = faStopwatch;
 
 
-  public gewunschteAnzahlPersonen = 1;
+  public gewunschteAnzahlPersonen = 2;
   public userIsAuthenticated$ = this.store.select(state => state.auth.isAuthenticated);
   public title = 'angular-confirmation-dialog';
 

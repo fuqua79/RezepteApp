@@ -2,109 +2,117 @@
   <mat-spinner *ngIf="isLoading?.isLoading"></mat-spinner>
   <div *ngIf="!isLoading?.isLoading">
     <div id="detail_content">
-      <div class="mb-4">
+      <div id="rezpetDetailHeader" class="mb-4">
         <div *ngIf="rezept && rezept.imagePath && rezept.imagePath !== ''" class="text-center">
           <img [src]="rezept?.imagePath" [alt]="rezept?.titel" class="home-image">
         </div>
-        <h1 class="h1 text-center mt-4">
+        <h2 class="text-center mt-4">
           {{rezept?.titel}}
-        </h1>
-        <h2 class="h2 text-center mt-3">
-          {{rezept?.beschreibung}}
         </h2>
-        <fa-icon [icon]="faStopwatch"></fa-icon>
-        <h5 class="h5 mt-4">
-          Total Zeit: {{rezept?.zeit}} min
+        <h5 class="text-center mt-3">
+          {{rezept?.beschreibung}}
         </h5>
-        <h5 class="h5 mt-4">
+        <div id="zeiten" class="m-3">
+          <span class="mr-3">
+          <fa-icon [icon]="['far', 'clock']"></fa-icon>
+          Totale Zeit: {{rezept?.zeit}} min
+          </span>
+          <span class="mr-3">
+          <fa-icon [icon]="['far', 'clock']"></fa-icon>
           Aktive Zeit: {{rezept?.aktiveZeit}} min
-        </h5>
-        <h5 class="h5 mt-1">
-          Art: {{rezept?.art}}
-        </h5>
+          </span>
+        </div>
+        <div id="art" class="mt-1 text-center " *ngIf="rezept?.art">
+          Art: {{rezept.art}}
+        </div>
       </div>
-      <div id="printArea">
-        <div class="container mt-4" id="detail_container">
-          <div class="row">
-            <div class="col">
+      <div id="rezeptDetailZutaten">
+        <div class="mt-4">
+          <div>
+            <h4 class="text-center">
+              Zutaten
+            </h4>
+            <div class="text-center mb-3">
               <div>
-                <h4 class="h4 text-center">
-                  Anzahl Personen
-                </h4>
-                <div id="input_div" class="text-center">
-                  <input type="button" value="-" id="moins"
-                         (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen - 1">
-                  <input class="app-anzahl-personen text-center" id="gewuenschteAnzalPersonen" type="text"
-                         name="gewunschteAnzahlPersonen"
-                         [(ngModel)]="gewunschteAnzahlPersonen">
-                  <input type="button" value="+" id="plus"
-                         (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen + 1">
-                </div>
-                <div *ngIf="rezept?.zutaten?.length > 0">
-                  <h4 class="h4 text-center mt-4">
-                    Zutaten
-                  </h4>
-                  <ul class="list-group">
-                    <li *ngFor="let zutat of rezept?.zutaten; let i = index;" class="list-group-item">
-                      <div>
-                        {{((gewunschteAnzahlPersonen) / (rezept?.zutaten.length)) * (zutat?.menge)}}
-                        {{zutat?.einheit}}
-                        {{zutat?.zutat}}
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                Anzahl Personen
               </div>
-              <div class="mt-4" id="accordion" role="tablist">
-                <div class="card">
-                  <mat-accordion>
-                    <mat-expansion-panel>
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          Nährwerte
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-
-                      <ul class="no-list-type no-padding">
-                        <li>
-                          Kalorien in kcal:
-                          <span>{{rezept?.naehrwerte?.kalorien|number}}</span>
-                        </li>
-                        <li>
-                          Kohlenhydrate:
-                          <span>{{rezept?.naehrwerte?.kohlenhydrate|number}}</span>
-                        </li>
-                        <li>
-                          Eiweiss:
-                          <span>{{rezept?.naehrwerte?.eiweiss|number}}</span>
-                        </li>
-                        <li>
-                          Fett:
-                          <span>{{rezept?.naehrwerte?.fett|number}}</span>
-                        </li>
-                      </ul>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                </div>
+              <div id="input_div" class="text-center">
+                <input type="button" value="-" id="moins"
+                       (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen - 1">
+                <input class="app-anzahl-personen text-center" id="gewuenschteAnzalPersonen" type="text"
+                       name="gewunschteAnzahlPersonen"
+                       [(ngModel)]="gewunschteAnzahlPersonen">
+                <input type="button" value="+" id="plus"
+                       (click)="gewunschteAnzahlPersonen = gewunschteAnzahlPersonen + 1">
               </div>
             </div>
-            <div class="col">
-              <h4>
-                Zubereitung
-              </h4>
-              <textarea readonly class="zubereitung form-control">
+            <div *ngIf="rezept?.zutaten?.length > 0">
+              <ul class="list-group m-3">
+                <li *ngFor="let zutat of rezept?.zutaten; let i = index;" class="list-group-item">
+                  <div>
+                    {{((gewunschteAnzahlPersonen) / (rezept?.zutaten.length)) * (zutat?.menge)}}
+                    {{zutat?.einheit}}
+                    {{zutat?.zutat}}
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="rezeptDetailZubereitung" class="m-3">
+        <h4>
+          Zubereitung
+        </h4>
+        <textarea readonly class="zubereitung form-control">
                 {{rezept?.zubereitung}}
               </textarea>
-            </div>
+      </div>
+      <div id="rezeptDetailNaehrwerte" class="m-3">
+        <div id="accordion" role="tablist">
+          <div class="card">
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Nährwerte
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <ul class="no-list-type no-padding">
+                  <li>
+                    Kalorien in kcal:
+                    <span>{{rezept?.naehrwerte?.kalorien|number}}</span>
+                  </li>
+                  <li>
+                    Kohlenhydrate:
+                    <span>{{rezept?.naehrwerte?.kohlenhydrate|number}}</span>
+                  </li>
+                  <li>
+                    Eiweiss:
+                    <span>{{rezept?.naehrwerte?.eiweiss|number}}</span>
+                  </li>
+                  <li>
+                    Fett:
+                    <span>{{rezept?.naehrwerte?.fett|number}}</span>
+                  </li>
+                </ul>
+              </mat-expansion-panel>
+            </mat-accordion>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <button (click)="printRezept(rezept?.id)">DRUCKEN</button>
-  <button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()" (click)="openRezept(rezept?.id)">
-    BEARBEITEN
-  </button>
-  <button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()" (click)="deleteRezept(rezept?.id)">LÖSCHEN
-  </button>
+  <div id="RezeptDetailButtons" class="m-3 mt-5">
+    <button mat-raised-button
+            (click)="printRezept(rezept?.id)">DRUCKEN
+    </button>
+    <button mat-raised-button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()"
+            (click)="openRezept(rezept?.id)">BEARBEITEN
+    </button>
+    <button mat-raised-button *ngIf="(userIsAuthenticated$ | async) && isCreatorLoggedInUser()"
+            (click)="deleteRezept(rezept?.id)">LÖSCHEN
+    </button>
+  </div>
 </div>

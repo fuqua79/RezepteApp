@@ -2,6 +2,7 @@ Rezepte-App:
 http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
         -BUG:
+			-Beim Bearbeiten werden die Zutaten verdoppelt !
 			-2 Arten eintragen...
 		
 		-font-awesome einrichten:
