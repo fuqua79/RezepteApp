@@ -26,7 +26,7 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 		-Testing aufbauen (Container, GUI, ngrx,...)
 
 		-Drucken
-		
+			https://medium.com/@Idan_Co/angular-print-service-290651c721f9
 
 		-Liste: Sortierung einbauen: Zeit
 		-Container Comp

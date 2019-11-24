@@ -2,12 +2,11 @@
   <h2 class="h2 text-center m-4">
     {{rezeptListe?.length}} Rezepte gefunden
   </h2>
-  <div class="border m-3 border-dark">
-    <br>
+  <div class="border m-3 p-2 border-dark">
     SUCHE
     <br>
-    <input matInput [(ngModel)]="searchInputText" type="text" placeholder="Titel/Beschreibung/Zutat">
-    <input matInput [(ngModel)]="searchInputZeit" type="tel" placeholder="Zeit">
+    <input matInput [(ngModel)]="searchInputText" type="text" placeholder="Titel/Beschreibung/Zutat" class="mt-2">
+    <input matInput [(ngModel)]="searchInputZeit" type="tel" placeholder="Zeit" class="mt-2">
     <mat-form-field>
       <mat-label>Art</mat-label>
       <mat-select [(ngModel)]="searchInputArt">
@@ -26,17 +25,22 @@
 </div>
 <mat-spinner *ngIf="isLoading?.isLoading"></mat-spinner>
 <div *ngIf="!isLoading?.isLoading">
-  <ul class="list-group no-list-type">
-    <li class="m-1 rounded app-liste-item border border-muted" *ngFor="let rezept of rezeptListe"
+  <ul class="list-group no-list-type m-3">
+    <li class="m-1 rounded app-liste-item border border-muted p-1" *ngFor="let rezept of rezeptListe"
         (click)="openRezept(rezept.id)"
         [ngClass]="{'bg-primary border-primary ' : rezept.selected}">
-      <h5 class="">{{rezept.titel}}</h5>
-      <div class="">{{rezept.beschreibung}}</div>
-      <div class="row mt-3">
-        <div class="mr-4">{{rezept.zeit}} min</div>
-        <div class="mr-4">{{rezept.aktiveZeit}} min</div>
-        <div class="mr-4">{{rezept.naehrwerte.kalorien}} kcal</div>
-        <div class="">{{rezept.art}}</div>
+      <h5 class="mt-1">{{rezept.titel}}</h5>
+      <div class="mt-1">{{rezept.beschreibung}}</div>
+      <div class="row mt-1 no-ml">
+        <div *ngIf="rezept.zeit" class="mr-4">
+          <fa-icon [icon]="['far', 'clock']"></fa-icon>
+          {{rezept.zeit}} min
+        </div>
+        <div *ngIf="rezept.aktiveZeit" class="mr-4">
+          <fa-icon [icon]="['fas', 'stopwatch']"></fa-icon>
+          {{rezept.aktiveZeit}} min</div>
+        <div *ngIf="rezept.naehrwerte.kalorien" class="mr-4">{{rezept.naehrwerte.kalorien}} kcal</div>
+        <div *ngIf="rezept.art" class="">{{rezept.art}}</div>
       </div>
     </li>
   </ul>

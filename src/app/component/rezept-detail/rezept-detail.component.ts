@@ -5,7 +5,6 @@ import {MatDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '../../container/confirmation-dialog/confirmation-dialog.component';
 import {GlobalState} from '../../state/state';
 import {Store} from '@ngrx/store';
-import {faStopwatch} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -32,9 +31,6 @@ export class RezeptComponent {
 
   @Output()
   print = new EventEmitter<string>();
-
-  faStopwatch = faStopwatch;
-
 
   public gewunschteAnzahlPersonen = 2;
   public userIsAuthenticated$ = this.store.select(state => state.auth.isAuthenticated);

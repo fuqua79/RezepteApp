@@ -3,8 +3,8 @@
   min-width: 10rem;
 }
 
-.app-liste-item:hover {
-
+.no-ml {
+  margin-left:0;
 }
 
 mat-spinner {
