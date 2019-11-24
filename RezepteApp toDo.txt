@@ -16,6 +16,8 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
             migusto
 			-icons verwenden
 			-Pagination einbauen
+			-Platzhalter für Fotos einfügen... oder beim Laden statt spinner Platzhalter-Elemente
+			
 
 
         -ERROR-Handling im rezepte.service.ts nicht gut !!!
@@ -23,6 +25,8 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
 		-Testing aufbauen (Container, GUI, ngrx,...)
 
+		-Drucken
+		
 
 		-Liste: Sortierung einbauen: Zeit
 		-Container Comp

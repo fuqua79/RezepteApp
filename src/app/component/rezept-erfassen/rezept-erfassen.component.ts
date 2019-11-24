@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Rezept} from '../../model/rezept';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Zutat} from '../../model/zutat';
+import {createInitialZutat, Zutat} from '../../model/zutat';
 import {Observable} from 'rxjs/internal/Observable';
 import {map, startWith} from 'rxjs/operators';
 
@@ -88,20 +88,20 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
     return this.formGroup.get('zutaten') as FormArray;
   }
 
-  private createZutat(menge: number, einheit: string, zutat: string): FormGroup {
+  private createZutat(zutat: Zutat): FormGroup {
     return this.formBuilder.group({
-      'menge': [menge],
-      'einheit': [einheit],
-      'zutat': [zutat]
+      'menge': [zutat.menge],
+      'einheit': [zutat.einheit],
+      'zutat': [zutat.zutat]
     });
   }
 
   public addEmptyZutat(): void {
-    this.zutatenListe.push(this.createZutat(0, '', ''));
+    this.zutatenListe.insert(0, this.createZutat(createInitialZutat()));
   }
 
-  private addZutat(menge: number, einheit: string, zutat: string): void {
-    this.zutatenListe.push(this.createZutat(menge, einheit, zutat));
+  private addZutat(zutat: Zutat): void {
+    this.zutatenListe.push(this.createZutat(zutat));
   }
 
   private removeZutat(arrayIndex: number): void {
@@ -109,8 +109,8 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
   }
 
   private patchZutaten(zutaten: Array<Zutat>) {
-    zutaten.forEach(item => {
-      this.addZutat(item.menge, item.einheit, item.zutat);
+    zutaten.forEach(zutat => {
+      this.addZutat(zutat);
     });
   }
 
@@ -143,5 +143,28 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
   clearArt() {
     this.formGroup.patchValue({'art': ''});
   }
-}
 
+  clearZeit() {
+    this.formGroup.patchValue({'zeit': ''});
+  }
+
+  clearAktiveZeit() {
+    this.formGroup.patchValue({'aktiveZeit': ''});
+  }
+
+  clearKalorien() {
+    this.formGroup.patchValue({'kalorien': ''});
+  }
+
+  clearFett() {
+    this.formGroup.patchValue({'fett': ''});
+  }
+
+  clearEiweiss() {
+    this.formGroup.patchValue({'eiweiss': ''});
+  }
+
+  clearKohlenhydrate() {
+    this.formGroup.patchValue({'kohlenhydrate': ''});
+  }
+}

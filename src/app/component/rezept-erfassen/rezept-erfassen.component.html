@@ -8,7 +8,6 @@
       <textarea matInput rows=6 formControlName="beschreibung" placeholder="Beschreibung"></textarea>
       <mat-error *ngIf="formGroup.get('beschreibung').invalid">Bitte tragen Sie eine Beschreibung ein.</mat-error>
     </mat-form-field>
-    <label>Art</label>
     <mat-form-field>
       <input matInput formControlName="art" type="text" placeholder="Art" [matAutocomplete]="auto">
       <mat-autocomplete #auto="matAutocomplete">
@@ -23,31 +22,31 @@
       </button>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" formControlName="zeit" placeholder="Total Zeit in min">
+      <input (click)="clearZeit()" matInput type="number" formControlName="zeit" placeholder="Total Zeit in min">
       <mat-error *ngIf="formGroup.get('zeit').invalid">Bitte tragen Sie die benötigte Zeit ein.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput type="number" formControlName="aktiveZeit" placeholder="Aktive Zeit in min">
+      <input (click)="clearAktiveZeit()" matInput type="number" formControlName="aktiveZeit" placeholder="Aktive Zeit in min">
       <mat-error *ngIf="formGroup.get('aktiveZeit').invalid">Bitte tragen Sie die benötigte Zeit ein.</mat-error>
     </mat-form-field>
     <mat-form-field>
       <textarea matInput rows=6 formControlName="zubereitung" placeholder="Zubereitung"></textarea>
       <mat-error *ngIf="formGroup.get('zubereitung').invalid">Bitte tragen Sie die Zubereitung ein.</mat-error>
     </mat-form-field>
-    <label>Zutaten:</label>
-    <button matButton type="button" (click)="addEmptyZutat()">
-      Zutat hinzufügen
-    </button>
+    <label class="mt-3">Zutaten:</label>
     <mat-form-field>
       <input matInput type="number" formControlName="anzahlPersonen" placeholder="Anzahl Personen">
       <mat-error *ngIf="formGroup.get('anzahlPersonen').invalid">Bitte tragen Sie die Anzahl der Personen ein.
       </mat-error>
     </mat-form-field>
+    <button matButton type="button" (click)="addEmptyZutat()" class="mb-3">
+      Zutat hinzufügen
+    </button>
     <div formArrayName="zutaten">
       <div *ngFor="let zutat of zutatenFormGroup.controls; let i = index">
-        <div [formGroupName]="i">
+        <div [formGroupName]="i" class="mt-4">
           <label>Zutat {{i + 1}}</label>
-          <button matButton type="button" (click)="removeZutat(i)">
+          <button matButton type="button" (click)="removeZutat(i)" class="ml-3">
             Zutat löschen
           </button>
           <mat-form-field>
@@ -72,28 +71,28 @@
         <ul class="no-list-type no-padding">
           <li>
             <mat-form-field>
-              <input matInput type="number" formControlName="kalorien" placeholder="Kalorien in kcal">
+              <input matInput type="number" formControlName="kalorien" placeholder="Kalorien in kcal" (click)="clearKalorien()">
             </mat-form-field>
           </li>
           <li>
             <mat-form-field>
-              <input matInput type="number" formControlName="fett" placeholder="Fett">
+              <input matInput type="number" formControlName="fett" placeholder="Fett" (click)="clearFett()">
             </mat-form-field>
           </li>
           <li>
             <mat-form-field>
-              <input matInput type="number" formControlName="eiweiss" placeholder="Eiweiss">
+              <input matInput type="number" formControlName="eiweiss" placeholder="Eiweiss" (click)="clearEiweiss()">
             </mat-form-field>
           </li>
           <li>
             <mat-form-field>
-              <input matInput type="number" formControlName="kohlenhydrate" placeholder="Kohlenhydrate">
+              <input matInput type="number" formControlName="kohlenhydrate" placeholder="Kohlenhydrate" (click)="clearKohlenhydrate()">
             </mat-form-field>
           </li>
         </ul>
       </mat-expansion-panel>
     </mat-accordion>
-    <div>
+    <div id="rezeptErfassenFileButton" class="mt-3">
       <button mat-stroked-button type="button" (click)="filePicker.click()">Bild auswählen</button>
       <input type="file" #filePicker (change)="onImagePicked($event)">
     </div>

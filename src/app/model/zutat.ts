@@ -8,7 +8,7 @@ export interface Zutat {
 
 export function createInitialZutat(): Zutat {
   return {
-    menge: 0,
+    menge: null,
     einheit: '',
     zutat: ''
   }
