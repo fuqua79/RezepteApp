@@ -10,3 +10,8 @@
 mat-spinner {
   margin: auto;
 }
+
+.image-preview {
+  height: 140px;
+  margin: 1rem 0;
+}

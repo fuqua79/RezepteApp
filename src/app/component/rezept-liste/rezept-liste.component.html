@@ -29,6 +29,11 @@
     <li class="m-1 rounded app-liste-item border border-muted p-1" *ngFor="let rezept of rezeptListe"
         (click)="openRezept(rezept.id)"
         [ngClass]="{'bg-primary border-primary ' : rezept.selected}">
+      <div class="text-center">
+      <span *ngIf="rezept.imagePath && rezept.imagePath !== ''">
+        <img class="image-preview" [src]="rezept.imagePath">
+      </span>
+      </div>
       <h5 class="mt-1">{{rezept.titel}}</h5>
       <div class="mt-1">{{rezept.beschreibung}}</div>
       <div class="row mt-1 no-ml">
@@ -38,7 +43,8 @@
         </div>
         <div *ngIf="rezept.aktiveZeit" class="mr-4">
           <fa-icon [icon]="['fas', 'stopwatch']"></fa-icon>
-          {{rezept.aktiveZeit}} min</div>
+          {{rezept.aktiveZeit}} min
+        </div>
         <div *ngIf="rezept.naehrwerte.kalorien" class="mr-4">{{rezept.naehrwerte.kalorien}} kcal</div>
         <div *ngIf="rezept.art" class="">{{rezept.art}}</div>
       </div>

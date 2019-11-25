@@ -3,10 +3,14 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
         -BUG:
 			-2 Arten eintragen...
-		
-		-font-awesome einrichten:
-			https://medium.com/better-programming/angular-font-awesome-in-5-easy-steps-with-angular-fontawesome-2b80129bcd7
-			
+				1.) Art soll array werden
+				2.) Beim erfassen so belassen
+				3.) im Backend soll dann art.split(' ') gemacht werden und dann die einzelnen Arten im Array speichern
+				4.) Ausserdem noch die Liste der möglichen Arten erweitert mit allen einzelnen Arten !
+				5.) Löschen anpassen => prüfen, gibt es Art, welche in keinem Rezept vorkommt -> Wenn ja, löschen
+				
+				
+				
 
         -GUI verschönern:
             -Bootstrap evtl. entfernen...
@@ -18,8 +22,7 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 			-Pagination einbauen
 			-Platzhalter für Fotos einfügen... oder beim Laden statt spinner Platzhalter-Elemente
 			
-
-
+			
         -ERROR-Handling im rezepte.service.ts nicht gut !!!
 		überall nicht. Server fehler aus GUI geben !! nicht nur object !
 
@@ -29,21 +32,19 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 			https://medium.com/@Idan_Co/angular-print-service-290651c721f9
 
 		-Liste: Sortierung einbauen: Zeit
-		-Container Comp
-		-GUI Comp
 		-isLoading-Logik mit reactive geht noch nicht auf!!! error-Handling mit async, d.h. kein error-handling möglich.... ????$$$
 		-any, etc. ersetzen !!
-		-ngx-api-utils (https://github.com/ngx-api-utils/ngx-api-utils)
 		-optimistic update
 		-CSS Grid (https://stackblitz.com/edit/angular-css-grid-holy-grail)
 		-Web Worker
-		-Cypress
 		-Animations
-		-Ionic ausprobieren: RezepteApp als App laufen lassen (https://angular.de/artikel/ionic2-tutorial-deutsch/)
 		-Angular Ivy opt-in ausprobieren
 		-Bazel inkremental Build ausprobieren
+		-Cypress
 		-Angular Testing: https://angular.de/artikel/angular-testing/
 		-codelyzer (https://github.com/mgechev/codelyzer)
+		-ngx-api-utils (https://github.com/ngx-api-utils/ngx-api-utils)
+		-Ionic ausprobieren: RezepteApp als App laufen lassen (https://angular.de/artikel/ionic2-tutorial-deutsch/)
 		-RezpteApp als DEsktop-App laufen lassen mit Electron (https://angular.de/artikel/angular-electron/ , https://github.com/maximegris/angular-electron)
 
 
@@ -71,5 +72,9 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
         -SetTimer geht noch nicht !
         -ngrx 8
             => Effects einbauen, dass bei gewissen Action in localstorage gespeichert/gecleart wird
-                https://www.youtube.com/watch?v=zkejq88f7CY
+                https://www.youtube.com/watch?v=zkejq88f7CY		
+		-font-awesome einrichten:
+			https://medium.com/better-programming/angular-font-awesome-in-5-easy-steps-with-angular-fontawesome-2b80129bcd7
+		-Container Comp
+		-GUI Comp			
 
