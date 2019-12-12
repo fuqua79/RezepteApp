@@ -1,7 +1,7 @@
-import { Subject } from "rxjs";
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
+import {Subject} from 'rxjs/internal/Subject';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class ErrorService {
   private errorListener = new Subject<string>();
 
