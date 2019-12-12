@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const rezeptSchema = mongoose.Schema({
-  beschreibung: {type: String, required: true},
   titel: {type: String, required: true},
+  beschreibung: {type: String},
   anzahlPersonen: {type: Number},
   zutaten: {type: [{menge: Number, einheit: String, zutat: String}]},
   zeit: {type: Number},
