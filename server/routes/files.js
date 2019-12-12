@@ -8,7 +8,13 @@ const fileController = require("../controllers/file");
 // Multer ships with storage engines DiskStorage and MemoryStorage
 // And Multer adds a body object and a file or files object to the request object. The body object contains the values of the text fields of the form, the file or files object contains the files uploaded via the form.
 const storage = multer.memoryStorage();
-const upload = multer({storage: storage});
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 8Mb Filesize... default 1Mb
+    fieldSize: 10 * 1024 * 1024
+  }
+});
 
 // route to upload a file
 router.post("/saveto3s", checkAuth, upload.single("image"), fileController.saveFile);

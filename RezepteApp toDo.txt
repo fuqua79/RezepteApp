@@ -2,6 +2,8 @@ Rezepte-App:
 http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 
         -BUG:
+			-Nach einem Fehler beim speichernn bleibt Spinner endlos dort !!
+			-Beschreibung in DB als Mussfeld definiert
 			-2 Arten eintragen...
 				1.) Art soll array werden
 				2.) Beim erfassen so belassen
@@ -10,7 +12,10 @@ http://rezepteapp-env.hngxgeqrzw.eu-central-1.elasticbeanstalk.com/
 				5.) Löschen anpassen => prüfen, gibt es Art, welche in keinem Rezept vorkommt -> Wenn ja, löschen
 				
 				
-				
+		-Text scannen:
+			https://www.ttmind.com/techpost/how-to-extract-text-from-image-using-angularocr-with-tessera
+			https://www.youtube.com/watch?v=NF_nnoA0aXM
+		
 
         -GUI verschönern:
             -Bootstrap evtl. entfernen...
