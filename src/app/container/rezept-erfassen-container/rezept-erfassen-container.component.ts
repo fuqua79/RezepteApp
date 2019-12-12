@@ -8,6 +8,7 @@ import {of} from 'rxjs/internal/observable/of';
 import {selectLoading} from '../../state/loading/loading.selectors';
 import {GlobalState} from '../../state/state';
 import {Store} from '@ngrx/store';
+import {stopLoading} from '../../state/loading/loading.actions';
 
 @Component({
   selector: 'app-rezept-erfassen-container',
@@ -47,8 +48,12 @@ export class RezeptErfassenContainerComponent implements OnInit, OnDestroy {
 
   saveRezept(form: any): void {
     this.rezeptService.saveRezept(form).subscribe(() => {
-      this.router.navigate(['/rezeptliste/']);
-    });
+        this.router.navigate(['/rezeptliste/']);
+      },
+      () => {
+        this.store.dispatch(stopLoading());
+      }
+    );
   }
 }
 
