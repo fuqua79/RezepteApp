@@ -39,9 +39,6 @@
       <mat-error *ngIf="formGroup.get('anzahlPersonen').invalid">Bitte tragen Sie die Anzahl der Personen ein.
       </mat-error>
     </mat-form-field>
-    <button matButton type="button" (click)="addEmptyZutat()" class="mb-3">
-      Zutat hinzufügen
-    </button>
     <div formArrayName="zutaten">
       <div *ngFor="let zutat of zutatenFormGroup.controls; let i = index">
         <div [formGroupName]="i" class="mt-4">
@@ -61,6 +58,9 @@
         </div>
       </div>
     </div>
+    <button matButton type="button" (click)="addEmptyZutat()" class="mb-5">
+      Zutat hinzufügen
+    </button>
     <mat-accordion>
       <mat-expansion-panel>
         <mat-expansion-panel-header>

@@ -97,7 +97,7 @@ export class RezeptErfassenComponent implements OnInit, OnChanges {
   }
 
   public addEmptyZutat(): void {
-    this.zutatenListe.insert(0, this.createZutat(createInitialZutat()));
+    this.zutatenListe.push(this.createZutat(createInitialZutat()));
   }
 
   private addZutat(zutat: Zutat): void {
